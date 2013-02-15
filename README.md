@@ -17,3 +17,8 @@ developed by previous CS56 students.  Each of those subdirectories has
 its own README.md file that explains where that game came from, and
 what the next steps for that game might be.
 
+cs56_W12_501
+============
+
+* [mantis page](https://foo.cs.ucsb.edu/56mantis/view.php?id=501)
+* [archive page](https://foo.cs.ucsb.edu/cs56/issues/0000501/)
