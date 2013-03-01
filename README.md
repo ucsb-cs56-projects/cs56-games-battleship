@@ -1,24 +1,13 @@
-cs56-games-battleship
-=====================
+# cs56-games-battleship
 
-Battleship games
+<b>TODO</b> - add more description to the sections of this README
 
-In this directory, you will find several subdirectories.
+This is a command line version of the game Battleship. 
+* Original developer description - the Milton Bradley board game that has won the hearts of children for over four decades. It will be single-player (vs. computer) and will have various difficulty settings (easy, normal, hard).  You can also host/join games and play against your friends online WITH THE POWER OF JAVA NETWORKING!
 
-* main contains the "main" branch of development for the CS56
-  battleship project.  At the start of S13, this is simply an empty
-  shell.  If you choose to take on this project, your job is to look
-  at all of the other subdirectories below, and either (a) improve one
-  of those, or (b) build a brand new game in this directory, pulling
-  the "best pieces" from those other attempts.
+The code can also be found at these links
 
-Each of the other subdirectories contains code for a battleship game
-developed by previous CS56 students.  Each of those subdirectories has
-its own README.md file that explains where that game came from, and
-what the next steps for that game might be.
+* [Archive page](https://foo.cs.ucsb.edu/cs56/issues/0000501/)
+* [Mantis page](https://foo.cs.ucsb.edu/56mantis/view.php?id=501)
 
-cs56_W12_501
-============
-
-* [mantis page](https://foo.cs.ucsb.edu/56mantis/view.php?id=501)
-* [archive page](https://foo.cs.ucsb.edu/cs56/issues/0000501/)
+## Possible improvements
