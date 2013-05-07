@@ -11,32 +11,21 @@ public class BattleshipGUI extends JFrame{
 	private JFrame typePopUp = new JFrame();
 	private JFrame diffPopUp = new JFrame();
 	private JLabel title = new JLabel("Battleship",JLabel.CENTER);
-	private JTable board = new JTable(21,10);
+	private Grid board = new Grid();
 
 	
 	BattleshipGUI(){
 		//Setup main game frame
-		JPanel gamePanel = new JPanel(new GridBagLayout());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 500);
 		
 		//Add Title
-		GridBagConstraints titleConstraints = new GridBagConstraints();
-		titleConstraints.gridy = 1;
-		gamePanel.add(title,titleConstraints);
+		this.getContentPane().add(BorderLayout.NORTH,title);
 		
 		//Add play board
-		board.setColumnSelectionAllowed(false);
-		board.setRowSelectionAllowed(false);
-		board.setDefaultRenderer(String.class, new CustomRenderer());
-		//board.repaint();
-		GridBagConstraints boardConstraints = new GridBagConstraints();
-		boardConstraints.gridy = 2;
-		boardConstraints.gridx = 0;
+		this.board.setSize(100,100);
 
-		gamePanel.add(board, boardConstraints);
-		
-		this.add(gamePanel);
+		this.getContentPane().add(BorderLayout.CENTER,board);
 		
 		//setup difficulty options frame
 		this.diffPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,8 +72,7 @@ public class BattleshipGUI extends JFrame{
 	public static void main(String[] args){
 	
 		BattleshipGUI gui = new BattleshipGUI();
-		gui.setOptions();
-		gui.repaint();
+		gui.setVisible(true);
 	
 	}
 	
@@ -119,13 +107,50 @@ public class BattleshipGUI extends JFrame{
 		this.typePopUp.setVisible(false);
 	}
 	
+	public class Grid extends JPanel{
+		@Override
+		public void paintComponent(Graphics g)
+		{
+			Graphics2D g2d = (Graphics2D) g;
+			int width = this.getWidth();
+			int height = this.getHeight();
+			int cellWidth = height/21;
+			int startX = (width - (cellWidth*10))/2;
+			
+			g2d.setColor(Color.WHITE);
+			g2d.fillRect(0,0,this.getWidth(),this.getHeight());
+			
+			for(int i=0; i < 10; i++){
+				for(int j = 0; j<21; j++){
+					g2d.setColor(new Color(0,119,190));
+					if(j==10)
+						g2d.setColor(Color.BLACK);
+					g2d.fillRect(startX + (i*cellWidth),j*cellWidth,cellWidth,cellWidth);
+				}
+			}
+			
+			g2d.setColor(Color.GRAY);
+			g2d.drawLine(startX,0,startX,cellWidth*21);
+			g2d.drawLine(startX + 10*cellWidth,0,startX + 10*cellWidth,cellWidth*21);
+			for(int i=1; i<10; i++)
+				g2d.drawLine(startX + i*cellWidth,0,startX + cellWidth*i,cellWidth*10);
+				
+			for(int i=1; i<10; i++)
+			g2d.drawLine(startX + i*cellWidth,cellWidth*11,startX + cellWidth*i,cellWidth*21);
+				
+			for(int j=0; j<22; j++)
+				g2d.drawLine(startX, j*cellWidth, startX + 10*cellWidth, j*cellWidth);
+		}
+		
+	
+	}
+	
 	public class EasyClick implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			System.out.println("Easy Button Clicked");
 			difficulty = "Easy";
 			BattleshipGUI.this.hideDiffPopUp();
 			BattleshipGUI.this.setVisible(true);
-		
 		}
 	
 	}
@@ -182,28 +207,6 @@ public class BattleshipGUI extends JFrame{
 		
 		}
 	
-	}
-	
-	class CustomRenderer extends javax.swing.table.DefaultTableCellRenderer
-	{
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
-		{
-			Component d =  super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			if(true)
-			{
-				d.setBackground(Color.RED);
-				d.setForeground(Color.RED);
-			}
-			else
-			{
-				d.setBackground(Color.WHITE);
-				d.setForeground(Color.WHITE);
-			}
-			setOpaque(true);
-			return d;
-		}
-	}
-			
+	}	
 
 }

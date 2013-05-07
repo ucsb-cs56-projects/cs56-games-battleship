@@ -24,9 +24,8 @@
   </target>
 
   <!-- run -->
-  <target name="run" depends="compile">
-    <echo message="For some reason, cmd-line programs cannot take input from behind ant. Please run BattleShipMain.java with a java command" />
-    <echo message="java -jar ./download/battleship.jar" />
+ <target name="run" depends="compile" description="run the PolynomialTest.class program"> 
+    <java classname="BattleshipGUI" classpath="./build" />
   </target>
 
   <!-- clean -->
