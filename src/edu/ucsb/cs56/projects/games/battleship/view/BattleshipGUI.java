@@ -7,10 +7,20 @@ public class BattleshipGUI extends JFrame{
 
 	private String difficulty;
 	private int gameType;
+	public BoardStatus gameStatus = new BoardStatus("test");
 
-	private JFrame typePopUp = new JFrame();
-	private JFrame diffPopUp = new JFrame();
 	private JLabel title = new JLabel("Battleship",JLabel.CENTER);
+	
+	private JFrame typePopUp = new JFrame();
+	private JButton hostButton = new JButton("Host a Game");
+	private JButton joinButton = new JButton("Join a Game");
+	private JButton computerButton = new JButton("Play Against a Computer");
+	
+	private JFrame diffPopUp = new JFrame();
+	private JButton easyButton = new JButton("Easy");
+	private JButton mediumButton = new JButton("Medium");
+	private JButton hardButton = new JButton("Hard");
+	
 	private Grid board = new Grid();
 
 	
@@ -23,55 +33,43 @@ public class BattleshipGUI extends JFrame{
 		this.getContentPane().add(BorderLayout.NORTH,title);
 		
 		//Add play board
-		this.board.setSize(100,100);
-
 		this.getContentPane().add(BorderLayout.CENTER,board);
 		
-		//setup difficulty options frame
+		//setup difficulty options popup
+		GridLayout threeButtonGrid = new GridLayout(1,3);
+		this.diffPopUp.setLayout(threeButtonGrid);
 		this.diffPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.diffPopUp.setSize(600,100);
 		
-		JPanel options = new JPanel();
+		//Add difficulty buttons listeners
+		this.easyButton.addActionListener(this.new difficultyClick());
+		this.mediumButton.addActionListener(this.new difficultyClick());
+		this.hardButton.addActionListener(this.new difficultyClick());
 		
-		//Add difficulty buttons
-		JButton easyButton = new JButton("Easy");
-		easyButton.addActionListener(this.new EasyClick());
-		JButton mediumButton = new JButton("Medium");
-		mediumButton.addActionListener(this.new MediumClick());
-		JButton hardButton = new JButton("Hard");
-		hardButton.addActionListener(this.new HardClick());
-		
-		options.add(easyButton);
-		options.add(mediumButton);
-		options.add(hardButton);
-		
-		this.diffPopUp.add(options);
+		this.diffPopUp.add(easyButton);
+		this.diffPopUp.add(mediumButton);
+		this.diffPopUp.add(hardButton);
 		
 		//Setup gametype popup
+		this.typePopUp.setLayout(threeButtonGrid);
 		this.typePopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.typePopUp.setSize(600,100);
 		
-		JPanel gameTypes = new JPanel();
+		//Add type buttons listeners
+		this.hostButton.addActionListener(this.new typeClick());
+		this.joinButton.addActionListener(this.new typeClick());
+		this.computerButton.addActionListener(this.new typeClick());
 		
-		//Add type buttons
-		JButton hostButton = new JButton("Host a Game");
-		hostButton.addActionListener(this.new HostClick());
-		JButton joinButton = new JButton("Join a Game");
-		joinButton.addActionListener(this.new JoinClick());
-		JButton computerButton = new JButton("Play Against a Computer");
-		computerButton.addActionListener(this.new ComputerClick());
+		this.typePopUp.add(hostButton);
+		this.typePopUp.add(joinButton);
+		this.typePopUp.add(computerButton);
 		
-		gameTypes.add(hostButton);
-		gameTypes.add(joinButton);
-		gameTypes.add(computerButton);
-		
-		this.typePopUp.add(gameTypes);
-	
 	}
 	
 	public static void main(String[] args){
 	
 		BattleshipGUI gui = new BattleshipGUI();
+		//gui.setOptions();
 		gui.setVisible(true);
 	
 	}
@@ -116,16 +114,25 @@ public class BattleshipGUI extends JFrame{
 			int height = this.getHeight();
 			int cellWidth = height/21;
 			int startX = (width - (cellWidth*10))/2;
+			Color ocean = new Color(0,119,190);
 			
 			g2d.setColor(Color.WHITE);
 			g2d.fillRect(0,0,this.getWidth(),this.getHeight());
 			
 			for(int i=0; i < 10; i++){
 				for(int j = 0; j<21; j++){
-					g2d.setColor(new Color(0,119,190));
 					if(j==10)
 						g2d.setColor(Color.BLACK);
+					else if(gameStatus.isHit(i,j))
+						g2d.setColor(Color.RED);
+					else if(gameStatus.isPlayerBoat(i,j))
+						g2d.setColor(Color.DARK_GRAY);
+					else if(gameStatus.isShot(i,j))
+						g2d.setColor(ocean.darker());
+					else g2d.setColor(ocean);
+					
 					g2d.fillRect(startX + (i*cellWidth),j*cellWidth,cellWidth,cellWidth);
+			
 				}
 			}
 			
@@ -145,68 +152,52 @@ public class BattleshipGUI extends JFrame{
 	
 	}
 	
-	public class EasyClick implements ActionListener{
+	public class difficultyClick implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			System.out.println("Easy Button Clicked");
-			difficulty = "Easy";
-			BattleshipGUI.this.hideDiffPopUp();
-			BattleshipGUI.this.setVisible(true);
+			if( e.getSource() == BattleshipGUI.this.easyButton){
+				System.out.println("Easy Button Clicked");
+				difficulty = "Easy";
+				BattleshipGUI.this.hideDiffPopUp();
+				BattleshipGUI.this.setVisible(true);
+			}
+			else if( e.getSource() == BattleshipGUI.this.mediumButton){
+				System.out.println("Medium Button Clicked");
+				difficulty = "Medium";
+				BattleshipGUI.this.hideDiffPopUp();
+				BattleshipGUI.this.setVisible(true);
+			}
+			else if ( e.getSource() == BattleshipGUI.this.hardButton){
+				System.out.println("Hard Button Clicked");
+				difficulty = "Hard";
+				BattleshipGUI.this.hideDiffPopUp();
+				BattleshipGUI.this.setVisible(true);
+			}
+		}
+	}
+	
+	public class typeClick implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			if( e.getSource() == BattleshipGUI.this.hostButton){
+			
+				System.out.println("Host Button Clicked");
+				gameType = 1;
+				BattleshipGUI.this.hideTypePopUp();
+				BattleshipGUI.this.showDiffPopUp();
+			}
+			else if( e.getSource() == BattleshipGUI.this.joinButton){
+				System.out.println("Join Button Clicked");
+				gameType = 2;
+				BattleshipGUI.this.hideTypePopUp();
+				BattleshipGUI.this.showDiffPopUp();
+			}
+			else if ( e.getSource() == BattleshipGUI.this.computerButton){
+				System.out.println("Computer Button Clicked");
+				gameType = 3;
+				BattleshipGUI.this.hideTypePopUp();
+				BattleshipGUI.this.showDiffPopUp();
+			}
 		}
 	
 	}
-	
-	public class MediumClick implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			System.out.println("Medium Button Clicked");
-			difficulty = "Medium";
-			BattleshipGUI.this.hideDiffPopUp();
-			BattleshipGUI.this.setVisible(true);
-		}
-	
-	}
-	
-	public class HardClick implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			System.out.println("Hard Button Clicked");
-			difficulty = "Hard";
-			BattleshipGUI.this.hideDiffPopUp();
-			BattleshipGUI.this.setVisible(true);
-		
-		}
-	
-	}
-	
-	public class HostClick implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			System.out.println("Host Button Clicked");
-			gameType = 1;
-			BattleshipGUI.this.hideTypePopUp();
-			BattleshipGUI.this.showDiffPopUp();
-		
-		}
-	
-	}
-	
-	public class JoinClick implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			System.out.println("Join Button Clicked");
-			gameType = 2;
-			BattleshipGUI.this.hideTypePopUp();
-			BattleshipGUI.this.showDiffPopUp();
-		
-		}
-	
-	}
-	
-	public class ComputerClick implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			System.out.println("Computer Button Clicked");
-			gameType = 3;
-			BattleshipGUI.this.hideTypePopUp();
-			BattleshipGUI.this.showDiffPopUp();
-		
-		}
-	
-	}	
 
 }
