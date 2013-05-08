@@ -6,7 +6,7 @@ public class BattleshipGUI extends JFrame{
 
     private String difficulty;
     private int gameType;
-    public BoardStatus gameStatus = new BoardStatus("test");
+    public BoardStatus gameStatus = new BoardStatus();
 
     private JLabel title = new JLabel("Battleship",JLabel.CENTER);
     private JLabel messages = new JLabel("Messages go here:", JLabel.CENTER);
@@ -210,23 +210,16 @@ public class BattleshipGUI extends JFrame{
     }
 	
     public class cellClick implements MouseListener{
-	public void mouseClicked(MouseEvent e){
-	    //Calculate which column & row the mouse was clicked in
-	    int cellColumn = (int) Math.floor((e.getX() - board.startX)/board.cellWidth);
-	    int cellRow = (int) Math.floor(e.getY()/board.cellWidth);
-	    //Add to shot list if it was in enemy territory
-	    if(cellRow < 10)
-		gameStatus.addShot( cellColumn, cellRow);	
-	    repaint();
-	}
+	public void mouseClicked(MouseEvent e){}
 		
 	public void mousePressed(MouseEvent e){
 	    //Calculate which column & row the mouse was clicked in
 	    int cellColumn = (int) Math.floor((e.getX() - board.startX)/board.cellWidth);
 	    int cellRow = (int) Math.floor(e.getY()/board.cellWidth);
 	    //Add to shot list if it was in enemy territory
-	    if(cellRow < 10)
-		gameStatus.addShot( cellColumn, cellRow);		
+	    if(cellRow < 10 && cellRow >=0 && cellColumn >=0 && cellColumn < 10 && (!gameStatus.isShot( cellColumn, cellRow))){
+			gameStatus.addShot( cellColumn, cellRow);
+		}
 	    repaint();
 	}
 	public void mouseReleased(MouseEvent e){}
