@@ -1,6 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class BattleshipGUI extends JFrame{
@@ -33,6 +32,7 @@ public class BattleshipGUI extends JFrame{
 		this.getContentPane().add(BorderLayout.NORTH,title);
 		
 		//Add play board
+		this.board.addMouseListener(this.new cellClick());
 		this.getContentPane().add(BorderLayout.CENTER,board);
 		
 		//setup difficulty options popup
@@ -72,6 +72,14 @@ public class BattleshipGUI extends JFrame{
 		//gui.setOptions();
 		gui.setVisible(true);
 	
+	}
+	
+	public int getBoardX(){
+		return this.board.getX();
+	}
+	
+	public int getBoardY(){
+		return this.board.getY();
 	}
 	
 	public void setOptions(){
@@ -198,6 +206,41 @@ public class BattleshipGUI extends JFrame{
 			}
 		}
 	
+	}
+	
+	public class cellClick implements MouseListener{
+		public void mouseClicked(MouseEvent e){
+			int width = board.getWidth();
+			int height = board.getHeight();
+			int cellWidth = height/21;
+			int startX = (width - (cellWidth*10))/2;
+			//e.translatePoint(board.getX(),-board.getY());
+			int clickPositionX = e.getX() - startX;
+			int clickPositionY = e.getY();
+			int cellColumn = (int) Math.floor(clickPositionX/cellWidth);
+			int cellRow = (int) Math.floor(clickPositionY/cellWidth);
+			gameStatus.addShot( cellColumn, cellRow);
+			
+			repaint();
+		}
+		
+		public void mousePressed(MouseEvent e){
+			int width = board.getWidth();
+			int height = board.getHeight();
+			int cellWidth = height/21;
+			int startX = (width - (cellWidth*10))/2;
+			//e.translatePoint(board.getX(),-board.getY());
+			int clickPositionX = e.getX() - startX;
+			int clickPositionY = e.getY();
+			int cellColumn = (int) Math.floor(clickPositionX/cellWidth);
+			int cellRow = (int) Math.floor(clickPositionY/cellWidth);
+			gameStatus.addShot( cellColumn, cellRow);
+			
+			repaint();
+		}
+		public void mouseReleased(MouseEvent e){}
+		public void mouseEntered(MouseEvent e){}
+		public void mouseExited(MouseEvent e){}
 	}
 
 }

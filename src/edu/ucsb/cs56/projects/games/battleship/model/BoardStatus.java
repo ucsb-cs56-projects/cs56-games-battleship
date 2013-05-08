@@ -44,6 +44,11 @@ public class BoardStatus{
 		else return false;
 	}
 	
+	public void addShot(int x, int y){
+		Tuple tup = new Tuple(x,y);
+		this.shots.add(tup);
+	}
+	
 	
 	
 	
