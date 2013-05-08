@@ -9,6 +9,7 @@ public class BattleshipGUI extends JFrame{
 	public BoardStatus gameStatus = new BoardStatus("test");
 
 	private JLabel title = new JLabel("Battleship",JLabel.CENTER);
+	private JLabel messages = new JLabel("Messages go here:", JLabel.CENTER);
 	
 	private JFrame typePopUp = new JFrame();
 	private JButton hostButton = new JButton("Host a Game");
@@ -24,16 +25,22 @@ public class BattleshipGUI extends JFrame{
 
 	
 	BattleshipGUI(){
+	
 		//Setup main game frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 500);
 		
 		//Add Title
+		//Font titleFont = new Font(Font.SERIF, Font.BOLD,this.getWidth()/3);
+		//this.title.setFont(titleFont);
 		this.getContentPane().add(BorderLayout.NORTH,title);
 		
 		//Add play board
 		this.board.addMouseListener(this.new cellClick());
 		this.getContentPane().add(BorderLayout.CENTER,board);
+		
+		//Add messages
+		this.getContentPane().add(BorderLayout.SOUTH, messages);
 		
 		//setup difficulty options popup
 		GridLayout threeButtonGrid = new GridLayout(1,3);
@@ -74,25 +81,7 @@ public class BattleshipGUI extends JFrame{
 	
 	}
 	
-	public int getBoardX(){
-		return this.board.getX();
-	}
-	
-	public int getBoardY(){
-		return this.board.getY();
-	}
-	
 	public void setOptions(){
-		this.setVisible(false);
-		this.typePopUp.setVisible(true);
-	}
-	
-	public void setDifficulty(){
-		this.setVisible(false);
-		this.diffPopUp.setVisible(true);
-	}
-	
-	public void setType(){
 		this.setVisible(false);
 		this.typePopUp.setVisible(true);
 	}
