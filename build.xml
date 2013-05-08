@@ -24,8 +24,8 @@
   </target>
 
   <!-- run -->
- <target name="run" depends="compile" description="run the PolynomialTest.class program"> 
-    <java classname="BattleshipGUI" classpath="./build" />
+ <target name="run" depends="compile" description="Run the BattleshipGUI program."> 
+    <java classname="BattleshipGUI" classpath="build" fork ="true"/>
   </target>
 
   <!-- clean -->
