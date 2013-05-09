@@ -1,3 +1,4 @@
+package edu.ucsb.cs56.projects.games.battleship;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -6,6 +7,8 @@ public class BattleshipGUI extends JFrame{
 
     private String difficulty;
     private int gameType;
+	private boolean playersTurn = false;
+	
     public BoardStatus gameStatus = new BoardStatus();
 
     private JLabel title = new JLabel("Battleship",JLabel.CENTER);
@@ -91,6 +94,26 @@ public class BattleshipGUI extends JFrame{
 	this.messages.setText(message);
     }
 	
+	public void setPlayersTurn(boolean tf){
+		this.playersTurn = tf;
+	}
+	
+	public int getGameType(){
+		return this.gameType;
+	}
+	
+	public String getDifficulty(){
+		return this.difficulty;
+	}
+	
+	public boolean getPlayersTurn(boolean tf){
+		return this.playersTurn = tf;
+	}
+	
+	public String getMessage(){
+		return this.messages.getText();
+	}
+	
     public void showDiffPopUp(){
 	this.diffPopUp.setVisible(true);
     }
@@ -106,6 +129,25 @@ public class BattleshipGUI extends JFrame{
     public void hideTypePopUp(){
 	this.typePopUp.setVisible(false);
     }
+	
+	public int makeMove(){
+		this.playersTurn = true;
+		while(playersTurn == true)
+			return -1;
+		return 0;
+	}
+	
+	public void computerMove(int row, int column){
+		gameStatus.addShot( row, column);
+	}
+	
+	public boolean humanWins(){
+		return this.gameStatus.humanWin();
+	}
+	
+	public boolean computerWins(){
+		return this.gameStatus.computerWin();
+	}
 	
     public class Grid extends JPanel{
 	public int width;
@@ -165,19 +207,19 @@ public class BattleshipGUI extends JFrame{
 	public void actionPerformed(ActionEvent e){
 	    if( e.getSource() == BattleshipGUI.this.easyButton){
 		System.out.println("Easy Button Clicked");
-		difficulty = "Easy";
+		difficulty = "EASY";
 		BattleshipGUI.this.hideDiffPopUp();
 		BattleshipGUI.this.setVisible(true);
 	    }
 	    else if( e.getSource() == BattleshipGUI.this.mediumButton){
 		System.out.println("Medium Button Clicked");
-		difficulty = "Medium";
+		difficulty = "MEDIUM";
 		BattleshipGUI.this.hideDiffPopUp();
 		BattleshipGUI.this.setVisible(true);
 	    }
 	    else if ( e.getSource() == BattleshipGUI.this.hardButton){
 		System.out.println("Hard Button Clicked");
-		difficulty = "Hard";
+		difficulty = "HARD";
 		BattleshipGUI.this.hideDiffPopUp();
 		BattleshipGUI.this.setVisible(true);
 	    }
@@ -217,8 +259,9 @@ public class BattleshipGUI extends JFrame{
 	    int cellColumn = (int) Math.floor((e.getX() - board.startX)/board.cellWidth);
 	    int cellRow = (int) Math.floor(e.getY()/board.cellWidth);
 	    //Add to shot list if it was in enemy territory
-	    if(cellRow < 10 && cellRow >=0 && cellColumn >=0 && cellColumn < 10 && (!gameStatus.isShot( cellColumn, cellRow))){
+	    if(cellRow < 10 && cellRow >=0 && cellColumn >=0 && cellColumn < 10 && (!gameStatus.isShot( cellColumn, cellRow)) && playersTurn){
 			gameStatus.addShot( cellColumn, cellRow);
+			playersTurn = false;
 		}
 	    repaint();
 	}

@@ -1,3 +1,4 @@
+package edu.ucsb.cs56.projects.games.battleship;
 import java.util.*;
 
 /**
@@ -32,13 +33,25 @@ public class BoardStatus{
 	
 	public void addShot(int x, int y){
 		Tuple tup = new Tuple(x,y);
-		this.shots.add(tup);
+		if(!this.shots.contains(tup))
+			this.shots.add(tup);
 	}
 	
+	public boolean humanWin(){
+		for(Tuple tup:enemyBoats){
+			if(!shots.contains(tup))
+				return false;
+		}
+		return true;
+	}
 	
-	
-	
-	
+	public boolean computerWin(){
+		for(Tuple tup: playerBoats){
+			if(!shots.contains(tup))
+				return false;
+		}
+		return true;
+	}
 	
 	
 	public class Tuple{

@@ -3,39 +3,15 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.io.*;
 import java.net.*;
 
-/**
-   Dis da main class, son
-*/
-
 public class BattleShipMainGUI {
     
     public static void main(String[] args) {
 	
-	System.out.println("WELCOME TO BATTLESHIP!");
-	System.out.println("WHAT DO YOU WANT TO DO?");
-	System.out.println("1) HOST A GAME \n" +
-                           "2) JOIN A GAME \n" +
-			   "3) PLAY AGAINST A COMPUTER");
-	
-	//  open up standard input
-	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-	String gameChoice = null;
-
-	//  read the choice from the command-line; need to use try/catch with the
-	//  readLine() method
-	while(gameChoice == null || !isValid(gameChoice, "intro")) {
-	    try {
-		gameChoice = br.readLine();
-	    } 
-	    catch (IOException ioe) {
-		System.err.println("IO error trying to read your selection!" + ioe.getMessage());
-		System.exit(1);
-	    }
-	}
-	
+		BattleshipGUI theGame = new BattleshipGUI();
+		theGame.setOptions();
+	/*
 	// hosting a game
-	if(gameChoice.equals("1")) {
+	if(theGame.getGameType() == 1) {
 
 	    Player player1 = new Player();
 	    
@@ -133,7 +109,7 @@ public class BattleShipMainGUI {
 	}
 	
 	// joining a game
-	else if(gameChoice.equals("2")) {
+	else if(theGame.getGameType == 2) {
 	    
 	    Player player2 = new Player();
 	    
@@ -234,65 +210,33 @@ public class BattleShipMainGUI {
 	    
 
 	}
-	else if(gameChoice.equals("3")) {
-	    System.out.println("SELECT DIFFICULTY: EASY/MEDIUM/HARD");
-	    gameChoice = null;
-	    while(gameChoice == null || !isValid(gameChoice, "cpu difficulty")) {
-		try {
-		    gameChoice = br.readLine();
-		} 
-		catch (IOException ioe) {
-		    System.err.println("IO error trying to read your selection!" + ioe.getMessage());
-		    System.exit(1);
-		}
-	    }
-
-	    gameChoice = gameChoice.toUpperCase();
-
-	    Player human = new Player();
-	    Player computer = new Computer(gameChoice);
+	*/
+	
+	if(theGame.getGameType() == 3) {
+		Player human = new Player();
+		Player computer = new Computer(theGame.getDifficulty());
+		
+		//Players turn
 	    while(true) {
-		System.out.println("HUMAN GAME");
-		human.printGameBoard();
-		int humanMove = human.requestMove();
-		while(humanMove == -1)
-		    humanMove = human.requestMove();
-		String humanStatus = computer.incomingMissile(humanMove);
-		System.out.println(humanStatus);
-		human.updateGuessGrid(humanMove, humanStatus);
-		if(human.hasWon()) {
-		    System.out.println("CONGRATULATIONS, YOU WIN!");
+		while(theGame.makeMove() == -1);
+		if(theGame.humanWins()) {
+		    theGame.setMessage("CONGRATULATIONS, YOU WIN!");
 		    break;
 		}
+		
+		//Computers turn
 		int computerMove = computer.requestMove();
+		theGame.computerMove((int) Math.floor(computerMove/10),(int) Math.floor(computerMove%10));
 		String readableLocation = "" + (char)(computerMove/10+65) + computerMove%10;
-		System.out.println("COMPUTER HAS FIRED MISSILES AT " + readableLocation);
-		String computerStatus = human.incomingMissile(computerMove);
-		System.out.println(computerStatus);
-		computer.updateGuessGrid(computerMove, computerStatus);
-		if(computer.hasWon()) {
-		    System.out.println("OH NO, YOU LOSE!");
+		theGame.setMessage("COMPUTER HAS FIRED MISSILES AT " + readableLocation);
+		//computer.updateGuessGrid(computerMove, computerStatus);
+		if(theGame.computerWins()) {
+		    theGame.setMessage("OH NO, YOU LOSE!");
 		    break;
 		}
 	    }
 	}
-	System.out.println("THANK YOU FOR PLAYING");
+	theGame.setMessage(theGame.getMessage() + " " + "THANK YOU FOR PLAYING");
     }
     
-    private static boolean isValid(String gameSelection, String state) {
-	if(state.equals("intro")) {
-	    if(gameSelection.equals("1") || gameSelection.equals("2") || gameSelection.equals("3"))
-		return true;
-	    System.out.println("Invalid game selection, please enter '1', '2', or '3'");
-	    return false;
-	}
-	else if(state.equals("cpu difficulty")) {
-	    if(gameSelection.compareToIgnoreCase("Easy") == 0 || gameSelection.compareToIgnoreCase("Medium") == 0 || gameSelection.compareToIgnoreCase("Hard") == 0)
-		return true;
-	    System.out.println("Invalid computer difficulty, please enter 'EASY', 'MEDIUM', or 'HARD'");
-	    return false;
-	}
-	return false;
-    }
-
 }
