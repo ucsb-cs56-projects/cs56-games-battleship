@@ -1,4 +1,5 @@
 package edu.ucsb.cs56.projects.games.battleship;
+import java.util.ArrayList;
 
 
 
@@ -19,6 +20,10 @@ public class GameBoard {
 	guesses = new GuessGrid();
     }
 
+	public ArrayList getShipLocations(){
+		return this.ships.getShipLocations();
+	}
+	
     /**
        checks that the location hasn't already been guessed
        @param location the location to be checked

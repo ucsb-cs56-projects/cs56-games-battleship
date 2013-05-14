@@ -2,43 +2,50 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 public class BattleshipGUI extends JFrame{
 
-    private String difficulty;
-    private int gameType;
+	//GUI recorded information
+    private String difficulty = null;
+    private int gameType = 0;
 	private boolean playersTurn = false;
+	private int lastMove;
 	
-    public BoardStatus gameStatus = new BoardStatus();
+	//GUI's knowledge bank. Used for grid cell coloring
+	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
+	private ArrayList<Integer> enemyBoats = new ArrayList<Integer>();
+	private ArrayList<Integer> shots = new ArrayList<Integer>();
 
+	//GUI Texts
     private JLabel title = new JLabel("Battleship",JLabel.CENTER);
     private JLabel messages = new JLabel("Messages go here:", JLabel.CENTER);
 	
+	//Game type frame popup
     private JFrame typePopUp = new JFrame();
     private JButton hostButton = new JButton("Host a Game");
     private JButton joinButton = new JButton("Join a Game");
     private JButton computerButton = new JButton("Play Against a Computer");
 	
+	//Difficulty frame popup
     private JFrame diffPopUp = new JFrame();
     private JButton easyButton = new JButton("Easy");
     private JButton mediumButton = new JButton("Medium");
     private JButton hardButton = new JButton("Hard");
 	
+	//Game board component
     private Grid board = new Grid();
 
 	
     BattleshipGUI(){
 	
-	//Setup main game frame
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 500);
+    this.setSize(500, 500);
 		
 	//Add Title
-	//Font titleFont = new Font(Font.SERIF, Font.BOLD,this.getWidth()/3);
-	//this.title.setFont(titleFont);
 	this.getContentPane().add(BorderLayout.NORTH,title);
 		
-	//Add play board
+	//Add game board
 	this.board.addMouseListener(this.new cellClick());
 	this.getContentPane().add(BorderLayout.CENTER,board);
 		
@@ -79,7 +86,7 @@ public class BattleshipGUI extends JFrame{
     public static void main(String[] args){
 	
 	BattleshipGUI gui = new BattleshipGUI();
-	//gui.setOptions();
+	gui.setOptions();
 	gui.setMessage("The game is waiting!");
 	gui.setVisible(true);
 	
@@ -106,8 +113,8 @@ public class BattleshipGUI extends JFrame{
 		return this.difficulty;
 	}
 	
-	public boolean getPlayersTurn(boolean tf){
-		return this.playersTurn = tf;
+	public boolean getPlayersTurn(){
+		return this.playersTurn;
 	}
 	
 	public String getMessage(){
@@ -130,23 +137,25 @@ public class BattleshipGUI extends JFrame{
 	this.typePopUp.setVisible(false);
     }
 	
-	public int makeMove(){
+	public void makeMove(){
 		this.playersTurn = true;
-		while(playersTurn == true)
-			return -1;
-		return 0;
 	}
 	
-	public void computerMove(int row, int column){
-		gameStatus.addShot( row, column);
+	public void addShot(int shot){
+		this.shots.add(shot);
+		this.repaint();
 	}
 	
-	public boolean humanWins(){
-		return this.gameStatus.humanWin();
+	public void addPlayerBoat(int boatLocation){
+		this.playerBoats.add(boatLocation);
 	}
 	
-	public boolean computerWins(){
-		return this.gameStatus.computerWin();
+	public void addEnemyBoat(int boatLocation){
+		this.enemyBoats.add(boatLocation);
+	}
+	
+	public int getLastMove(){
+		return this.lastMove;
 	}
 	
     public class Grid extends JPanel{
@@ -173,14 +182,15 @@ public class BattleshipGUI extends JFrame{
 	    //Paint individual cells
 	    for(int i=0; i < 10; i++){
 		for(int j = 0; j<21; j++){
+			int loc = j*10 + i;
 		    if(j==10)
-			g2d.setColor(Color.BLACK);
-		    else if(gameStatus.isHit(i,j))
-			g2d.setColor(Color.RED);
-		    else if(gameStatus.isPlayerBoat(i,j))
-			g2d.setColor(Color.DARK_GRAY);
-		    else if(gameStatus.isShot(i,j))
-			g2d.setColor(ocean.darker());
+				g2d.setColor(Color.BLACK);
+		    else if(shots.contains(loc) && (playerBoats.contains(loc) || enemyBoats.contains(loc)))
+				g2d.setColor(Color.RED);
+		    else if(playerBoats.contains(loc))
+				g2d.setColor(Color.DARK_GRAY);
+		    else if(shots.contains(loc))
+				g2d.setColor(ocean.darker());
 		    else g2d.setColor(ocean);
 					
 		    g2d.fillRect(startX + (i*cellWidth),j*cellWidth,cellWidth,cellWidth);
@@ -259,8 +269,9 @@ public class BattleshipGUI extends JFrame{
 	    int cellColumn = (int) Math.floor((e.getX() - board.startX)/board.cellWidth);
 	    int cellRow = (int) Math.floor(e.getY()/board.cellWidth);
 	    //Add to shot list if it was in enemy territory
-	    if(cellRow < 10 && cellRow >=0 && cellColumn >=0 && cellColumn < 10 && (!gameStatus.isShot( cellColumn, cellRow)) && playersTurn){
-			gameStatus.addShot( cellColumn, cellRow);
+	    if(cellRow < 10 && cellRow >=0 && cellColumn >=0 && cellColumn < 10 && playersTurn && (!shots.contains(cellRow*10 + cellColumn))){
+			lastMove = cellRow*10 + cellColumn;
+			shots.add(lastMove);
 			playersTurn = false;
 		}
 	    repaint();

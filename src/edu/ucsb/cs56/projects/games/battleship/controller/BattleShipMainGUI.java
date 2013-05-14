@@ -2,6 +2,11 @@ package edu.ucsb.cs56.projects.games.battleship;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+
+/**
+   Dis da main class, son
+*/
 
 public class BattleShipMainGUI {
     
@@ -9,9 +14,40 @@ public class BattleShipMainGUI {
 	
 		BattleshipGUI theGame = new BattleshipGUI();
 		theGame.setOptions();
+		while(theGame.getDifficulty() == null || theGame.getGameType() == 0){
+			try{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e){
+			}
+		
+		}
 	/*
+	System.out.println("WELCOME TO BATTLESHIP!");
+	System.out.println("WHAT DO YOU WANT TO DO?");
+	System.out.println("1) HOST A GAME \n" +
+                           "2) JOIN A GAME \n" +
+			   "3) PLAY AGAINST A COMPUTER");
+	
+	//  open up standard input
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+	String gameChoice = null;
+
+	//  read the choice from the command-line; need to use try/catch with the
+	//  readLine() method
+	while(gameChoice == null || !isValid(gameChoice, "intro")) {
+	    try {
+		gameChoice = br.readLine();
+	    } 
+	    catch (IOException ioe) {
+		System.err.println("IO error trying to read your selection!" + ioe.getMessage());
+		System.exit(1);
+	    }
+	}
+	
 	// hosting a game
-	if(theGame.getGameType() == 1) {
+	if(gameChoice.equals("1")) {
 
 	    Player player1 = new Player();
 	    
@@ -109,7 +145,7 @@ public class BattleShipMainGUI {
 	}
 	
 	// joining a game
-	else if(theGame.getGameType == 2) {
+	else if(gameChoice.equals("2")) {
 	    
 	    Player player2 = new Player();
 	    
@@ -207,36 +243,78 @@ public class BattleShipMainGUI {
 		}
 	    }
 	    
-	    
+	
 
 	}
 	*/
 	
 	if(theGame.getGameType() == 3) {
-		Player human = new Player();
-		Player computer = new Computer(theGame.getDifficulty());
+	
+		//Setup the players
+	    Player human = new Player();
+	    Player computer = new Computer(theGame.getDifficulty());
 		
-		//Players turn
+		//Send information about ship locations to the GUI
+		ArrayList<Integer> shipLocations = human.getShipLocations();
+		for(Integer loc:shipLocations){
+			int boatRow = loc/10 + 11;
+			int boatColumn = loc%10;
+			theGame.addPlayerBoat(boatRow*10 + boatColumn);
+		}
+		shipLocations = computer.getShipLocations();
+		for(Integer loc:shipLocations){
+			theGame.addEnemyBoat(loc);
+		}
+		
+		//Start the game
 	    while(true) {
-		while(theGame.makeMove() == -1);
-		if(theGame.humanWins()) {
+		
+		//Start player's move
+		theGame.makeMove();
+		theGame.setMessage("Your turn!");
+		while(theGame.getPlayersTurn()){
+			try{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e){
+			}
+		}
+		
+		//Get player's move from GUI and send it to model
+		int humanMove = theGame.getLastMove();
+		String humanStatus = computer.incomingMissile(humanMove);
+		human.updateGuessGrid(humanMove, humanStatus);
+		
+		//Check win status
+		if(human.hasWon()) {
 		    theGame.setMessage("CONGRATULATIONS, YOU WIN!");
 		    break;
 		}
 		
-		//Computers turn
+		//Start computer's move
 		int computerMove = computer.requestMove();
-		theGame.computerMove((int) Math.floor(computerMove/10),(int) Math.floor(computerMove%10));
-		String readableLocation = "" + (char)(computerMove/10+65) + computerMove%10;
-		theGame.setMessage("COMPUTER HAS FIRED MISSILES AT " + readableLocation);
-		//computer.updateGuessGrid(computerMove, computerStatus);
-		if(theGame.computerWins()) {
+		//String readableLocation = "" + (char)(computerMove/10+65) + computerMove%10;
+		//System.out.println("COMPUTER HAS FIRED MISSILES AT " + readableLocation);
+		//Update model and GUI with computer's move
+		String computerStatus = human.incomingMissile(computerMove);
+		System.out.println(computerStatus);
+		computer.updateGuessGrid(computerMove, computerStatus);
+		int computersMoveRow = (computerMove/10) + 11;
+		int computersMoveColumn = computerMove%10;
+		theGame.addShot(computersMoveRow*10 + computersMoveColumn);
+		
+		//Check win status
+		if(computer.hasWon()) {
 		    theGame.setMessage("OH NO, YOU LOSE!");
 		    break;
 		}
+		//back up to player's move
 	    }
 	}
-	theGame.setMessage(theGame.getMessage() + " " + "THANK YOU FOR PLAYING");
+	//Display end of game message
+	String currentMessage = theGame.getMessage();
+	System.out.println(theGame.getGameType());
+	theGame.setMessage(currentMessage + " THANK YOU FOR PLAYING");
     }
-    
+
 }
