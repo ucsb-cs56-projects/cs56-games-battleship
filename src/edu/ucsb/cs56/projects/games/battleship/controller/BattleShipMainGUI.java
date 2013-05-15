@@ -297,7 +297,6 @@ public class BattleShipMainGUI {
 		//System.out.println("COMPUTER HAS FIRED MISSILES AT " + readableLocation);
 		//Update model and GUI with computer's move
 		String computerStatus = human.incomingMissile(computerMove);
-		System.out.println(computerStatus);
 		computer.updateGuessGrid(computerMove, computerStatus);
 		int computersMoveRow = (computerMove/10) + 11;
 		int computersMoveColumn = computerMove%10;
