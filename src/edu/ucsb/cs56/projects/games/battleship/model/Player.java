@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.W12.choice.mantis0000400.battleship;
+package edu.ucsb.cs56.projects.games.battleship;
 
 import java.util.*;
 import java.io.*;
@@ -20,6 +20,10 @@ public class Player {
 	isWinner = false;
     }
     
+	public ArrayList getShipLocations(){
+		return this.gb.getShipLocations();
+	}
+	
     /**
        Requests a move from the player
        @return an int from 0-99 corresponding to the player's move or -1 if error

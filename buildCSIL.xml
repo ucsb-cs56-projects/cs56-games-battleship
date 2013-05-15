@@ -8,7 +8,7 @@
   <property name="projectName" value="battleship" />
   <property name="javadocDest" value="~/public_html/cs56/13S/kreimer/cs56-games-battleship" /> 
   <property name="javadocUrl" value="${webBaseUrl}/${projectName}/javadoc" />
-  <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleShipMainGUI" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleShipMain" />
 
   <!-- beginning of targets -->
 
@@ -24,8 +24,9 @@
   </target>
 
   <!-- run -->
- <target name="run" depends="jar" description="Run the battleship.jar file."> 
-    <java jar="battleship.jar" fork ="true"/>
+  <target name="run" depends="compile">
+    <echo message="For some reason, cmd-line programs cannot take input from behind ant. Please run BattleShipMain.java with a java command" />
+    <echo message="java -jar ./download/battleship.jar" />
   </target>
 
   <!-- clean -->
@@ -59,7 +60,7 @@
   <target name="test" depends="compile">
     <junit haltonerror="no" haltonfailure="no">
       <classpath>
-	<pathelement location="lib/junit-4.8.2.jar" />
+	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar" />
 	<pathelement location="build" />
       </classpath>
       <batchtest fork="yes">
@@ -73,7 +74,8 @@
 
   <!-- jar -->
   <target name="jar" depends="compile">
-    <jar destfile="${projectName}.jar" basedir="build" >
+    <mkdir dir="dist" />
+    <jar destfile="dist/${projectName}.jar" basedir="build" >
       <manifest>
 	<attribute name="Main-Class" value="${mainClass}" />      </manifest>
     </jar>
