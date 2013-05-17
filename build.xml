@@ -1,14 +1,14 @@
 <!-- build.xml for battleship
  by Robert Waite and Aleskandr Zhang -->
 
-<project default="compile">
+<project name="Battleship" default="compile">
   <property environment="env" />
   <property name="webRoot" value="${env.HOME}/public_html/cs56" />
   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
-  <property name="projectName" value="battleship" />
-  <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" /> 
-  <property name="javadocUrl" value="${webBaseUrl}/${projectName}/javadoc" />
-  <property name="mainClass" value="edu.ucsb.cs56.W12.choice.mantis0000400.battleship.BattleShipMain" />
+  <property name="projectName" value="cs-56-games-battleship" />
+  <property name="javadocDest" value="${webRoot}/S13/FamiliarStranger-/${projectName}/javadoc" /> 
+  <property name="javadocUrl" value="${webBaseUrl}/S13/FamiliarStranger-/${projectName}/javadoc" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleShipMain" />
 
   <!-- beginning of targets -->
 
@@ -18,7 +18,7 @@
     <javac srcdir="src" destdir="build" includeantruntime="false">
       <classpath>
 	<pathelement location="build" />
-	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar" />
+	<pathelement location="lib/junit-4.8.2.jar" />
       </classpath>
     </javac>
   </target>
@@ -44,7 +44,7 @@
    <javadoc  destdir="javadoc" author="true" version="true" use="true" >
       <fileset dir="src" includes="**/*.java"/>
       <classpath>
-          <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+          <pathelement location="lib/junit-4.8.2.jar"/>
      </classpath>
    </javadoc>
    <delete quiet="true" dir="${javadocDest}" />   
@@ -60,7 +60,7 @@
   <target name="test" depends="compile">
     <junit haltonerror="no" haltonfailure="no">
       <classpath>
-	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar" />
+	<pathelement location="lib/junit-4.8.2.jar" />
 	<pathelement location="build" />
       </classpath>
       <batchtest fork="yes">

@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.W12.choice.mantis0000400.battleship;
+package edu.ucsb.cs56.projects.games.battleship;
 
 
 
