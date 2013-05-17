@@ -12,6 +12,8 @@ public class BattleShipMain {
     /** Take a positon 0 through 99, and convert it to row column,
 	e.g 0 becomes A1, 1 becomes A1, 2 becomes A2, etc.
 	and 10 becomes B0, 11 becomes B1, etc.
+	@param pos an int from 0 to 99 corresponding to a location on the board
+	@return the name of the board coordinates (e.g A1, B2)
      */
     public static String int2LetterNumber(int pos) {
 	String readableLocation = "" + (char)(pos/10+65) + pos%10;

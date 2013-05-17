@@ -1,11 +1,12 @@
 <!-- build.xml for battleship
- by Robert Waite and Aleskandr Zhang -->
+ by Robert Waite and Aleskandr Zhang 
+ version CS56, S13 by Dario Castellanos Anaya-->
 
 <project name="Battleship" default="compile">
   <property environment="env" />
   <property name="webRoot" value="${env.HOME}/public_html/cs56" />
   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
-  <property name="projectName" value="cs-56-games-battleship" />
+  <property name="projectName" value="cs56-games-battleship" />
   <property name="javadocDest" value="${webRoot}/S13/FamiliarStranger-/${projectName}/javadoc" /> 
   <property name="javadocUrl" value="${webBaseUrl}/S13/FamiliarStranger-/${projectName}/javadoc" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleShipMain" />
