@@ -8,6 +8,16 @@ import java.net.*;
 */
 
 public class BattleShipMain {
+
+    /** Take a positon 0 through 99, and convert it to row column,
+	e.g 0 becomes A1, 1 becomes A1, 2 becomes A2, etc.
+	and 10 becomes B0, 11 becomes B1, etc.
+     */
+    public static String int2LetterNumber(int pos) {
+	String readableLocation = "" + (char)(pos/10+65) + pos%10;
+	return readableLocation;
+
+    }
     
     public static void main(String[] args) {
 	
@@ -85,7 +95,7 @@ public class BattleShipMain {
 		    while(p1Move == -1)
 			p1Move = player1.requestMove();
 
-		    String readableLocation = "" + (char)(p1Move/10+65) + p1Move%10;
+		    String readableLocation = int2LetterNumber(p1Move);
 		    // send player1 move to player 2
 		    System.out.println("Firing missiles at: " + readableLocation);
 		    toPlayer2.println(p1Move);
@@ -110,7 +120,7 @@ public class BattleShipMain {
 		    System.out.println("Waiting for player 2's move...");
 		    int p2Move = Integer.parseInt(fromPlayer2.readLine());
 
-		    readableLocation = "" + (char)(p2Move/10+65) + p2Move%10;
+		    readableLocation = int2LetterNumber(p2Move);
 		    System.out.println("PLAYER2 HAS FIRED MISSILES AT " + readableLocation);
 
 		    String p2Status = player1.incomingMissile(p2Move);
@@ -183,7 +193,7 @@ public class BattleShipMain {
 		    int p1Move = Integer.parseInt(fromPlayer1.readLine());
 		    String p1Status = player2.incomingMissile(p1Move);
 		    
-		    String readableLocation = "" + (char)(p1Move/10+65) + p1Move%10;
+		    String readableLocation = int2LetterNumber(p1Move);
 		    System.out.println("Player 1 fires at: " + readableLocation);
 		    System.out.println(p1Status);
 
@@ -205,7 +215,7 @@ public class BattleShipMain {
 		    while(p2Move == -1)
 			p2Move = player2.requestMove();
 		    
-		    readableLocation = "" + (char)(p2Move/10+65) + p2Move%10;
+		    readableLocation = int2LetterNumber(p2Move);
 		    System.out.println("Firing missiles at: " + readableLocation);
 		    toPlayer1.println(p2Move);
 
@@ -264,8 +274,9 @@ public class BattleShipMain {
 		    System.out.println("CONGRATULATIONS, YOU WIN!");
 		    break;
 		}
-		int computerMove = computer.requestMove();
-		String readableLocation = "" + (char)(computerMove/10+65) + computerMove%10;
+	       	int computerMove = computer.requestMove();
+		//String readableLocation = "" + (char)(computerMove/10+65) + computerMove%10;
+		String readableLocation = int2LetterNumber(computerMove);
 		System.out.println("COMPUTER HAS FIRED MISSILES AT " + readableLocation);
 		String computerStatus = human.incomingMissile(computerMove);
 		System.out.println(computerStatus);
