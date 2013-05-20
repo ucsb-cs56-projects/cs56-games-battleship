@@ -73,25 +73,7 @@ public class Battleship extends JFrame
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(createMenuBar());
 		setResizable(false);			
-		
-		//gets user to input name
-//		user=JOptionPane.showInputDialog("Please Enter your name.");		
-//		int dummy=0;
-////		while (((user==null)||(user.equals("")))&&(dummy<3))
-//                while ((user==null)||(user.equals("")))
-//		{				
-//			user=JOptionPane.showInputDialog("I won't play with you until I have your name.");
-//			if ((user!=null)&&(!user.equals("")))
-//				dummy=4;
-//			else
-//				dummy++;
-//		}
-//		if (dummy==3)
-//		{
-//			JOptionPane.showMessageDialog(null,"Since you're having trouble inp"
-//			+"utting your name, I'll just call you stupid.","",JOptionPane.INFORMATION_MESSAGE);
-//			user="Stupid";
-//		}
+	
                 user="Human Being";
 		players[you]=new Player (user);
 		players[enemy]=new Player ("Computer");						
@@ -323,21 +305,7 @@ public class Battleship extends JFrame
 		pvc.addActionListener(stuff);
                 m.add(pvc);
 		menu.add(m);
-		
-		//m.add(pvc);
-//		cvc = new JMenuItem("Computer vs. Computer");
-//		cvc.addActionListener(stuff);
-//		m.add(cvc);
-		
-//		m = new JMenuItem("Rules");
-//		m.addActionListener(new RulesListener());
-//		menu.add(m);
-//		m = new JMenuItem("Statistics");
-//		m.addActionListener(new StatsListener());		
-//		menu.add(m);
-//		m = new JMenuItem("Options");
-//		m.addActionListener(new OptionsListener());		
-//		menu.add(m);
+
 		m = new JMenuItem("Exit");
 		m.addActionListener(new ExitListener());
 		menu.add(m);	
@@ -671,61 +639,7 @@ public class Battleship extends JFrame
 		System.exit(-1);
 	    }
 
-//	    while(true) {
-//		player1.printGameBoard();
-//		try {
-//
-//		    int p1Move = player1.requestMove();
-//		    while(p1Move == -1)
-//			p1Move = player1.requestMove();
-//
-//		    String readableLocation = "" + (char)(p1Move/10+65) + p1Move%10;
-//		    // send player1 move to player 2
-//		    System.out.println("Firing missiles at: " + readableLocation);
-//		    toPlayer2.println(p1Move);
-//
-//		    // get status from player 2
-//		    String p1Status = fromPlayer2.readLine();
-//		    
-//		    System.out.println(p1Status);
-//		    player1.updateGuessGrid(p1Move, p1Status);
-//		    player1.printGameBoard();
-//
-//		    if(player1.hasWon()) {
-//			toPlayer2.println("WIN");
-//			System.out.println("CONGRATULATIONS, YOU WIN!");
-//			break;
-//		    }
-//		    else {
-//			toPlayer2.println("CONTINUE");
-//		    }
-//
-//		    // get player 2 move
-//		    System.out.println("Waiting for player 2's move...");
-//		    int p2Move = Integer.parseInt(fromPlayer2.readLine());
-//
-//		    readableLocation = "" + (char)(p2Move/10+65) + p2Move%10;
-//		    System.out.println("PLAYER2 HAS FIRED MISSILES AT " + readableLocation);
-//
-//		    String p2Status = player1.incomingMissile(p2Move);
-//		    System.out.println(p2Status);
-//
-//		    toPlayer2.println(p2Status);
-//		
-//		    String p2victoryStatus = fromPlayer2.readLine();
-//		
-//		    if(p2victoryStatus.equals("WIN")) {
-//			System.out.println("OH NO, YOU LOSE!");
-//			break;
-//		    }
-//		}
-//		catch (IOException e1) {
-//		    System.out.println("SOMETHING WENT WRONG WITH READING THINGS N SUCH, SORRY");
-//		    System.exit(-1);
-//		}
-//	    }                       
-                                    
-                                    
+
                                     
                                     
                                     
