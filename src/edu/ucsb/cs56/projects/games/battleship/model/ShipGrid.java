@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.W12.choice.mantis0000400.battleship;
+package edu.ucsb.cs56.projects.games.battleship;
 
 import java.util.*;
 
@@ -11,6 +11,7 @@ public class ShipGrid {
     private Map<Integer, String> grid;
     // keep track of the ships and their locations with this handy map
     private Map<Integer, Ship> shipMap;
+	private ArrayList<Integer> shipLocations = new ArrayList<Integer>();
     
     private static final String[] orientations = {"U","D","L","R"};
 
@@ -35,6 +36,10 @@ public class ShipGrid {
 	
     }
     
+	public ArrayList getShipLocations(){
+		return this.shipLocations;
+	}
+	
     /**
        returns a string representation of the grid
     */
@@ -163,18 +168,22 @@ public class ShipGrid {
 	    if(orientationIndex == 0) {      //ship oriented up
 		grid.put    (spawnPoint - 10 * i   , toBePlaced.getShipType());
 		shipMap.put (spawnPoint - 10 * i   , toBePlaced);
+		this.shipLocations.add(spawnPoint - 10 * i);
 	    }
 	    else if(orientationIndex == 1) { //ship oriented down
 		grid.put    (spawnPoint + 10 * i   , toBePlaced.getShipType());
 		shipMap.put (spawnPoint + 10 * i   , toBePlaced);
+		shipLocations.add(spawnPoint + 10 * i);
 	    }
 	    else if(orientationIndex == 2) { //ship oriented left
 		grid.put    (spawnPoint - i        , toBePlaced.getShipType());
 		shipMap.put (spawnPoint - i        , toBePlaced);
+		shipLocations.add(spawnPoint - i );
 	    }
 	    else if(orientationIndex == 3) { //ship oriented right
 		grid.put    (spawnPoint + i        , toBePlaced.getShipType());
 		shipMap.put (spawnPoint + i        , toBePlaced);
+		shipLocations.add(spawnPoint + i);
 	    }
 	}
     }
