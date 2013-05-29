@@ -89,7 +89,7 @@ public class Player {
 		}
 	}
 	
-	public ArrayList<Integer> getBoatList(){
+	public ArrayList<Integer> getBoatsArrayList(){
 		return this.boats;
 	}
 }

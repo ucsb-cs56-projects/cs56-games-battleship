@@ -85,10 +85,19 @@ public class BattleshipGUI extends JFrame{
 	
     public static void main(String[] args){
 	
+	Player human = new Player();
+	human.randomGenerateBoats();
 	BattleshipGUI gui = new BattleshipGUI();
+	
 	gui.setOptions();
-	gui.setMessage("The game is waiting!");
 	gui.setVisible(true);
+	
+	ArrayList<Integer> boats = human.getBoatsArrayList();
+	for(Integer loc:boats){
+		int boatRow = loc/10 + 11;
+		int boatColumn = loc%10;
+		gui.addPlayerBoat(boatRow*10 + boatColumn);
+	}
 	
     }
 	
