@@ -1,17 +1,33 @@
 package edu.ucsb.cs56.S13.WeiGuo.battleship.model;
 
-
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.PixelGrabber;
 import javax.swing.*;
 import java.io.File;
 import java.io.*;
 import java.util.Vector;
 import java.lang.Integer;
 import java.text.NumberFormat;	
-
+import javax.imageio.ImageIO;
+import javax.swing.border.*;
 public class Player
 {
+    public static final int SPLASH = 0,
+							CARRIER = 1,
+							SEAWOLF = 2,
+							BATTLESHIP = 3,
+							SUBMARINE = 4,
+							PATROL = 5,
+
+							IDLE = 0,
+							SHIP_PLACEMENT = 1,
+							POINT_SELECTION = 2;
 	private int hits;
 	private int i,j;
 	private Integer n;
@@ -23,12 +39,12 @@ public class Player
 	private int shots;// shots taken
 	private boolean[][] hitormiss=new boolean[10][10];
 	private boolean chit=false;//checks if computer hit ship or not		
-	private JButton[][] bboard = new JButton [10][10];
+	private JButton[][] bboard = new JButton [10][10];//used by user
 						//gbutton=new JButton [10][10];
 	private int[][] mhs=new int[10][10];//used by computer to track miss(0)
 	//, hit(1), or sunk(2); default is (3)
 	private boolean move;
-	private JPanel gboard,myboard;
+	private JPanel gboard,myboard;//myboard is the 10*10 rectange for user
 	private Vector rows=new Vector();
 	private Vector cols=new Vector();	
 	private Timer timeleft;//
@@ -38,10 +54,24 @@ public class Player
 	private int lastship;//length of the last ship left
 	private NumberFormat nf = NumberFormat.getPercentInstance();
 	//private Board games
-		
+        static Image [][] ships = new Image[6][3];	//0 based indices not used
+        
+        
 	public Player(String name)
 	{			
-		user=name;
+		
+                ships[CARRIER][1] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/carrier.gif")).getImage();
+		ships[SEAWOLF][1] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/seawolf.gif")).getImage();
+		ships[BATTLESHIP][1] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/battleship.gif")).getImage();
+		ships[SUBMARINE][1] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/submarine.gif")).getImage();
+		ships[PATROL][1] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/patrol.gif")).getImage();
+		ships[CARRIER][2] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/carrierv.gif")).getImage();
+		ships[SEAWOLF][2] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/seawolfv.gif")).getImage();
+		ships[BATTLESHIP][2] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/battleshipv.gif")).getImage();
+		ships[SUBMARINE][2] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/submarinev.gif")).getImage();
+		ships[PATROL][2] = (new ImageIcon("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/patrolv.gif")).getImage();
+                
+                user=name;
 		shipsleft=5;
 		lastship=0;	
 				
@@ -71,9 +101,21 @@ public class Player
 				hitormiss[i][j]=false;
 				this.whatship[i][j]=" ";				
 			}
-		}			
+		}	
+                if (Battleship.soundOn()) Sound.start.play();
 	}
 	
+        
+        
+        public void paintShip(Ship uers)
+        {
+            //Graphic2D g = new 
+            Graphics2D g2 = (Graphics2D)this.getBboard(uers.getX(),uers.getY()).getGraphics();
+            
+            //g.
+            g2.drawImage(Player.ships[0][3], uers.getX(), uers.getY(),myboard);
+        
+        }
 	public void setUser(String m)
 	{
 		this.user=m;	
@@ -158,10 +200,273 @@ public class Player
 	{
 		return this.bboard[i][j];	
 	}	
-	
+        
+        public static boolean hasAlpha(Image image) {
+        // If buffered image, the color model is readily available
+        if (image instanceof BufferedImage) {
+            BufferedImage bimage = (BufferedImage)image;
+            return bimage.getColorModel().hasAlpha();
+        }
+    
+        // Use a pixel grabber to retrieve the image's color model;
+        // grabbing a single pixel is usually sufficient
+         PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
+        try {
+            pg.grabPixels();
+        } catch (InterruptedException e) {
+        }
+    
+        // Get the image's color model
+        ColorModel cm = pg.getColorModel();
+        return cm.hasAlpha();
+    }
+
+         public static BufferedImage toBufferedImage(Image image) {
+        if (image instanceof BufferedImage) {
+            return (BufferedImage)image;
+        }
+    
+        // This code ensures that all the pixels in the image are loaded
+        image = new ImageIcon(image).getImage();
+    
+        // Determine if the image has transparent pixels; for this method's
+        // implementation, see e661 Determining If an Image Has Transparent Pixels
+        boolean hasAlpha = hasAlpha(image);
+    
+        // Create a buffered image with a format that's compatible with the screen
+        BufferedImage bimage = null;
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        try {
+            // Determine the type of transparency of the new buffered image
+            int transparency = Transparency.OPAQUE;
+            if (hasAlpha) {
+                transparency = Transparency.BITMASK;
+            }
+    
+            // Create the buffered image
+            GraphicsDevice gs = ge.getDefaultScreenDevice();
+            GraphicsConfiguration gc = gs.getDefaultConfiguration();
+            bimage = gc.createCompatibleImage(
+                image.getWidth(null), image.getHeight(null), transparency);
+        } catch (HeadlessException e) {
+            // The system does not have a screen
+        }
+    
+        if (bimage == null) {
+            // Create a buffered image using the default color model
+            int type = BufferedImage.TYPE_INT_RGB;
+            if (hasAlpha) {
+                type = BufferedImage.TYPE_INT_ARGB;
+            }
+            bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
+        }
+    
+        // Copy image to buffered image
+        Graphics g = bimage.createGraphics();
+    
+        // Paint the image onto the buffered image
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+    
+        return bimage;
+    }
+         
+         
+         
+         
+                 /**
+     *
+     * @param bufferedimage
+     * @param degree
+     * @return
+     */
+    public static BufferedImage rotateImage(final BufferedImage bufferedimage, final int degree)
+        {
+        int w = bufferedimage.getWidth();
+        int h = bufferedimage.getHeight();
+        int type = bufferedimage.getColorModel().getTransparency();
+        BufferedImage img;
+        Graphics2D graphics2d;
+        (graphics2d = (img = new BufferedImage(w, h, type))
+                .createGraphics()).setRenderingHint(
+                RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics2d.rotate(Math.toRadians(degree), w / 2, h / 2);
+        graphics2d.drawImage(bufferedimage, 0, 0, null);
+        graphics2d.dispose();
+        return img;
+    }
+        public static Image cutImage(Image srcImageFile, int Columns,int rows,int resultOrders,int direction)
+                //(String descDir, int destWidth, int destHeight)   
+    {   
+        try  
+        {   
+            Image img;   
+            ImageFilter cropFilter; 
+            String dir = null;
+            // 读取源图像   
+            //BufferedImage bi = 
+            BufferedImage bi = Player.toBufferedImage(srcImageFile);//ImageIO.read(srcImageFile. new File(srcImageFile));   
+            int  srcHeight= bi.getHeight(); // 源图宽度   
+            int srcWidth = bi.getWidth(); // 源图高度
+            System.out.println("srcWidth:"+srcWidth);
+            System.out.println("srcHeight:"+srcHeight);
+            
+            int destWidth, destHeight;
+            
+                
+            
+            
+            if (Columns > 0 && rows > 0)   
+            {   
+                Image image = bi.getScaledInstance(srcWidth, srcHeight, Image.SCALE_DEFAULT);   
+//                destWidth = 300; // 切片宽度   
+//                destHeight = 300; // 切片高度   
+//                int cols = 0; // 切片横向数量   
+//                int rows = 0; // 切片纵向数量   
+                // 计算切片的横向和纵向数量   
+                if (srcWidth % Columns == 0)   
+                {   
+                    destWidth = srcWidth/Columns;  
+                }   
+                else  
+                {   
+                    destWidth = (int) Math.floor(srcWidth/Columns) + 1;   
+                }   
+                if (srcHeight % rows == 0)   
+                {   
+                    destHeight = srcHeight/rows;   
+                }   
+                else  
+                {   
+                    destHeight = (int) Math.floor(srcHeight/rows) + 1;   
+                }     
+                // 循环建立切片
+                int counts = 0;
+                for (int i = 0; i <  rows; i++)   
+                {   
+                    for (int j = 0; j <Columns; j++)   
+                    {   
+                        counts++;
+                        // 四个参数分别为图像起点坐标和宽高   
+                        // 即: CropImageFilter(int x,int y,int width,int height)   
+                        cropFilter = new CropImageFilter(j * destWidth, i *  destHeight, destWidth, destHeight);   
+                        img = Toolkit.getDefaultToolkit().createImage(   
+                                        new FilteredImageSource(image.getSource(), cropFilter));   
+                        if (counts == resultOrders)
+                            if (direction == 1)
+                                return img;
+                            else
+                                return (Player.rotateImage(Player.toBufferedImage(img), -90)).getScaledInstance(Player.toBufferedImage(img).getHeight(),Player.toBufferedImage(img).getWidth(),  Image.SCALE_DEFAULT);;
+                        
+                        
+                         
+//                        
+//                        
+//                        BufferedImage tag = new BufferedImage(destWidth, destHeight, BufferedImage.TYPE_INT_RGB);   
+//                        Graphics g = tag.getGraphics();   
+//                        g.drawImage(img, 0, 0, null); // 绘制缩小后的图   
+//                        g.dispose();   
+//                        // 输出为文件  
+//                        dir = descDir + "cut_image_" + i + "_" + j + ".jpg";
+//                        File f = new File(dir);
+//                        ImageIO.write(tag, "JPEG",f);
+//                        System.out.println(dir);
+//                        ImageUtils.pressText("水印",dir,"宋体",1,1,25,10,10);
+                    }   
+                }   
+                
+            }  
+            
+        }   
+        catch (Exception e)   
+        {   
+            e.printStackTrace();   
+        }   
+        return srcImageFile;
+    }
+        
+	public void setBckgrImageboard(String shipName,int diretion,int clipOrder,int i,int j, Color k)
+        //public void setBckgrImageboard(int i,int j, Color k)
+	{
+            int colums,rows;
+            colums = 1;
+            rows = 0;
+            Image image = Toolkit.getDefaultToolkit().getImage("graphics/carrier.gif");
+            if (diretion == 0)
+            {
+            
+            if (shipName == "Carrier")
+            {
+                rows = 5;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/carrierv.gif");
+            }
+             if (shipName == "Battleship")
+                {
+                rows = 5;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/battleshipv.gif");
+            }
+             if (shipName == "Submarine")
+              {
+                rows = 4;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/submarinev.gif");
+            }
+             if (shipName == "Destroyer")
+             {
+                rows = 4;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/seawolfv.gif");
+            }
+             if (shipName == "Patrol Boat")
+              {
+                rows = 2;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/patrolv.gif");
+            }
+            }
+            else
+            {if (shipName == "Carrier")
+            {
+                rows = 5;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/carrierv.gif");
+            }
+             if (shipName == "Battleship")
+                {
+                rows = 5;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/battleshipv.gif");
+            }
+             if (shipName == "Submarine")
+              {
+                rows = 4;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/submarinev.gif");
+            }
+             if (shipName == "Destroyer")
+             {
+                rows = 4;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/seawolfv.gif");
+            }
+             if (shipName == "Patrol Boat")
+              {
+                rows = 2;
+                image = Toolkit.getDefaultToolkit().getImage("graphics/patrolv.gif");
+            }
+            }
+             
+            
+                    
+		this.bboard[i][j].setBackground(k);
+                //Image image = Toolkit.getDefaultToolkit().getImage("graphics/carrier.gif");
+                //image.getGraphics()
+                this.bboard[i][j].setPreferredSize(new Dimension(this.bboard[i][j].getWidth(),this.bboard[i][j].getHeight()));
+                //this.bboard[i][j].setIcon(new ImageIcon(image.getScaledInstance(this.bboard[i][j].getWidth(), this.bboard[i][j].getHeight(), Image.SCALE_DEFAULT)));
+                this.bboard[i][j].setIcon(new ImageIcon(cutImage(image,colums,rows,clipOrder,diretion).getScaledInstance(this.bboard[i][j].getWidth(), this.bboard[i][j].getHeight(), Image.SCALE_DEFAULT)));
+                //public static Image cutImage(Image srcImageFile, int Columns,int rows,int resultOrders)
+//                if (this.hitormiss[i][j] == true)
+//                    this.bboard[i][j].setText("x");
+	}
+
 	public void setBboard(int i,int j, Color k)
 	{
 		this.bboard[i][j].setBackground(k);
+                
 //                if (this.hitormiss[i][j] == true)
 //                    this.bboard[i][j].setText("x");
 	}		
@@ -375,12 +680,14 @@ public class Player
 					JOptionPane.showMessageDialog(null,"You just lost your "+
 					this.boats[f].getName()+"!","Ship Destroyed",
 					JOptionPane.WARNING_MESSAGE);
+                                if (Battleship.soundOn()) Sound.playHit();
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(null,"You sank the "+
 				this.boats[f].getName()+"!","Good Job!",
 				JOptionPane.INFORMATION_MESSAGE);
+                                if (Battleship.soundOn()) Sound.sonar.play();
 				for (int k=0;k<10;k++)
 					for (int m=0;m<10;m++)
 						if(this.boats[f].getName().equals(this.getWhatShip(k
@@ -410,6 +717,7 @@ public class Player
 			JOptionPane.showMessageDialog(null,"You just lost your "+
 			this.boats[f].getName()+"!","Ship Destroyed",
 					JOptionPane.WARNING_MESSAGE);
+                        if (Battleship.soundOn()) Sound.lostShip.play();
 			for (int k=0;k<10;k++)
 				for (int m=0;m<10;m++)
 					if(z.equals(this.getWhatShip(k,m)))
@@ -757,6 +1065,7 @@ public class Player
 			{	
 				this.setMHS(x,y,0);
 				this.setChit(false);
+                                if (Battleship.soundOn()) Sound.splash.play();
 			}
 		}					
 	}		
@@ -815,6 +1124,8 @@ public class Player
 				{
 					JOptionPane.showMessageDialog(null,"YOU WON!",
 					"It's A Celebration!",JOptionPane.INFORMATION_MESSAGE);
+                                        if (Battleship.soundOn()) Sound.victorious.play();
+                                        
 //					if (this.getUser().equals("Stupid"))
 //						JOptionPane.showMessageDialog(null,"Maybe you're no"
 //						+"t that stupid after all!","",JOptionPane.INFORMATION_MESSAGE);
@@ -824,6 +1135,7 @@ public class Player
 					JOptionPane.showMessageDialog(null,
 					this.getUser()+" won!!!","It's A Celebration"
 					+"!",JOptionPane.INFORMATION_MESSAGE);
+                                        if (Battleship.soundOn()) Sound.victorious.play();
 //					if (this.getUser().equals("Stupid"))
 //						JOptionPane.showMessageDialog(null,"Maybe you're no"
 //						+"t that stupid after all!","",JOptionPane.INFORMATION_MESSAGE);									
@@ -947,6 +1259,7 @@ public class Player
 			{
 				JOptionPane.showMessageDialog(null,"You Lost!","Sorry!",
 				JOptionPane.INFORMATION_MESSAGE);
+                                if (Battleship.soundOn()) Sound.loser.play();
 //				if (Battleship.getPlayers(Battleship.getEnemy()).getUser().equals("Stupid"))
 //					JOptionPane.showMessageDialog(null,"Stupid!","Sorry!",
 //					JOptionPane.INFORMATION_MESSAGE);
@@ -967,7 +1280,38 @@ public class Player
 			}
 			else
 				JOptionPane.showMessageDialog(null,this.getUser()+
-				" won!!!","It's A Celebration!",JOptionPane.INFORMATION_MESSAGE);			
+				" won!!!","It's A Celebration!",JOptionPane.INFORMATION_MESSAGE);
+                                if (Battleship.soundOn()) Sound.victorious.play();
+                        
 		}					
-	}	
+	}
+//        public void paintComponent(Graphics g)
+//	{
+//		//super.paintComponent(g);
+//		Graphics2D g2 = (Graphics2D)g;
+//
+//		int current;
+//		for (int y=0; y<10; y++) for (int x=0; x<10; x++)
+//		{
+//			if (area[x][y]!=0)
+//			{
+//				current = area[x][y];
+//				if (current%10!=0)
+//					g2.drawImage(PlayingField.ships[(current/10)%10][current%10], 	25*x, 25*y, this);
+//				current /= 10;
+//				if ((current/10)%10==1)
+//				{
+//					if (current%10!=0) g2.drawImage(PlayingField.fire, 25*x, 25*y, this);
+//					else g2.drawImage(PlayingField.splash, 25*x, 25*y, this);
+//				}
+//			}
+//		}
+//		if (mainHandle.selectedShipSize!=0 && validPlacement())
+//		{
+//			if (vertical) g2.fill3DRect(25*(int)cursorLocation.getX(),
+//				25*(int)cursorLocation.getY(), 25, 25*mainHandle.selectedShipSize, false);
+//			else g2.fill3DRect(25*(int)cursorLocation.getX(),
+//				25*(int)cursorLocation.getY(), 25*mainHandle.selectedShipSize, 25, false);
+//		}
+//	}
 }
