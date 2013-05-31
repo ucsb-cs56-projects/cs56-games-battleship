@@ -1,13 +1,12 @@
 package edu.ucsb.cs56.S13.WeiGuo.battleship.view;
-;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.io.*;
-import java.lang.Integer;
-import java.util.Vector;
+//import java.lang.Integer;
+//import java.util.Vector;
 import java.net.*;
 
 public class Battleship extends JFrame
@@ -66,10 +65,11 @@ public class Battleship extends JFrame
 						  gametype;
 	private static BattleshipClient me;
 	private static boolean gameover=false;
+        private static JCheckBoxMenuItem sound;
 	
 	public Battleship()
 	{	
-		setTitle("WELCOME TO BATTLESHIP!");		
+		setTitle("WELCOME TO BATTLESHIP!!!!");		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(createMenuBar());
 		setResizable(false);			
@@ -105,7 +105,9 @@ public class Battleship extends JFrame
 		setVisible(true);
 		
 	}	
-	
+	public static boolean soundOn()
+        {	return sound.isSelected();	}
+        
 	public static boolean getGameOver()
 	{
 	 	return gameover;	  
@@ -341,6 +343,13 @@ public class Battleship extends JFrame
 		m = new JMenuItem("Exit");
 		m.addActionListener(new ExitListener());
 		menu.add(m);	
+                
+                
+                sound = new JCheckBoxMenuItem("Sound");
+		sound.addActionListener(new SoundListener());
+		sound.setSelected(true);
+		menu.add(sound);
+                
 		return menuBar;
 	}
 	
@@ -365,7 +374,7 @@ public class Battleship extends JFrame
 		cdir.setBorder(title);		
 		deploy.setEnabled(false);
 		deploy.addActionListener(new DeployListener());
-		input.add(deploy);
+		input.add(deploy);//deploy is the key of Begin
 		return input;
 	}	
 	
@@ -476,7 +485,6 @@ public class Battleship extends JFrame
 	//Listener for combo boxes used to layout ships 
 	private class ShipsListener implements ActionListener
 	{	
-                @Override
 		public void actionPerformed(ActionEvent v)
 		{				
 			sindex=cshi.getSelectedIndex();
@@ -501,6 +509,7 @@ public class Battleship extends JFrame
 				,length,players[you].getBoats(sindex).getX(),players[you].getBoats(sindex).getY());		
 				players[you].getBoats(sindex).clearship();
 				players[you].setBoats(sindex,boat);
+                                players[you].paintShip(boat);
 				players[you].getBoats(sindex).placeship();			
 			}							
 		}
@@ -509,7 +518,6 @@ public class Battleship extends JFrame
 	//Listener for the Direction combo box		
 	private class DirectListener implements ActionListener
 	{	
-                @Override
 		public void actionPerformed(ActionEvent v)
 		{						
 			dindex = cdir.getSelectedIndex();					
@@ -527,7 +535,6 @@ public class Battleship extends JFrame
 	//Listener for the buttons on the board		
 	private class BoardListener implements ActionListener
 	{	
-                @Override
 		public void actionPerformed(ActionEvent v)
 		{				
 			if (ready==0)
@@ -570,7 +577,7 @@ public class Battleship extends JFrame
 									}
 							break;							
 						}	
-						players[you].setBoats(sindex,new Ship(ships[sindex],dindex,length,i,j));																									
+						players[you].setBoats(sindex,new Ship(ships[sindex],dindex,length,i,j));//display ship's image here																									
 						break outer;						
 					}					
 				}
@@ -592,7 +599,6 @@ public class Battleship extends JFrame
 	//Listener for exit choice on Game menu	
 	private class ExitListener implements ActionListener
 	{
-                @Override
 		public void actionPerformed(ActionEvent e)
 		{
 			int r= JOptionPane.showConfirmDialog(null,"Are you sure you would l"
@@ -602,10 +608,34 @@ public class Battleship extends JFrame
 		}	
 	}
 
+        //Listener for sound setup on Game menu	
+	private class SoundListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+		if (!sound.isSelected())	
+                {
+                    int r= JOptionPane.showConfirmDialog(null,"Are you sure you would l"
+			+"ike to shut sound down?", "Shut sound down?", JOptionPane.YES_NO_OPTION);
+			if (r==0)
+				sound.setSelected(false); //System.exit(0);
+                        
+		}
+                else
+                {
+                int r= JOptionPane.showConfirmDialog(null,"Are you sure you would l"
+			+"ike to open sound down?", "open sound ?", JOptionPane.YES_NO_OPTION);
+			if (r==0)
+				sound.setSelected(true); //System.exit(0);
+                       
+                }
+                }
+	}
+        
+        
 	//listener for New Game submenu		
 	private class GameListener implements ActionListener
 	{	
-                @Override
 		public void actionPerformed(ActionEvent e)
 		{	
 			int q= JOptionPane.showConfirmDialog(null,"Are you sure you would l"
@@ -1046,7 +1076,6 @@ public class Battleship extends JFrame
 	//Listener for Deploy Button 
 	private class DeployListener implements ActionListener
 	{	
-                @Override
 		public void actionPerformed(ActionEvent v)
 		{	
 			int r= JOptionPane.showConfirmDialog(null,"Are you sure about current deployment?", "Begin to Battle?", 
@@ -1058,15 +1087,18 @@ public class Battleship extends JFrame
 				s=0;
 				t=0;
 				e=0;									
-				d.remove(input);						
-				b.add(players[you].getMyBoard(),BorderLayout.WEST);
+				d.remove(input);	
+                                
+                                //players[you].
+				b.add(players[you].getMyBoard(),BorderLayout.WEST);//important 在此处添加
+                                
 				ready=1;	
 				c.add(autoBoard(enemy,you),BorderLayout.EAST);													
 				d.add(new JPanel(),BorderLayout.CENTER);
 				if (!selectedValue.equals("Online"))
 					whoGoesFirst();						
 				pack();
-				repaint();										
+				repaint();				//就在此处刷新 important						
 			}
 		}	
 	}
@@ -1074,7 +1106,6 @@ public class Battleship extends JFrame
 	//Listener for Options menu
 	public class OptionsListener implements ActionListener
 	{	
-                @Override
 		public void actionPerformed(ActionEvent e)
 		{		
 			if (opts==null)
@@ -1116,7 +1147,6 @@ public class Battleship extends JFrame
 		//Listener for the Colors combo box		
 		private class SColorListener implements ActionListener
 		{	
-                        @Override
 			public void actionPerformed(ActionEvent v)
 			{	
 				for (i=0;i<10;i++)
@@ -1126,7 +1156,7 @@ public class Battleship extends JFrame
 							players[you].setBboard(i,j,color[shipColor.getSelectedIndex()]);				
 						if (players[enemy].getBboard(i,j).getBackground()
 							==color[prevcolor])
-							players[enemy].setBboard(i,j,color[shipColor.getSelectedIndex()]);		
+                                                            players[enemy].setBboard(i,j,color[shipColor.getSelectedIndex()]);		
 					}
 				prevcolor=shipColor.getSelectedIndex();	
 			}
@@ -1135,7 +1165,6 @@ public class Battleship extends JFrame
 		//Listener for ok button in statistics menu
 		private class DoneListener implements ActionListener
 		{	
-                        @Override
 			public void actionPerformed(ActionEvent e)
 			{	
 				if ((shipLayout.getSelectedIndex()!=prevLayout)||
