@@ -392,68 +392,68 @@ public class Player
             int colums,rows;
             colums = 1;
             rows = 0;
-            Image image = Toolkit.getDefaultToolkit().getImage("graphics/carrier.gif");
+            Image image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/carrier.gif");
             if (diretion == 0)
             {
             
             if (shipName == "Carrier")
             {
                 rows = 5;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/carrierv.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/carrierv.gif");
             }
              if (shipName == "Battleship")
                 {
                 rows = 5;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/battleshipv.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/battleshipv.gif");
             }
              if (shipName == "Submarine")
               {
                 rows = 4;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/submarinev.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/submarinev.gif");
             }
              if (shipName == "Destroyer")
              {
                 rows = 4;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/seawolfv.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/seawolfv.gif");
             }
              if (shipName == "Patrol Boat")
               {
                 rows = 2;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/patrolv.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/patrolv.gif");
             }
             }
             else
             {if (shipName == "Carrier")
             {
                 rows = 5;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/carrierv.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/carrierv.gif");
             }
              if (shipName == "Battleship")
                 {
                 rows = 5;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/battleshipv.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/battleshipv.gif");
             }
              if (shipName == "Submarine")
               {
                 rows = 4;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/submarinev.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/submarinev.gif");
             }
              if (shipName == "Destroyer")
              {
                 rows = 4;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/seawolfv.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/seawolfv.gif");
             }
              if (shipName == "Patrol Boat")
               {
                 rows = 2;
-                image = Toolkit.getDefaultToolkit().getImage("graphics/patrolv.gif");
+                image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/patrolv.gif");
             }
             }
              
             
                     
 		this.bboard[i][j].setBackground(k);
-                //Image image = Toolkit.getDefaultToolkit().getImage("graphics/carrier.gif");
+                //Image image = Toolkit.getDefaultToolkit().getImage("edu/ucsb/cs56/S13/WeiGuo/battleship/view/graphics/carrier.gif");
                 //image.getGraphics()
                 this.bboard[i][j].setPreferredSize(new Dimension(this.bboard[i][j].getWidth(),this.bboard[i][j].getHeight()));
                 //this.bboard[i][j].setIcon(new ImageIcon(image.getScaledInstance(this.bboard[i][j].getWidth(), this.bboard[i][j].getHeight(), Image.SCALE_DEFAULT)));
