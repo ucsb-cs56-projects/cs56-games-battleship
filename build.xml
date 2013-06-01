@@ -28,6 +28,11 @@
     <java jar="battleship.jar" fork ="true"/>
   </target>
 
+   <!-- runTest -->
+ <target name="runTest" depends="compile" description="Run a test file of my choosing."> 
+    <java classpath="build" classname="edu.ucsb.cs56.projects.games.battleship.BattleshipGUI" fork ="true"/>
+  </target>
+  
   <!-- clean -->
   <target name="clean">
     <delete dir="build" quiet="true" />

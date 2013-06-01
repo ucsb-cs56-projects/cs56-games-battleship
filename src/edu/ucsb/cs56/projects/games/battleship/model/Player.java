@@ -23,47 +23,49 @@ public class Player {
 	
 	public void randomGenerateBoats(){
 		int[] shipSizes = {2,3,3,4,5};
-		for( int shipSize: shipSizes){
-			int spawn = (int) (99.99*Math.random());
-			int orientation = (int) (3.99*Math.random());
-			while( !isValidSpawn( spawn, orientation, shipSize))
-				spawn = (int) (99.99*Math.random());
+		for(int shipSize: shipSizes){
+			int spawn = (int) (100*Math.random());
+			int orientation = (int) (4*Math.random());
+			while(!isValidSpawnAndOrientation( spawn, orientation, shipSize)){
+				spawn = (int) (100*Math.random());
+				orientation = (int) (4*Math.random());
+			}
 			addShip( spawn, orientation, shipSize);
 		}
 		
 	}
 	
 	public boolean isValidLocal(int i){
-		if( i >= 0 && i <= 99 ) return true;
+		if( i >= 0 && i < 100 ) return true;
 		else return false;
 	}
 	
-	public boolean isValidSpawn(int spawn, int orientation, int shipSize){
+	public boolean isValidSpawnAndOrientation(int spawn, int orientation, int shipSize){
 		if( orientation == 0){ //up
 			for( int i=0; i<shipSize; i++){
-				if( !isValidLocal(spawn - 10*i) || boats.contains(spawn - 10*i)) return false;
-				else return true;
+				int loc = spawn - 10*i;
+				if( !isValidLocal(loc) || boats.contains(loc)) return false;
 			}
 		}
-		if( orientation == 1){ //right
+		else if( orientation == 1){ //right
 			for( int i=0; i<shipSize; i++){
-				if( !isValidLocal(spawn + i) || boats.contains(spawn + i)) return false;
-				else return true;
+				int loc = spawn + i;
+				if( !isValidLocal(loc) || boats.contains(loc) || loc >= (10 * (spawn/10) + 1)) return false;
 			}
 		}
-		if( orientation == 2){ //down
+		else if( orientation == 2){ //down
 			for( int i=0; i<shipSize; i++){
-				if( !isValidLocal(spawn - 10*i) || boats.contains(spawn - 10*i)) return false;
-				else return true;
+				int loc = spawn + 10*i;
+				if( !isValidLocal(loc) || boats.contains(loc)) return false;
 			}
 		}
-		if( orientation == 3){ //left
+		else if( orientation == 3){ //left
 			for( int i=0; i<shipSize; i++){
-				if( !isValidLocal(spawn - i) || boats.contains(spawn - i)) return false;
-				else return true;
+				int loc = spawn - i;
+				if( !isValidLocal(loc) ||  boats.contains(loc) || loc <= (10 * (spawn/10) - 1)) return false;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public void addShip(int spawn, int orientation, int shipSize){
@@ -79,7 +81,7 @@ public class Player {
 		}
 		if( orientation == 2){ //down
 			for( int i=0; i<shipSize; i++){
-				boats.add(spawn - 10*i);
+				boats.add(spawn + 10*i);
 			}
 		}
 		if( orientation == 3){ //left
