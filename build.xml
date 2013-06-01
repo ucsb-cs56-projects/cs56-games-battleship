@@ -8,7 +8,7 @@
   <property name="projectName" value="battleship" />
   <property name="javadocDest" value="~/public_html/cs56/13S/kreimer/cs56-games-battleship" /> 
   <property name="javadocUrl" value="${webBaseUrl}/${projectName}/javadoc" />
-  <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleShipMainGUI" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipGUI" />
 
   <!-- beginning of targets -->
 
@@ -32,7 +32,7 @@
  <target name="runTest" depends="compile" description="Run a test file of my choosing."> 
     <java classpath="build" classname="edu.ucsb.cs56.projects.games.battleship.BattleshipGUI" fork ="true"/>
   </target>
-  
+
   <!-- clean -->
   <target name="clean">
     <delete dir="build" quiet="true" />
@@ -63,7 +63,7 @@
   <!-- test -->
   <target name="test" depends="compile">
     <junit haltonerror="no" haltonfailure="no">
-      <classpath>
+     <classpath>
 	<pathelement location="lib/junit-4.8.2.jar" />
 	<pathelement location="build" />
       </classpath>
