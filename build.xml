@@ -30,7 +30,7 @@
 
    <!-- runTest -->
  <target name="runTest" depends="compile" description="Run a test file of my choosing."> 
-    <java classpath="build" classname="edu.ucsb.cs56.projects.games.battleship.BattleshipGUI" fork ="true"/>
+    <java classpath="build" classname="edu.ucsb.cs56.projects.games.battleship.BattleShipMainGUI" fork ="true"/>
   </target>
 
   <!-- clean -->

@@ -93,13 +93,35 @@ public class BattleshipGUI extends JFrame{
 	gui.setVisible(true);
 	
 	ArrayList<Integer> boats = human.getBoatsArrayList();
-	for(Integer loc:boats){
-		int boatRow = loc/10 + 11;
-		int boatColumn = loc%10;
-		gui.addPlayerBoat(boatRow*10 + boatColumn);
+	gui.addPlayerBoats(boats);
+	
+	Computer computer = new Computer("HARD");
+	ArrayList<Integer> boatList = computer.getBoatsArrayList();
+	gui.addEnemyBoats(boatList);
+	
+	for(int i = 0; i<20; i++){
+		int move = computer.makeMove();
+		gui.addShot(move);
+		computer.updateGuessGrid( move, gui.hitEnemy(move));
 	}
 	
     }
+	
+	public String hitEnemy(int shot){
+		if( enemyBoats.contains(shot)) return "HIT";
+		else return "MISS";
+	}
+	
+	public String hitPlayer(int shot){
+		if( playerBoats.contains(shot)) return "HIT";
+		else return "MISS";
+	}
+	
+	public int shiftToPlayerGrid(int loc){
+		int boatRow = loc/10 + 11;
+		int boatColumn = loc%10;
+		return boatRow*10 + boatColumn;
+	}
 	
     public void setOptions(){
 	this.setVisible(false);
@@ -155,12 +177,13 @@ public class BattleshipGUI extends JFrame{
 		this.repaint();
 	}
 	
-	public void addPlayerBoat(int boatLocation){
-		this.playerBoats.add(boatLocation);
+	public void addPlayerBoats(ArrayList<Integer> boatList){
+		for( Integer loc: boatList)
+			this.playerBoats.add(shiftToPlayerGrid(loc));
 	}
 	
-	public void addEnemyBoat(int boatLocation){
-		this.enemyBoats.add(boatLocation);
+	public void addEnemyBoats(ArrayList<Integer> boatList){
+		this.enemyBoats = boatList;
 	}
 	
 	public int getLastMove(){

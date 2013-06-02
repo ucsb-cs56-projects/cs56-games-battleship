@@ -35,6 +35,17 @@ public class Player {
 		
 	}
 	
+	public void addShot(int shot){
+		this.shots.add(shot);
+	}
+	
+	public boolean hasLost(){
+		for( Integer boatLoc: this.boats){
+			if( ! shots.contains(boatLoc)) return false;
+		}
+		return true;
+	}
+	
 	public boolean isValidLocal(int i){
 		if( i >= 0 && i < 100 ) return true;
 		else return false;
