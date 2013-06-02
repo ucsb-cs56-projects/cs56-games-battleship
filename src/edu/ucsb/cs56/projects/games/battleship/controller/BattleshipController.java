@@ -99,22 +99,6 @@ public class BattleshipController {
 		//Begin game
 		while(true){
 			try{
-				//Check if you've lost
-				if(player1.hasLost()){
-					toPlayer2.println("LOSE");
-					gui.setMessage("OH NO, YOU LOSE!");
-					break;
-				}
-				else
-					toPlayer2.println("CONTINUE");
-				
-				//Check if you've won
-				String p2VictoryStatus = fromPlayer2.readLine();
-				if(p2VictoryStatus.equals("LOSE")){
-					gui.setMessage("CONGRATULATIONS, YOU WIN!");
-					break;
-				}
-				
 				gui.makeMove();
 				gui.setMessage("Your turn!");
 				
@@ -129,12 +113,27 @@ public class BattleshipController {
 				int p1Move = gui.getLastMove();
 				toPlayer2.println(p1Move); //Send move to player 2
 				
+				//Check if you've won
+				String p2VictoryStatus = fromPlayer2.readLine();
+				if(p2VictoryStatus.equals("LOSE")){
+					gui.setMessage("CONGRATULATIONS, YOU WIN!");
+					break;
+				}
 				
 				//Get player 2's move
 				gui.setMessage("Waiting for player 2's move.");
 				int p2Move = Integer.parseInt(fromPlayer2.readLine());
 				gui.addShot(gui.shiftToPlayerGrid(p2Move));
 				player1.addShot(p2Move);
+				
+				//Check if you've lost
+				if(player1.hasLost()){
+					toPlayer2.println("LOSE");
+					gui.setMessage("OH NO, YOU LOSE!");
+					break;
+				}
+				else
+					toPlayer2.println("CONTINUE");
 			}
 			catch(IOException e){
 				System.out.println("Something went wrong while reading from or writing to player 2");
@@ -216,6 +215,12 @@ public class BattleshipController {
 		
 		while(true){
 			try{
+				//Wait for player 1's move
+				gui.setMessage("Waiting for player 1's move.");
+				int p1Move = Integer.parseInt(fromPlayer1.readLine());
+				gui.addShot(gui.shiftToPlayerGrid(p1Move));
+				player2.addShot(p1Move);
+				
 				//Check to see if you've lost
 				if(player2.hasLost()){
 					toPlayer1.println("LOSE");
@@ -224,19 +229,6 @@ public class BattleshipController {
 				}
 				else
 					toPlayer1.println("CONTINUE");
-				
-				//Check to see if you've won
-				String p1VictoryStatus = fromPlayer1.readLine();
-				if(p1VictoryStatus.equals("LOSE")){
-					gui.setMessage("CONGRATULATIONS, YOU WIN!");
-					break;
-				}
-				
-				//Wait for player 1's move
-				gui.setMessage("Waiting for player 1's move.");
-				int p1Move = Integer.parseInt(fromPlayer1.readLine());
-				gui.addShot(gui.shiftToPlayerGrid(p1Move));
-				player2.addShot(p1Move);
 				
 				gui.makeMove();
 				gui.setMessage("Your turn!");
@@ -250,6 +242,14 @@ public class BattleshipController {
 				}
 				int p2Move = gui.getLastMove();
 				toPlayer1.println(p2Move);
+				
+				//Check to see if you've won
+				String p1VictoryStatus = fromPlayer1.readLine();
+				if(p1VictoryStatus.equals("LOSE")){
+					gui.setMessage("CONGRATULATIONS, YOU WIN!");
+					break;
+				}
+				
 			}
 			catch(IOException e){
 				System.out.println("Something went wrong while reading from or writing to player 1");
