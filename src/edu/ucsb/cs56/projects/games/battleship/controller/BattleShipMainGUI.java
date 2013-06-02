@@ -131,6 +131,13 @@ public class BattleshipMainGUI {
 		player2.randomGenerateBoats();
 		gui.addPlayerBoats(player2.getBoatsArrayList());
 		
+		while( !gui.getIPEntered()){
+			try{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e){
+			}
+		}
 		String connectTo = gui.getIP();
 		Socket player1Socket = null;
 		try{

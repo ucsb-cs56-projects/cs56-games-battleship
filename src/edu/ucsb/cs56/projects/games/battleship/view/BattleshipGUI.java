@@ -19,6 +19,7 @@ public class BattleshipGUI extends JFrame{
     private String difficulty = null;
     private int gameType = 0;
 	private boolean playersTurn = false;
+	private boolean ipEntered = false;
 	private int lastMove;
 	
 	//GUI's knowledge bank. Used for GameGrid cell coloring
@@ -245,6 +246,15 @@ public class BattleshipGUI extends JFrame{
 	public String getIP(){
 		return this.ipField.getText();
 	}
+	
+	/**
+	 * Find out whether or not an IP address has been entered
+	 * @return state of IP address entry
+	 **/
+	
+	public boolean getIPEntered(){
+		return this.ipEntered;
+	}
 	 
 	/**
 	 * Lets gui know its players turn
@@ -420,6 +430,7 @@ public class BattleshipGUI extends JFrame{
 	
 	public class ipEnter implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			ipEntered = true;
 			BattleshipGUI.this.ipPopUp.setVisible(false);
 			BattleshipGUI.this.setVisible(true);
 		}
