@@ -4,6 +4,15 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
+/**
+ * A gui class for playing battleship.
+
+ *@author Keenan Reimer
+ *@version CS56 Spring 2013
+ *@see BattleshipMainGUI
+
+ **/
+
 public class BattleshipGUI extends JFrame{
 
 	//GUI recorded information
@@ -12,7 +21,7 @@ public class BattleshipGUI extends JFrame{
 	private boolean playersTurn = false;
 	private int lastMove;
 	
-	//GUI's knowledge bank. Used for grid cell coloring
+	//GUI's knowledge bank. Used for GameGrid cell coloring
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> enemyBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> shots = new ArrayList<Integer>();
@@ -34,9 +43,11 @@ public class BattleshipGUI extends JFrame{
     private JButton hardButton = new JButton("Hard");
 	
 	//Game board component
-    private Grid board = new Grid();
+    private GameGrid board = new GameGrid();
 
-	
+	/**
+	 * Default constructor for the class. Sets everything up.
+	 **/
     BattleshipGUI(){
 	
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,8 +64,8 @@ public class BattleshipGUI extends JFrame{
 	this.getContentPane().add(BorderLayout.SOUTH, messages);
 		
 	//setup difficulty options popup
-	GridLayout threeButtonGrid = new GridLayout(1,3);
-	this.diffPopUp.setLayout(threeButtonGrid);
+	GridLayout threeButtonGameGrid = new GridLayout(1,3);
+	this.diffPopUp.setLayout(threeButtonGameGrid);
 	this.diffPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.diffPopUp.setSize(600,100);
 		
@@ -68,7 +79,7 @@ public class BattleshipGUI extends JFrame{
 	this.diffPopUp.add(hardButton);
 		
 	//Setup gametype popup
-	this.typePopUp.setLayout(threeButtonGrid);
+	this.typePopUp.setLayout(threeButtonGameGrid);
 	this.typePopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.typePopUp.setSize(600,100);
 		
@@ -83,6 +94,10 @@ public class BattleshipGUI extends JFrame{
 		
     }
 	
+	/**
+	 * Main class used only for testing purposes.
+	 *@param args not used
+	 **/
     public static void main(String[] args){
 	
 	Player human = new Player();
@@ -107,15 +122,32 @@ public class BattleshipGUI extends JFrame{
 	
     }
 	
+	/**
+	 * Returns whether a shot from the player against the enemy is a "HIT" or a "MISS".
+	 * @param shot The player's shot.
+	 * @return "HIT" or "MISS"
+	 **/
 	public String hitEnemy(int shot){
 		if( enemyBoats.contains(shot)) return "HIT";
 		else return "MISS";
 	}
 	
+	/**
+	 * Returns whether a shot from the enemy against the player is a "HIT" or a "MISS".
+	 * @param shot The enemy's shot.
+	 * @return "HIT" or "MISS"
+	 **/
+	
 	public String hitPlayer(int shot){
 		if( playerBoats.contains(shot)) return "HIT";
 		else return "MISS";
 	}
+	
+	/**
+	 * Shifts some location to player's GameGrid by moving it down 11 rows.
+	 * @param loc The location to be shifted.
+	 * @return shifted integer location value
+	 **/
 	
 	public int shiftToPlayerGrid(int loc){
 		int boatRow = loc/10 + 11;
@@ -123,74 +155,158 @@ public class BattleshipGUI extends JFrame{
 		return boatRow*10 + boatColumn;
 	}
 	
+	/**
+	 * Method to initiate option prompts to the user.
+	 **/
+	
     public void setOptions(){
 	this.setVisible(false);
 	this.typePopUp.setVisible(true);
     }
 
+	/**
+	 * Changes the message at the bottom of the gui.
+	 *@param message The new message to set.
+	 **/
     public void setMessage(String message){
 	this.messages.setText(message);
     }
+
+	/**
+	 * Setter for playersTurn variable. Used by controller to let user make a move.
+	 * @param tf The boolean value to set to playersTurn.
+	 **/
 	
 	public void setPlayersTurn(boolean tf){
 		this.playersTurn = tf;
 	}
 	
+	/**
+	 * Getter for gameType instance variable
+	 * @return value stored in gameType
+	 */
+	
 	public int getGameType(){
 		return this.gameType;
 	}
+	
+	/**
+	 * Getter for gameDifficulty instance variable
+	 * @return value stored in gameDifficulty
+	 */
 	
 	public String getDifficulty(){
 		return this.difficulty;
 	}
 	
+	/**
+	 * Getter for playersTurn instance variable
+	 * @return value stored in playersTurn
+	 */
+	
 	public boolean getPlayersTurn(){
 		return this.playersTurn;
 	}
+	
+	/**
+	 * Returns the message being displayed at the bottom of the GUI.
+	 * @return message String
+	 */
 	
 	public String getMessage(){
 		return this.messages.getText();
 	}
 	
+	/**
+	 * Reveals the difficulty options frame.
+	 */
+	
     public void showDiffPopUp(){
 	this.diffPopUp.setVisible(true);
     }
+	
+	/**
+	 * Reveals the type options frame.
+	 */
 	
     public void showTypePopUp(){
 	this.typePopUp.setVisible(true);
     }
 	
+	/**
+	 * Hides the difficulty options frame.
+	 */
+	
     public void hideDiffPopUp(){
 	this.diffPopUp.setVisible(false);
     }
+	
+	/**
+	 * Hides the gametype options frame.
+	 */
 	
     public void hideTypePopUp(){
 	this.typePopUp.setVisible(false);
     }
 	
+	/**
+	 * Lets gui know its players turn
+	 */
+	
 	public void makeMove(){
 		this.playersTurn = true;
 	}
+	
+	/**
+	 * Add a shot to the gui's shots list
+	 * @param shot The shot to be added
+	 */
 	
 	public void addShot(int shot){
 		this.shots.add(shot);
 		this.repaint();
 	}
 	
+	/**
+	 * Adds locations for player's boats to the playerBoats list. Shifts their integer locations.
+	 * @param boatList A list of boat locations.
+	 */
+	
 	public void addPlayerBoats(ArrayList<Integer> boatList){
 		for( Integer loc: boatList)
 			this.playerBoats.add(shiftToPlayerGrid(loc));
 	}
 	
+	/**
+	 * Adds locations for enemy's boats to the enemyBoats list.
+	 * @param boatList A list of boat locations.
+	 */
+	
 	public void addEnemyBoats(ArrayList<Integer> boatList){
 		this.enemyBoats = boatList;
 	}
+	
+	/**
+	 * Adds a single boat location to enemyBoats
+	 **/
+	
+	public void addEnemyBoat(int boatLoc){
+		this.enemyBoats.add(boatLoc);
+	}
+	
+	/**
+	 * Returns the player's most recent move.
+	 **/
 	
 	public int getLastMove(){
 		return this.lastMove;
 	}
 	
-    public class Grid extends JPanel{
+	/**
+	 * Inner class that paints the literal GameGrid for the game.
+	 **/
+	
+    public class GameGrid extends JComponent{
 	public int width;
 	public int height;
 	public int cellWidth;
@@ -230,7 +346,7 @@ public class BattleshipGUI extends JFrame{
 		}
 	    }
 			
-	    //Paint grid lines
+	    //Paint GameGrid lines
 	    g2d.setColor(Color.GRAY);
 	    g2d.drawLine(startX,0,startX,cellWidth*21); //Far left border
 	    g2d.drawLine(startX + 10*cellWidth,0,startX + 10*cellWidth,cellWidth*21); //Far right border
@@ -244,6 +360,10 @@ public class BattleshipGUI extends JFrame{
 		
 	
     }
+	
+	/**
+	 * Listener for difficulty option buttons
+	 **/
 	
     public class difficultyClick implements ActionListener{
 	public void actionPerformed(ActionEvent e){
@@ -268,6 +388,10 @@ public class BattleshipGUI extends JFrame{
 	}
     }
 	
+	/**
+	 * Lisener for the type options buttons
+	 **/
+	 
     public class typeClick implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 	    if( e.getSource() == BattleshipGUI.this.hostButton){
@@ -293,6 +417,9 @@ public class BattleshipGUI extends JFrame{
 	
     }
 	
+	/**
+	 * Mouse listener for clicking on game cells
+	 **/
     public class cellClick implements MouseListener{
 	public void mouseClicked(MouseEvent e){}
 		
