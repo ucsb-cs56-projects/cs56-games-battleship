@@ -384,19 +384,16 @@ public class BattleshipGUI extends JFrame{
     public class difficultyClick implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 	    if( e.getSource() == BattleshipGUI.this.easyButton){
-		System.out.println("Easy Button Clicked");
 		difficulty = "EASY";
 		BattleshipGUI.this.diffPopUp.setVisible(false);
 		BattleshipGUI.this.setVisible(true);
 	    }
 	    else if( e.getSource() == BattleshipGUI.this.mediumButton){
-		System.out.println("Medium Button Clicked");
 		difficulty = "MEDIUM";
 		BattleshipGUI.this.diffPopUp.setVisible(false);
 		BattleshipGUI.this.setVisible(true);
 	    }
 	    else if ( e.getSource() == BattleshipGUI.this.hardButton){
-		System.out.println("Hard Button Clicked");
 		difficulty = "HARD";
 		BattleshipGUI.this.diffPopUp.setVisible(false);
 		BattleshipGUI.this.setVisible(true);
@@ -411,21 +408,18 @@ public class BattleshipGUI extends JFrame{
     public class typeClick implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if( e.getSource() == BattleshipGUI.this.hostButton){
-			System.out.println("Host Button Clicked");
 			gameType = 1;
 			difficulty = "INTERNET";
 			BattleshipGUI.this.typePopUp.setVisible(false);
 			BattleshipGUI.this.setVisible(true);
 			}
 			else if( e.getSource() == BattleshipGUI.this.joinButton){
-			System.out.println("Join Button Clicked");
 			gameType = 2;
 			difficulty = "INTERNET";
 			BattleshipGUI.this.typePopUp.setVisible(false);
 			BattleshipGUI.this.ipPopUp.setVisible(true);
 			}
 			else if ( e.getSource() == BattleshipGUI.this.computerButton){
-			System.out.println("Computer Button Clicked");
 			gameType = 3;
 			BattleshipGUI.this.typePopUp.setVisible(false);
 			BattleshipGUI.this.diffPopUp.setVisible(true);
