@@ -174,7 +174,6 @@ public class BattleshipController {
 		catch(IOException e){
 			gui.setMessage("IOException when connecting to host.");
 			System.out.println("IOException when connecting to host.");
-			System.exit(-1);
 		}
 		
 		gui.setMessage("Connected to " + player1Socket.getLocalAddress());
