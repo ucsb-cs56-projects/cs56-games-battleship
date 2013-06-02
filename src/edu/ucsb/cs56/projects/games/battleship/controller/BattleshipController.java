@@ -27,6 +27,7 @@ public class BattleshipController {
 	
 	//Hosting a game
 	if(gui.getGameType() == 1){
+		gui.setTitle("Battleship : Player 1");
 	
 		Player player1 = new Player();
 		player1.randomGenerateBoats();
@@ -145,6 +146,8 @@ public class BattleshipController {
 	
 	//Joining a game
 	if(gui.getGameType() == 2){
+		gui.setTitle("Battleship : Player 2");
+	
 		Player player2 = new Player();
 		player2.randomGenerateBoats();
 		gui.addPlayerBoats(player2.getBoatsArrayList());

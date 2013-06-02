@@ -186,6 +186,15 @@ public class BattleshipGUI extends JFrame{
     }
 
 	/**
+	 * Changes the title at the top of the gui.
+	 *@param title The new title to set.
+	 **/
+	
+	public void setTitle(String title){
+		this.title.setText(title);
+	}
+	
+	/**
 	 * Changes the message at the bottom of the gui.
 	 *@param message The new message to set.
 	 **/
