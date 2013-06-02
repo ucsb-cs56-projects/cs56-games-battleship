@@ -3,7 +3,7 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.util.*;
 
 /**
-   The comptuer class, holds a gameboard and generates guesses
+   The comptuer class, extends player and uses a guess generator
 */
 
 public class Computer extends Player {
@@ -16,10 +16,8 @@ public class Computer extends Player {
     */
     public Computer(String difficulty) {
 	super();
-	if(!(difficulty.equals("EASY") || difficulty.equals("MEDIUM") || difficulty.equals("HARD"))) {
-	    System.err.println("Invalid computer difficulty");
-	    System.exit(1);
-	}
+	super.randomGenerateBoats();
+
 	gg = new GuessGenerator(difficulty);
     }
 
@@ -27,15 +25,14 @@ public class Computer extends Player {
        Requests a move from the computer
        @return an int from 0-99, coming from the GuessGenerator
     */
-    public int requestMove() {
+    public int makeMove() {
 	return gg.nextMove();
     }
     
-    /**
-       overriding updateGuessGrid so that we can have a 'smart' computer
-    */
+	/**
+	 * Sends information to the guess generator so we can have a 'smart' computer
+	 */
     public void updateGuessGrid(int location, String status) {
-	super.updateGuessGrid(location, status);
 	gg.processResult(location, status);
     }
 }

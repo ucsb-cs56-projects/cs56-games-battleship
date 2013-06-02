@@ -4,15 +4,25 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
+/**
+ * A gui class for playing battleship.
+
+ *@author Keenan Reimer
+ *@version CS56 Spring 2013
+ *@see BattleshipMainGUI
+
+ **/
+
 public class BattleshipGUI extends JFrame{
 
 	//GUI recorded information
     private String difficulty = null;
     private int gameType = 0;
 	private boolean playersTurn = false;
+	private boolean ipEntered = false;
 	private int lastMove;
 	
-	//GUI's knowledge bank. Used for grid cell coloring
+	//GUI's knowledge bank. Used for GameGrid cell coloring
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> enemyBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> shots = new ArrayList<Integer>();
@@ -21,7 +31,7 @@ public class BattleshipGUI extends JFrame{
     private JLabel title = new JLabel("Battleship",JLabel.CENTER);
     private JLabel messages = new JLabel("Messages go here:", JLabel.CENTER);
 	
-	//Game type frame popup
+	//Gametype frame popup
     private JFrame typePopUp = new JFrame();
     private JButton hostButton = new JButton("Host a Game");
     private JButton joinButton = new JButton("Join a Game");
@@ -33,10 +43,18 @@ public class BattleshipGUI extends JFrame{
     private JButton mediumButton = new JButton("Medium");
     private JButton hardButton = new JButton("Hard");
 	
-	//Game board component
-    private Grid board = new Grid();
-
+	//Join IP frame popup
+	private JFrame ipPopUp = new JFrame();
+	private JLabel ipRequest = new JLabel("Please input the IP address you wish to join.", JLabel.CENTER);
+	private JTextField ipField = new JTextField();
+	private JLabel ipMessage = new JLabel("Hit enter to submit.", JLabel.CENTER);
 	
+	//Game board component
+    private GameGrid board = new GameGrid();
+
+	/**
+	 * Default constructor for the class. Sets everything up.
+	 **/
     BattleshipGUI(){
 	
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,85 +98,231 @@ public class BattleshipGUI extends JFrame{
 	this.typePopUp.add(hostButton);
 	this.typePopUp.add(joinButton);
 	this.typePopUp.add(computerButton);
+	
+	//Setup IP popup
+	GridLayout threeWidgetVerticleGrid = new GridLayout(3,1);
+	this.ipPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.ipPopUp.setLayout(threeWidgetVerticleGrid);
+	this.ipPopUp.setSize(600,100);
+	this.ipField.setHorizontalAlignment(JTextField.CENTER);
+	this.ipField.addActionListener(this.new ipEnter());
+	
+	
+	//Add IP widgets
+	this.ipPopUp.getContentPane().add(BorderLayout.NORTH,ipRequest);
+	this.ipPopUp.getContentPane().add(BorderLayout.CENTER,ipField);
+	this.ipPopUp.getContentPane().add(BorderLayout.SOUTH,ipMessage);
 		
     }
 	
+	/**
+	 * Main class used only for testing purposes.
+	 *@param args not used
+	 **/
     public static void main(String[] args){
 	
+	Player human = new Player();
+	human.randomGenerateBoats();
 	BattleshipGUI gui = new BattleshipGUI();
+	
 	gui.setOptions();
-	gui.setMessage("The game is waiting!");
 	gui.setVisible(true);
 	
+	ArrayList<Integer> boats = human.getBoatsArrayList();
+	gui.addPlayerBoats(boats);
+	
+	Computer computer = new Computer("HARD");
+	ArrayList<Integer> boatList = computer.getBoatsArrayList();
+	gui.addEnemyBoats(boatList);
+	
+	for(int i = 0; i<20; i++){
+		int move = computer.makeMove();
+		gui.addShot(move);
+		computer.updateGuessGrid( move, gui.hitEnemy(move));
+	}
+	
     }
+	
+	/**
+	 * Returns whether a shot from the player against the enemy is a "HIT" or a "MISS".
+	 * @param shot The player's shot.
+	 * @return "HIT" or "MISS"
+	 **/
+	public String hitEnemy(int shot){
+		if( enemyBoats.contains(shot)) return "HIT";
+		else return "MISS";
+	}
+	
+	/**
+	 * Returns whether a shot from the enemy against the player is a "HIT" or a "MISS".
+	 * @param shot The enemy's shot.
+	 * @return "HIT" or "MISS"
+	 **/
+	
+	public String hitPlayer(int shot){
+		if( playerBoats.contains(shot)) return "HIT";
+		else return "MISS";
+	}
+	
+	/**
+	 * Shifts some location to player's GameGrid by moving it down 11 rows.
+	 * @param loc The location to be shifted.
+	 * @return shifted integer location value
+	 **/
+	
+	public int shiftToPlayerGrid(int loc){
+		int boatRow = loc/10 + 11;
+		int boatColumn = loc%10;
+		return boatRow*10 + boatColumn;
+	}
+	
+	/**
+	 * Method to initiate option prompts to the user.
+	 **/
 	
     public void setOptions(){
 	this.setVisible(false);
 	this.typePopUp.setVisible(true);
     }
 
+	/**
+	 * Changes the title at the top of the gui.
+	 *@param title The new title to set.
+	 **/
+	
+	public void setTitle(String title){
+		this.title.setText(title);
+	}
+	
+	/**
+	 * Changes the message at the bottom of the gui.
+	 *@param message The new message to set.
+	 **/
     public void setMessage(String message){
 	this.messages.setText(message);
     }
+
+	/**
+	 * Setter for playersTurn variable. Used by controller to let user make a move.
+	 * @param tf The boolean value to set to playersTurn.
+	 **/
 	
 	public void setPlayersTurn(boolean tf){
 		this.playersTurn = tf;
 	}
 	
+	/**
+	 * Getter for gameType instance variable
+	 * @return value stored in gameType
+	 */
+	
 	public int getGameType(){
 		return this.gameType;
 	}
+	
+	/**
+	 * Getter for gameDifficulty instance variable
+	 * @return value stored in gameDifficulty
+	 */
 	
 	public String getDifficulty(){
 		return this.difficulty;
 	}
 	
+	/**
+	 * Getter for playersTurn instance variable
+	 * @return value stored in playersTurn
+	 */
+	
 	public boolean getPlayersTurn(){
 		return this.playersTurn;
 	}
+	
+	/**
+	 * Returns the message being displayed at the bottom of the GUI.
+	 * @return message String
+	 */
 	
 	public String getMessage(){
 		return this.messages.getText();
 	}
 	
-    public void showDiffPopUp(){
-	this.diffPopUp.setVisible(true);
-    }
+	/**
+	 * Returns the IP address that should be stored in ipField
+	 * @return the IP address stored in ipField
+	 **/
+	 
+	public String getIP(){
+		return this.ipField.getText();
+	}
 	
-    public void showTypePopUp(){
-	this.typePopUp.setVisible(true);
-    }
+	/**
+	 * Find out whether or not an IP address has been entered
+	 * @return state of IP address entry
+	 **/
 	
-    public void hideDiffPopUp(){
-	this.diffPopUp.setVisible(false);
-    }
-	
-    public void hideTypePopUp(){
-	this.typePopUp.setVisible(false);
-    }
+	public boolean getIPEntered(){
+		return this.ipEntered;
+	}
+	 
+	/**
+	 * Lets gui know its players turn
+	 */
 	
 	public void makeMove(){
 		this.playersTurn = true;
 	}
+	
+	/**
+	 * Add a shot to the gui's shots list
+	 * @param shot The shot to be added
+	 */
 	
 	public void addShot(int shot){
 		this.shots.add(shot);
 		this.repaint();
 	}
 	
-	public void addPlayerBoat(int boatLocation){
-		this.playerBoats.add(boatLocation);
+	/**
+	 * Adds locations for player's boats to the playerBoats list. Shifts their integer locations.
+	 * @param boatList A list of boat locations.
+	 */
+	
+	public void addPlayerBoats(ArrayList<Integer> boatList){
+		for( Integer loc: boatList)
+			this.playerBoats.add(shiftToPlayerGrid(loc));
 	}
 	
-	public void addEnemyBoat(int boatLocation){
-		this.enemyBoats.add(boatLocation);
+	/**
+	 * Adds locations for enemy's boats to the enemyBoats list.
+	 * @param boatList A list of boat locations.
+	 */
+	
+	public void addEnemyBoats(ArrayList<Integer> boatList){
+		this.enemyBoats = boatList;
 	}
+	
+	/**
+	 * Adds a single boat location to enemyBoats
+	 **/
+	
+	public void addEnemyBoat(int boatLoc){
+		this.enemyBoats.add(boatLoc);
+	}
+	
+	/**
+	 * Returns the player's most recent move.
+	 **/
 	
 	public int getLastMove(){
 		return this.lastMove;
 	}
 	
-    public class Grid extends JPanel{
+	/**
+	 * Inner class that paints the literal GameGrid for the game.
+	 **/
+	
+    public class GameGrid extends JComponent{
 	public int width;
 	public int height;
 	public int cellWidth;
@@ -198,7 +362,7 @@ public class BattleshipGUI extends JFrame{
 		}
 	    }
 			
-	    //Paint grid lines
+	    //Paint GameGrid lines
 	    g2d.setColor(Color.GRAY);
 	    g2d.drawLine(startX,0,startX,cellWidth*21); //Far left border
 	    g2d.drawLine(startX + 10*cellWidth,0,startX + 10*cellWidth,cellWidth*21); //Far right border
@@ -213,72 +377,91 @@ public class BattleshipGUI extends JFrame{
 	
     }
 	
+	/**
+	 * Listener for difficulty option buttons
+	 **/
+	
     public class difficultyClick implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 	    if( e.getSource() == BattleshipGUI.this.easyButton){
-		System.out.println("Easy Button Clicked");
 		difficulty = "EASY";
-		BattleshipGUI.this.hideDiffPopUp();
+		BattleshipGUI.this.diffPopUp.setVisible(false);
 		BattleshipGUI.this.setVisible(true);
 	    }
 	    else if( e.getSource() == BattleshipGUI.this.mediumButton){
-		System.out.println("Medium Button Clicked");
 		difficulty = "MEDIUM";
-		BattleshipGUI.this.hideDiffPopUp();
+		BattleshipGUI.this.diffPopUp.setVisible(false);
 		BattleshipGUI.this.setVisible(true);
 	    }
 	    else if ( e.getSource() == BattleshipGUI.this.hardButton){
-		System.out.println("Hard Button Clicked");
 		difficulty = "HARD";
-		BattleshipGUI.this.hideDiffPopUp();
+		BattleshipGUI.this.diffPopUp.setVisible(false);
 		BattleshipGUI.this.setVisible(true);
 	    }
 	}
     }
 	
+	/**
+	 * Lisener for the type options buttons
+	 **/
+	 
     public class typeClick implements ActionListener{
-	public void actionPerformed(ActionEvent e){
-	    if( e.getSource() == BattleshipGUI.this.hostButton){
-			
-		System.out.println("Host Button Clicked");
-		gameType = 1;
-		BattleshipGUI.this.hideTypePopUp();
-		BattleshipGUI.this.showDiffPopUp();
-	    }
-	    else if( e.getSource() == BattleshipGUI.this.joinButton){
-		System.out.println("Join Button Clicked");
-		gameType = 2;
-		BattleshipGUI.this.hideTypePopUp();
-		BattleshipGUI.this.showDiffPopUp();
-	    }
-	    else if ( e.getSource() == BattleshipGUI.this.computerButton){
-		System.out.println("Computer Button Clicked");
-		gameType = 3;
-		BattleshipGUI.this.hideTypePopUp();
-		BattleshipGUI.this.showDiffPopUp();
-	    }
-	}
-	
-    }
-	
-    public class cellClick implements MouseListener{
-	public void mouseClicked(MouseEvent e){}
-		
-	public void mousePressed(MouseEvent e){
-	    //Calculate which column & row the mouse was clicked in
-	    int cellColumn = (int) Math.floor((e.getX() - board.startX)/board.cellWidth);
-	    int cellRow = (int) Math.floor(e.getY()/board.cellWidth);
-	    //Add to shot list if it was in enemy territory
-	    if(cellRow < 10 && cellRow >=0 && cellColumn >=0 && cellColumn < 10 && playersTurn && (!shots.contains(cellRow*10 + cellColumn))){
-			lastMove = cellRow*10 + cellColumn;
-			shots.add(lastMove);
-			playersTurn = false;
+		public void actionPerformed(ActionEvent e){
+			if( e.getSource() == BattleshipGUI.this.hostButton){
+			gameType = 1;
+			difficulty = "INTERNET";
+			BattleshipGUI.this.typePopUp.setVisible(false);
+			BattleshipGUI.this.setVisible(true);
+			}
+			else if( e.getSource() == BattleshipGUI.this.joinButton){
+			gameType = 2;
+			difficulty = "INTERNET";
+			BattleshipGUI.this.typePopUp.setVisible(false);
+			BattleshipGUI.this.ipPopUp.setVisible(true);
+			}
+			else if ( e.getSource() == BattleshipGUI.this.computerButton){
+			gameType = 3;
+			BattleshipGUI.this.typePopUp.setVisible(false);
+			BattleshipGUI.this.diffPopUp.setVisible(true);
+			}
 		}
-	    repaint();
 	}
-	public void mouseReleased(MouseEvent e){}
-	public void mouseEntered(MouseEvent e){}
-	public void mouseExited(MouseEvent e){}
+	
+	/**
+	 * Listener class for entering IP addresses
+	 **/
+	
+	public class ipEnter implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			ipEntered = true;
+			BattleshipGUI.this.ipPopUp.setVisible(false);
+			BattleshipGUI.this.setVisible(true);
+		}
+	}
+	
+	/**
+	 * Mouse listener for clicking on game cells
+	 **/
+    public class cellClick implements MouseListener{
+		public void mouseClicked(MouseEvent e){}
+			
+		public void mousePressed(MouseEvent e){
+			//Calculate which column & row the mouse was clicked in
+			int cellColumn = (int) Math.floor((e.getX() - board.startX)/board.cellWidth);
+			int cellRow = (int) Math.floor(e.getY()/board.cellWidth);
+			//Add to shot list if it was in enemy territory
+			if(cellRow < 10 && cellRow >=0 && cellColumn >=0 && cellColumn < 10 && playersTurn && (!shots.contains(cellRow*10 + cellColumn))){
+				lastMove = cellRow*10 + cellColumn;
+				shots.add(lastMove);
+				playersTurn = false;
+			}
+			repaint();
+		}
+		public void mouseReleased(MouseEvent e){}
+		public void mouseEntered(MouseEvent e){}
+		public void mouseExited(MouseEvent e){}
     }
+	
+
 
 }
