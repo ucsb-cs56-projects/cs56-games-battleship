@@ -14,7 +14,7 @@ public class BattleshipMainGUI {
 	
 		BattleshipGUI gui = new BattleshipGUI();
 		gui.setOptions();
-		while(gui.getDifficulty() == null || gui.getGameType() == 0){
+		while(gui.getDifficulty() == null || gui.getGameType() == 0 || gui.getIP() == null){
 			try{
 				Thread.sleep(10);
 			}
@@ -131,7 +131,7 @@ public class BattleshipMainGUI {
 		player2.randomGenerateBoats();
 		gui.addPlayerBoats(player2.getBoatsArrayList());
 		
-		String connectTo = "169.231.10.242";
+		String connectTo = gui.getIP();
 		Socket player1Socket = null;
 		try{
 			player1Socket = new Socket(connectTo,22222);
