@@ -8,7 +8,7 @@
   <property name="projectName" value="battleship" />
   <property name="javadocDest" value="~/public_html/cs56/13S/kreimer/cs56-games-battleship" /> 
   <property name="javadocUrl" value="${webBaseUrl}/${projectName}/javadoc" />
-  <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipGUI" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipGUIController" />
 
   <!-- beginning of targets -->
 

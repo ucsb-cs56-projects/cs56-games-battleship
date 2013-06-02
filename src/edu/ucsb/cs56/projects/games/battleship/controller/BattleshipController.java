@@ -8,7 +8,7 @@ import java.util.ArrayList;
    Main class for Battleship Game
 */
 
-public class BattleshipMainGUI {
+public class BattleshipController {
     
     public static void main(String[] args) {
 	
@@ -40,11 +40,12 @@ public class BattleshipMainGUI {
 			System.out.println("Could not listen on port: 22222");
 		}
 		try{
-			gui.setMessage("Listening for player to connect on " + InetAddress.getLocalHost().getHostAddress() + ":" + serverSocket.getLocalPort());
+			gui.setMessage("Listening for player to connect on " + InetAddress.getLocalHost().getHostAddress() + " : " + serverSocket.getLocalPort());
 		}
 		catch(UnknownHostException e){
 			gui.setMessage("Unknown Host");
 			System.out.println("Uknown host exception: " + e);
+			System.exit(-1);
 		}
 		Socket player2Socket = null;
 		try{
@@ -52,6 +53,8 @@ public class BattleshipMainGUI {
 		}
 		catch(IOException e){
 			gui.setMessage("Accept failed on port 22222");
+			System.out.println("Accept failed on port 22222");
+			System.exit(-1);
 		}
 		
 		gui.setMessage("Connection recieved from " + player2Socket.getLocalAddress());
@@ -65,6 +68,8 @@ public class BattleshipMainGUI {
 		}
 		catch(IOException e){
 			gui.setMessage("Error setting up input/output streams from Player 2");
+			System.out.println("Error setting up input/output streams from Player 2");
+			System.exit(-1);
 		}
 		
 		//Send boat locations to player 2
@@ -77,6 +82,7 @@ public class BattleshipMainGUI {
 		}
 		catch(Exception e){
 			gui.setMessage("Error sending player1's boats");
+			System.out.println("Error sending player1's boats");
 		}
 		
 		//Get player 1's boat locations
@@ -89,6 +95,7 @@ public class BattleshipMainGUI {
 		}
 		catch(Exception e){
 			gui.setMessage("Error getting boats from player2");
+			System.out.println("Error getting boats from player2");
 		}	
 		
 		//Begin game
@@ -132,7 +139,9 @@ public class BattleshipMainGUI {
 				player1.addShot(p2Move);
 			}
 			catch(IOException e){
-				System.out.println("Something went wrong reading from player 2!");
+				System.out.println("Something went wrong while reading from or writing to player 2");
+				gui.setMessage("Something went wrong while reading from or writing to player 2");
+				System.exit(-1);
 			}
 		}
 	}
@@ -159,9 +168,13 @@ public class BattleshipMainGUI {
 		}
 		catch(UnknownHostException e){
 			gui.setMessage("Can't find host: " + connectTo);
+			System.out.println("Can't find host:" + connectTo);
+			System.exit(-1);
 		}
 		catch(IOException e){
-			gui.setMessage("IOException when connection to host.");
+			gui.setMessage("IOException when connecting to host.");
+			System.out.println("IOException when connecting to host.");
+			System.exit(-1);
 		}
 		
 		gui.setMessage("Connected to " + player1Socket.getLocalAddress());
@@ -175,6 +188,8 @@ public class BattleshipMainGUI {
 		}
 		catch(IOException e){
 			gui.setMessage("Error getting input/output streams from Player 1");
+			System.out.println("Error getting input/output streams from Player 1");
+			System.exit(-1);
 		}
 		
 		//Send boat locations to player 1
@@ -187,6 +202,7 @@ public class BattleshipMainGUI {
 		}
 		catch(Exception e){
 			gui.setMessage("Error sending player2's boats");
+			System.out.println("Error sending player2's boats");
 		}
 		 //Get boat locations from player 1
 		try{
@@ -197,7 +213,8 @@ public class BattleshipMainGUI {
 			}
 		}
 		catch(Exception e){
-			gui.setMessage("Error getting boats from player1");
+			gui.setMessage("Error getting boats from player 1");
+			System.out.println("Error getting boats from player1 ");
 		}	
 		
 		while(true){
@@ -238,7 +255,9 @@ public class BattleshipMainGUI {
 				toPlayer1.println(p2Move);
 			}
 			catch(IOException e){
-				System.out.println("Something went wrong with reading from player1");
+				System.out.println("Something went wrong while reading from or writing to player 1");
+				gui.setMessage("Something went wrong while reading from or writing to player 1");
+				System.exit(-1);
 			}
 		}
 	}
