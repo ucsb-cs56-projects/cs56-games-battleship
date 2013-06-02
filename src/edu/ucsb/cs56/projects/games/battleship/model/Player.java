@@ -21,6 +21,9 @@ public class Player {
 		shots = new ArrayList<Integer>();
     }
 	
+	/**
+	 * Randomly generate a set of boats for this player
+	 **/
 	public void randomGenerateBoats(){
 		int[] shipSizes = {2,3,3,4,5};
 		for(int shipSize: shipSizes){
@@ -35,10 +38,18 @@ public class Player {
 		
 	}
 	
+	/**
+	 * Add an incoming shot to the player's knowledge
+	 * @param shot an incomming shot
+	 **/
 	public void addShot(int shot){
 		this.shots.add(shot);
 	}
 	
+	/**
+	 * Compare all shots taken to boat locations to see if this player has lost
+	 **/
+	 
 	public boolean hasLost(){
 		for( Integer boatLoc: this.boats){
 			if( ! shots.contains(boatLoc)) return false;
@@ -46,10 +57,24 @@ public class Player {
 		return true;
 	}
 	
-	public boolean isValidLocal(int i){
-		if( i >= 0 && i < 100 ) return true;
+	/**
+	 * Check to see if a location exists on the game board
+	 * @param loc The location in question
+	 * @ return true if it is false if it is not
+	 **/
+	 
+	public boolean isValidLocal(int loc){
+		if( loc >= 0 && loc < 100 ) return true;
 		else return false;
 	}
+	
+	/**
+	 * Check to make sure a boat will fit on the board and not collide with any other boats.
+	 * @param spawn The location that boat's head is at
+	 * @param orientation The direction the boat extends in
+	 * @param shipSize The size of this boat
+	 * @return true if it it's valid false if it is not
+	 **/
 	
 	public boolean isValidSpawnAndOrientation(int spawn, int orientation, int shipSize){
 		if( orientation == 0){ //up
@@ -79,6 +104,13 @@ public class Player {
 		return true;
 	}
 	
+	/**
+	 * Add a ship to boats list
+	 * @param spawn The location that boat's head is at
+	 * @param orientation The direction the boat extends in
+	 * @param shipSize The size of this boat
+	 **/
+	 
 	public void addShip(int spawn, int orientation, int shipSize){
 		if( orientation == 0){ //up
 			for( int i=0; i<shipSize; i++){
@@ -101,6 +133,11 @@ public class Player {
 			}
 		}
 	}
+	
+	/**
+	 * Share the knowledge of this player's boat locations with the GUI
+	 * @return A list of boat locations
+	 **/
 	
 	public ArrayList<Integer> getBoatsArrayList(){
 		return this.boats;
