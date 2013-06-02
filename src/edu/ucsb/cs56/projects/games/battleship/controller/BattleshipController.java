@@ -45,7 +45,6 @@ public class BattleshipController {
 		catch(UnknownHostException e){
 			gui.setMessage("Unknown Host");
 			System.out.println("Uknown host exception: " + e);
-			System.exit(-1);
 		}
 		Socket player2Socket = null;
 		try{
@@ -54,7 +53,6 @@ public class BattleshipController {
 		catch(IOException e){
 			gui.setMessage("Accept failed on port 22222");
 			System.out.println("Accept failed on port 22222");
-			System.exit(-1);
 		}
 		
 		gui.setMessage("Connection recieved from " + player2Socket.getLocalAddress());
@@ -69,7 +67,6 @@ public class BattleshipController {
 		catch(IOException e){
 			gui.setMessage("Error setting up input/output streams from Player 2");
 			System.out.println("Error setting up input/output streams from Player 2");
-			System.exit(-1);
 		}
 		
 		//Send boat locations to player 2
@@ -160,7 +157,7 @@ public class BattleshipController {
 			catch (InterruptedException e){
 			}
 		}
-		String connectTo = "169.231.10.242";//gui.getIP();
+		String connectTo = gui.getIP();
 
 		Socket player1Socket = null;
 		try{
@@ -169,7 +166,6 @@ public class BattleshipController {
 		catch(UnknownHostException e){
 			gui.setMessage("Can't find host: " + connectTo);
 			System.out.println("Can't find host:" + connectTo);
-			System.exit(-1);
 		}
 		catch(IOException e){
 			gui.setMessage("IOException when connecting to host.");
@@ -188,7 +184,6 @@ public class BattleshipController {
 		catch(IOException e){
 			gui.setMessage("Error getting input/output streams from Player 1");
 			System.out.println("Error getting input/output streams from Player 1");
-			System.exit(-1);
 		}
 		
 		//Send boat locations to player 1
