@@ -14,7 +14,9 @@ public class BattleshipMainGUI {
 	
 		BattleshipGUI gui = new BattleshipGUI();
 		gui.setOptions();
-		while(gui.getDifficulty() == null || gui.getGameType() == 0 || gui.getIP() == null){
+		
+		//Makes program wait until options have been set.
+		while(gui.getDifficulty() == null || gui.getGameType() == 0){
 			try{
 				Thread.sleep(10);
 			}
@@ -23,7 +25,9 @@ public class BattleshipMainGUI {
 		
 		}
 	
+	//Hosting a game
 	if(gui.getGameType() == 1){
+	
 		Player player1 = new Player();
 		player1.randomGenerateBoats();
 		gui.addPlayerBoats(player1.getBoatsArrayList());
@@ -63,6 +67,7 @@ public class BattleshipMainGUI {
 			gui.setMessage("Error setting up input/output streams from Player 2");
 		}
 		
+		//Send boat locations to player 2
 		try{
 			ArrayList<Integer> player1Boats = player1.getBoatsArrayList();
 			for( Integer boatLoc: player1Boats){
@@ -74,6 +79,7 @@ public class BattleshipMainGUI {
 			gui.setMessage("Error sending player1's boats");
 		}
 		
+		//Get player 1's boat locations
 		try{
 			String boatLoc = fromPlayer2.readLine();
 			while( ! boatLoc.equals("DONE")){
@@ -85,20 +91,10 @@ public class BattleshipMainGUI {
 			gui.setMessage("Error getting boats from player2");
 		}	
 		
+		//Begin game
 		while(true){
 			try{
-				gui.makeMove();
-				gui.setMessage("Your turn!");
-				while(gui.getPlayersTurn()){
-					try{
-						Thread.sleep(10);
-					}
-					catch (InterruptedException e){
-					}
-				}
-				int p1Move = gui.getLastMove();
-				toPlayer2.println(p1Move);
-				
+				//Check if you've lost
 				if(player1.hasLost()){
 					toPlayer2.println("LOSE");
 					gui.setMessage("OH NO, YOU LOSE!");
@@ -107,18 +103,33 @@ public class BattleshipMainGUI {
 				else
 					toPlayer2.println("CONTINUE");
 				
-				gui.setMessage("Waiting for player 2's move.");
-				int p2Move = Integer.parseInt(fromPlayer2.readLine());
-				gui.addShot(gui.shiftToPlayerGrid(p2Move));
-				player1.addShot(p2Move);
-				
+				//Check if you've won
 				String p2VictoryStatus = fromPlayer2.readLine();
-				
 				if(p2VictoryStatus.equals("LOSE")){
 					gui.setMessage("CONGRATULATIONS, YOU WIN!");
 					break;
 				}
 				
+				gui.makeMove();
+				gui.setMessage("Your turn!");
+				
+				//Wait until player 1 has completed their turn
+				while(gui.getPlayersTurn()){
+					try{
+						Thread.sleep(10);
+					}
+					catch (InterruptedException e){
+					}
+				}
+				int p1Move = gui.getLastMove();
+				toPlayer2.println(p1Move); //Send move to player 2
+				
+				
+				//Get player 2's move
+				gui.setMessage("Waiting for player 2's move.");
+				int p2Move = Integer.parseInt(fromPlayer2.readLine());
+				gui.addShot(gui.shiftToPlayerGrid(p2Move));
+				player1.addShot(p2Move);
 			}
 			catch(IOException e){
 				System.out.println("Something went wrong reading from player 2!");
@@ -126,11 +137,13 @@ public class BattleshipMainGUI {
 		}
 	}
 	
+	//Joining a game
 	if(gui.getGameType() == 2){
 		Player player2 = new Player();
 		player2.randomGenerateBoats();
 		gui.addPlayerBoats(player2.getBoatsArrayList());
 		
+		//Wait until an IP address has been entered
 		while( !gui.getIPEntered()){
 			try{
 				Thread.sleep(10);
@@ -138,7 +151,8 @@ public class BattleshipMainGUI {
 			catch (InterruptedException e){
 			}
 		}
-		String connectTo = gui.getIP();
+		String connectTo = "169.231.10.242";//gui.getIP();
+
 		Socket player1Socket = null;
 		try{
 			player1Socket = new Socket(connectTo,22222);
@@ -163,6 +177,7 @@ public class BattleshipMainGUI {
 			gui.setMessage("Error getting input/output streams from Player 1");
 		}
 		
+		//Send boat locations to player 1
 		try{
 			ArrayList<Integer> player2Boats = player2.getBoatsArrayList();
 			for( Integer boatLoc: player2Boats){
@@ -173,7 +188,7 @@ public class BattleshipMainGUI {
 		catch(Exception e){
 			gui.setMessage("Error sending player2's boats");
 		}
-		
+		 //Get boat locations from player 1
 		try{
 			String boatLoc = fromPlayer1.readLine();
 			while( ! boatLoc.equals("DONE")){
@@ -187,20 +202,31 @@ public class BattleshipMainGUI {
 		
 		while(true){
 			try{
-				gui.setMessage("Waiting for player 1's move.");
-				int p1Move = Integer.parseInt(fromPlayer1.readLine());
-				gui.addShot(gui.shiftToPlayerGrid(p1Move));
-				player2.addShot(p1Move);
+				//Check to see if you've lost
+				if(player2.hasLost()){
+					toPlayer1.println("LOSE");
+					gui.setMessage("OH NO, YOU LOSE!");
+					break;
+				}
+				else
+					toPlayer1.println("CONTINUE");
 				
+				//Check to see if you've won
 				String p1VictoryStatus = fromPlayer1.readLine();
-				
 				if(p1VictoryStatus.equals("LOSE")){
 					gui.setMessage("CONGRATULATIONS, YOU WIN!");
 					break;
 				}
 				
+				//Wait for player 1's move
+				gui.setMessage("Waiting for player 1's move.");
+				int p1Move = Integer.parseInt(fromPlayer1.readLine());
+				gui.addShot(gui.shiftToPlayerGrid(p1Move));
+				player2.addShot(p1Move);
+				
 				gui.makeMove();
 				gui.setMessage("Your turn!");
+				//Halt the program until you've completed your move
 				while(gui.getPlayersTurn()){
 					try{
 						Thread.sleep(10);
@@ -210,14 +236,6 @@ public class BattleshipMainGUI {
 				}
 				int p2Move = gui.getLastMove();
 				toPlayer1.println(p2Move);
-				
-				if(player2.hasLost()){
-					toPlayer1.println("LOSE");
-					gui.setMessage("OH NO, YOU LOSE!");
-					break;
-				}
-				else
-					toPlayer1.println("CONTINUE");	
 			}
 			catch(IOException e){
 				System.out.println("Something went wrong with reading from player1");
