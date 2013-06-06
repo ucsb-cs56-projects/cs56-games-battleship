@@ -12,7 +12,6 @@ public class BattleshipController {
     
     public static void main(String[] args) {
 		BattleshipGUI gui = new BattleshipGUI();
-		while(true){
 		gui.reset();
 		gui.setOptions();
 		
@@ -31,7 +30,6 @@ public class BattleshipController {
 		gui.setTitle("Battleship : Player 1");
 	
 		Player player1 = new Player();
-		gui.addPlayerBoats(player1.getBoatsArrayList());
 		
 		ServerSocket serverSocket = null;
 		try{
@@ -56,8 +54,6 @@ public class BattleshipController {
 			System.out.println("Accept failed on port 22222");
 		}
 		
-		gui.setMessage("Connection recieved from " + player2Socket.getLocalAddress());
-		
 		PrintWriter toPlayer2 = null;
 		BufferedReader fromPlayer2 = null;
 		
@@ -73,6 +69,7 @@ public class BattleshipController {
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
 		player1.setBoatsArrayList(gui.getPlayerBoats());
+		gui.setMessage("Waiting for player 2 to place their boats.");
 		
 		//Send boat locations to player 2
 		try{
@@ -91,6 +88,7 @@ public class BattleshipController {
 		try{
 			String boatLoc = fromPlayer2.readLine();
 			while( ! boatLoc.equals("DONE")){
+				System.out.println("Recieved " + boatLoc + " from player 2");
 				gui.addEnemyBoat(Integer.parseInt(boatLoc));
 				boatLoc = fromPlayer2.readLine();
 			}
@@ -152,7 +150,6 @@ public class BattleshipController {
 		gui.setTitle("Battleship : Player 2");
 	
 		Player player2 = new Player();
-		gui.addPlayerBoats(player2.getBoatsArrayList());
 		
 		//Wait until an IP address has been entered
 		while( !gui.getIPEntered()){
@@ -194,6 +191,7 @@ public class BattleshipController {
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
 		player2.setBoatsArrayList(gui.getPlayerBoats());
+		gui.setMessage("Waiting for player 1 to place their boats.");
 		
 		//Send boat locations to player 1
 		try{
@@ -320,17 +318,6 @@ public class BattleshipController {
 	//Display end of game message
 	String currentMessage = gui.getMessage();
 	gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
-	gui.replay();
-	while(gui.getPrompt()){
-		try{
-			Thread.sleep(10);
-		}
-		catch (InterruptedException e){
-		}
-	}
-	if(gui.getReplay() == false)
-		break;
-	} // Close bracket for restart loop
     }
 
 }

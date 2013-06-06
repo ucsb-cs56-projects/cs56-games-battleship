@@ -140,7 +140,11 @@ public class Player {
 	 **/
 	 
 	 public void setBoatsArrayList(ArrayList<Integer> playerBoats){
-		for(int boat: playerBoats){
+		for(Integer boat: playerBoats){
+			int boatColumn = boat/10;
+			boatColumn = boatColumn - 11;
+			int boatRow = boat%10;
+			boat = boatColumn*10 + boatRow;
 			boats.add(boat);
 		}
 	 }

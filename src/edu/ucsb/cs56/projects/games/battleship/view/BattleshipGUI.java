@@ -58,10 +58,6 @@ public class BattleshipGUI extends JFrame{
 	private JTextField ipField = new JTextField();
 	private JLabel ipMessage = new JLabel("Hit enter to submit.", JLabel.CENTER);
 	
-	//Play again popup
-	private JFrame replayPopUp = new JFrame();
-	private JButton keepPlayingButton = new JButton("Keep Playing?");
-	
 	//Game board component
     private GameGrid board = new GameGrid();
 
@@ -131,16 +127,6 @@ public class BattleshipGUI extends JFrame{
 	this.ipPopUp.getContentPane().add(BorderLayout.NORTH,ipRequest);
 	this.ipPopUp.getContentPane().add(BorderLayout.CENTER,ipField);
 	this.ipPopUp.getContentPane().add(BorderLayout.SOUTH,ipMessage);
-	
-	//Setup play again frame
-	this.replayPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.replayPopUp.setSize(200,100);
-	
-	//Add action listers for play again frame
-	this.keepPlayingButton.addActionListener(this.new playAgain());
-	
-	//Add widgets to play again frame
-	this.replayPopUp.add(this.keepPlayingButton);
     }
 	
 	/**
@@ -207,6 +193,7 @@ public class BattleshipGUI extends JFrame{
 			}
 		}
 		this.placeBoats = false;
+		this.repaint();
 	}
 	
 	/**
@@ -250,14 +237,6 @@ public class BattleshipGUI extends JFrame{
 	
 		this.setVisible(false);
 	 }
-
-	 /**
-	  * Method to prompt user about replaying
-	  **/
-	  
-	  public void replay(){
-		this.replayPopUp.setVisible(true);
-	  }
 	
 	/**
 	 * Changes the title at the top of the gui.
@@ -592,18 +571,6 @@ public class BattleshipGUI extends JFrame{
 	}
 	
 	/**
-	 * Listener for the play again button.
-	 **/
-	 
-	 public class playAgain implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			replay = true;
-			prompt = false;
-			replayPopUp.setVisible(false);
-		}
-	 }
-	
-	/**
 	 * Mouse listener for clicking on game cells
 	 **/
     public class cellClick implements MouseListener{
@@ -633,7 +600,7 @@ public class BattleshipGUI extends JFrame{
 		}
 		public void mouseReleased(MouseEvent e){}
 		public void mouseEntered(MouseEvent e){}
-		public void mouseExited(MouseEvent e){}
+		public void mouseExited(MouseEvent e){BattleshipGUI.this.repaint();}
     }
 	
 	public class mouseMove implements MouseMotionListener{
