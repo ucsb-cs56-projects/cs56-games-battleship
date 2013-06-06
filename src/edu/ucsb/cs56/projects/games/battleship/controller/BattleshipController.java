@@ -11,8 +11,9 @@ import java.util.ArrayList;
 public class BattleshipController {
     
     public static void main(String[] args) {
-	
 		BattleshipGUI gui = new BattleshipGUI();
+		while(true){
+		gui.reset();
 		gui.setOptions();
 		
 		//Makes program wait until options have been set.
@@ -30,7 +31,6 @@ public class BattleshipController {
 		gui.setTitle("Battleship : Player 1");
 	
 		Player player1 = new Player();
-		player1.randomGenerateBoats();
 		gui.addPlayerBoats(player1.getBoatsArrayList());
 		
 		ServerSocket serverSocket = null;
@@ -69,6 +69,10 @@ public class BattleshipController {
 			gui.setMessage("Error setting up input/output streams from Player 2");
 			System.out.println("Error setting up input/output streams from Player 2");
 		}
+		
+		gui.setMessage("Place your boats. Use any key to change orientation");
+		gui.placeBoats();
+		player1.setBoatsArrayList(gui.getPlayerBoats());
 		
 		//Send boat locations to player 2
 		try{
@@ -148,7 +152,6 @@ public class BattleshipController {
 		gui.setTitle("Battleship : Player 2");
 	
 		Player player2 = new Player();
-		player2.randomGenerateBoats();
 		gui.addPlayerBoats(player2.getBoatsArrayList());
 		
 		//Wait until an IP address has been entered
@@ -187,6 +190,10 @@ public class BattleshipController {
 			gui.setMessage("Error getting input/output streams from Player 1");
 			System.out.println("Error getting input/output streams from Player 1");
 		}
+		
+		gui.setMessage("Place your boats. Use any key to change orientation");
+		gui.placeBoats();
+		player2.setBoatsArrayList(gui.getPlayerBoats());
 		
 		//Send boat locations to player 1
 		try{
@@ -263,7 +270,9 @@ public class BattleshipController {
 	
 		//Setup the players
 	    Player human = new Player();
-		human.randomGenerateBoats();
+		gui.setMessage("Place your boats. Use any key to change orientation");
+		gui.placeBoats();
+		human.setBoatsArrayList(gui.getPlayerBoats());
 	    Computer computer = new Computer(gui.getDifficulty());
 		
 		//Send information about ship locations to the GUI
@@ -311,6 +320,17 @@ public class BattleshipController {
 	//Display end of game message
 	String currentMessage = gui.getMessage();
 	gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
+	gui.replay();
+	while(gui.getPrompt()){
+		try{
+			Thread.sleep(10);
+		}
+		catch (InterruptedException e){
+		}
+	}
+	if(gui.getReplay() == false)
+		break;
+	} // Close bracket for restart loop
     }
 
 }

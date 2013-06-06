@@ -135,6 +135,17 @@ public class Player {
 	}
 	
 	/**
+	 * Get a list of boats from the GUI
+	 * @param a list of boat locations
+	 **/
+	 
+	 public void setBoatsArrayList(ArrayList<Integer> playerBoats){
+		for(int boat: playerBoats){
+			boats.add(boat);
+		}
+	 }
+	
+	/**
 	 * Share the knowledge of this player's boat locations with the GUI
 	 * @return A list of boat locations
 	 **/

@@ -18,9 +18,18 @@ public class BattleshipGUI extends JFrame{
 	//GUI recorded information
     private String difficulty = null;
     private int gameType = 0;
+	private int lastMove;
+	private int xLoc;
+	private int yLoc;
+	private int boatToPlace;
+	private int boatSpawn;
 	private boolean playersTurn = false;
 	private boolean ipEntered = false;
-	private int lastMove;
+	private boolean replay = true;
+	private boolean prompt = true;
+	private boolean placeBoats = false;
+	private boolean boatPlaced = false;
+	private boolean horzOrVert = true; //true for horizontal false for verticle
 	
 	//GUI's knowledge bank. Used for GameGrid cell coloring
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
@@ -49,6 +58,10 @@ public class BattleshipGUI extends JFrame{
 	private JTextField ipField = new JTextField();
 	private JLabel ipMessage = new JLabel("Hit enter to submit.", JLabel.CENTER);
 	
+	//Play again popup
+	private JFrame replayPopUp = new JFrame();
+	private JButton keepPlayingButton = new JButton("Keep Playing?");
+	
 	//Game board component
     private GameGrid board = new GameGrid();
 
@@ -58,17 +71,24 @@ public class BattleshipGUI extends JFrame{
     BattleshipGUI(){
 	
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setSize(500, 500);
 		
 	//Add Title
 	this.getContentPane().add(BorderLayout.NORTH,title);
 		
 	//Add game board
+	this.board.setSize(100,210);
 	this.board.addMouseListener(this.new cellClick());
+	this.board.addMouseMotionListener(this.new mouseMove());
+	this.board.addKeyListener(this.new changeOrientation());
 	this.getContentPane().add(BorderLayout.CENTER,board);
+	
 		
 	//Add messages
 	this.getContentPane().add(BorderLayout.SOUTH, messages);
+	
+	this.pack(); // For some reason this code is necessary to give the board focus
+	this.setSize(500,500);
+	this.board.requestFocusInWindow();
 		
 	//setup difficulty options popup
 	GridLayout threeButtonGrid = new GridLayout(1,3);
@@ -107,12 +127,20 @@ public class BattleshipGUI extends JFrame{
 	this.ipField.setHorizontalAlignment(JTextField.CENTER);
 	this.ipField.addActionListener(this.new ipEnter());
 	
-	
 	//Add IP widgets
 	this.ipPopUp.getContentPane().add(BorderLayout.NORTH,ipRequest);
 	this.ipPopUp.getContentPane().add(BorderLayout.CENTER,ipField);
 	this.ipPopUp.getContentPane().add(BorderLayout.SOUTH,ipMessage);
-		
+	
+	//Setup play again frame
+	this.replayPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.replayPopUp.setSize(200,100);
+	
+	//Add action listers for play again frame
+	this.keepPlayingButton.addActionListener(this.new playAgain());
+	
+	//Add widgets to play again frame
+	this.replayPopUp.add(this.keepPlayingButton);
     }
 	
 	/**
@@ -164,6 +192,23 @@ public class BattleshipGUI extends JFrame{
 		else return "MISS";
 	}
 	
+	public void placeBoats(){
+		this.placeBoats = true;
+		int[] boats = {2,3,3,4,5};
+		for( int boat: boats){
+			this.boatPlaced = false;
+			this.boatToPlace = boat;
+			while(!this.boatPlaced){
+				try{
+					Thread.sleep(10);
+				}
+				catch (InterruptedException e){
+				}
+			}
+		}
+		this.placeBoats = false;
+	}
+	
 	/**
 	 * Shifts some location to player's GameGrid by moving it down 11 rows.
 	 * @param loc The location to be shifted.
@@ -181,10 +226,39 @@ public class BattleshipGUI extends JFrame{
 	 **/
 	
     public void setOptions(){
+	//this.replay = false;
 	this.setVisible(false);
 	this.typePopUp.setVisible(true);
     }
 
+	/**
+	 * Method to reset the GUI
+	 **/
+	 
+	 public void reset(){
+		this.difficulty = null;
+		this.gameType = 0;
+		this.playersTurn = false;
+		this.ipEntered = false;
+		this.replay = true;
+		this.prompt = true;
+		this.lastMove = 0;
+		
+		this.playerBoats = new ArrayList<Integer>();
+		this.enemyBoats = new ArrayList<Integer>();
+		this.shots = new ArrayList<Integer>();
+	
+		this.setVisible(false);
+	 }
+
+	 /**
+	  * Method to prompt user about replaying
+	  **/
+	  
+	  public void replay(){
+		this.replayPopUp.setVisible(true);
+	  }
+	
 	/**
 	 * Changes the title at the top of the gui.
 	 *@param title The new title to set.
@@ -209,6 +283,15 @@ public class BattleshipGUI extends JFrame{
 	
 	public void setPlayersTurn(boolean tf){
 		this.playersTurn = tf;
+	}
+	
+	/**
+	 * Getter for replay instance variable. Used to check if the player wants to keep playing.
+	 * @return true for keep playing false for stop playing
+	 **/
+	
+	public boolean getReplay(){
+		return this.replay;
 	}
 	
 	/**
@@ -264,6 +347,15 @@ public class BattleshipGUI extends JFrame{
 	public boolean getIPEntered(){
 		return this.ipEntered;
 	}
+	
+	/**
+	 * Method for returning status of user prompt
+	 * @return true for the uses acknowledged prompt, false for user hasn't acknowledged prompt
+	 **/
+	 
+	 public boolean getPrompt(){
+		return this.prompt;
+	 }
 	 
 	/**
 	 * Lets gui know its players turn
@@ -271,6 +363,32 @@ public class BattleshipGUI extends JFrame{
 	
 	public void makeMove(){
 		this.playersTurn = true;
+	}
+	
+	public boolean isValidSpawn(int spawn){
+		if(this.horzOrVert){
+			for(int i=0; i < boatToPlace; i++){
+				if((spawn + i)%10 > 9 || playerBoats.contains(spawn+i) || (spawn + i)/10 != spawn/10) return false;
+			}
+		}
+		else{
+			for(int i=0; i<boatToPlace; i++){
+				if((spawn+10*i)/10 > 20 || playerBoats.contains(spawn+10*i)) return false;
+			}
+		}
+		return true;
+	}
+	
+	public void placeBoat(int spawn){
+		if(horzOrVert){
+			for(int i=0; i<this.boatToPlace; i++)
+				this.playerBoats.add(spawn + i);
+		}
+		else{
+			for(int i=0; i<this.boatToPlace; i++){
+				this.playerBoats.add(spawn + 10*i);
+			}
+		}
 	}
 	
 	/**
@@ -308,6 +426,14 @@ public class BattleshipGUI extends JFrame{
 	
 	public void addEnemyBoat(int boatLoc){
 		this.enemyBoats.add(boatLoc);
+	}
+	
+	/**
+	 * Method for retrieving player boats. Used when GUI is used to place boats.
+	 **/
+	
+	public ArrayList<Integer> getPlayerBoats(){
+		return this.playerBoats;
 	}
 	
 	/**
@@ -372,6 +498,32 @@ public class BattleshipGUI extends JFrame{
 		g2d.drawLine(startX + i*cellWidth,cellWidth*11,startX + cellWidth*i,cellWidth*21);	
 	    for(int j=0; j<22; j++)
 		g2d.drawLine(startX, j*cellWidth, startX + 10*cellWidth, j*cellWidth);
+		
+		//Paint boat to be placed if boats are being placed
+		int topLeftX = xLoc - cellWidth/2;
+		int topLeftY = yLoc - cellWidth/2;
+		if(placeBoats && horzOrVert){ //Draw boat to be placed horizontally
+			g2d.setColor(Color.DARK_GRAY);
+			g2d.fillRect(topLeftX, topLeftY, boatToPlace*cellWidth, cellWidth);
+
+			g2d.setColor(Color.GRAY);
+			g2d.drawLine( topLeftX, topLeftY, topLeftX + cellWidth*boatToPlace, topLeftY);
+			g2d.drawLine( topLeftX, topLeftY + cellWidth, topLeftX + cellWidth*boatToPlace, topLeftY + cellWidth);
+			for(int i =0; i<boatToPlace + 1; i++){
+				g2d.drawLine( topLeftX + i*cellWidth, topLeftY, topLeftX + i*cellWidth, topLeftY + cellWidth);
+			}
+		}
+		else if(placeBoats){ //Draw boat to be places vertically 
+			g2d.setColor(Color.DARK_GRAY);
+			g2d.fillRect( topLeftX, topLeftY, cellWidth, boatToPlace*cellWidth);
+				
+			g2d.setColor(Color.GRAY);
+			g2d.drawLine( topLeftX, topLeftY, topLeftX, topLeftY + boatToPlace*cellWidth);
+			g2d.drawLine( topLeftX + cellWidth, topLeftY, topLeftX + cellWidth, topLeftY + boatToPlace*cellWidth);
+			for(int i = 0; i< boatToPlace + 1; i++){
+				g2d.drawLine( topLeftX, topLeftY + i*cellWidth, topLeftX + cellWidth, topLeftY + i*cellWidth);
+			}
+		}
 	}
 		
 	
@@ -440,11 +592,22 @@ public class BattleshipGUI extends JFrame{
 	}
 	
 	/**
+	 * Listener for the play again button.
+	 **/
+	 
+	 public class playAgain implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			replay = true;
+			prompt = false;
+			replayPopUp.setVisible(false);
+		}
+	 }
+	
+	/**
 	 * Mouse listener for clicking on game cells
 	 **/
     public class cellClick implements MouseListener{
 		public void mouseClicked(MouseEvent e){}
-			
 		public void mousePressed(MouseEvent e){
 			//Calculate which column & row the mouse was clicked in
 			int cellColumn = (int) Math.floor((e.getX() - board.startX)/board.cellWidth);
@@ -455,6 +618,17 @@ public class BattleshipGUI extends JFrame{
 				shots.add(lastMove);
 				playersTurn = false;
 			}
+			//Record click for boat placement if it was in player's territory
+			else if( cellRow < 21 && cellRow > 10 && cellColumn >=0 && cellColumn < 10){
+				if(placeBoats){
+					int spawn = cellRow*10 + cellColumn;
+					if(isValidSpawn(spawn)){ //Place the boat on click if the spawn location is valid
+						boatPlaced = true;
+						placeBoat(spawn);
+						BattleshipGUI.this.repaint();
+					}
+				}
+			}
 			repaint();
 		}
 		public void mouseReleased(MouseEvent e){}
@@ -462,6 +636,23 @@ public class BattleshipGUI extends JFrame{
 		public void mouseExited(MouseEvent e){}
     }
 	
+	public class mouseMove implements MouseMotionListener{
+		public void mouseMoved(MouseEvent e){
+			if(placeBoats){ //Records x & y locations if player is placing boats
+				xLoc = e.getX();
+				yLoc = e.getY();
+				BattleshipGUI.this.repaint();
+			}
+		}
+		public void mouseDragged(MouseEvent e){}
+	}
 
-
+	public class changeOrientation implements KeyListener{
+		public void keyPressed(KeyEvent e){
+			horzOrVert = !horzOrVert; //Switch from drawing boats horizontally to drawing them vertically
+			BattleshipGUI.this.repaint();
+		}	
+		public void keyReleased(KeyEvent e){}
+		public void keyTyped(KeyEvent e){}
+	}
 }
