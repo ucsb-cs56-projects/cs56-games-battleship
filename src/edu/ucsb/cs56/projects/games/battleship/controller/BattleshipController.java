@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class BattleshipController {
     
     public static void main(String[] args) {
-	
 		BattleshipGUI gui = new BattleshipGUI();
+		gui.reset();
 		gui.setOptions();
 		
 		//Makes program wait until options have been set.
@@ -30,8 +30,6 @@ public class BattleshipController {
 		gui.setTitle("Battleship : Player 1");
 	
 		Player player1 = new Player();
-		player1.randomGenerateBoats();
-		gui.addPlayerBoats(player1.getBoatsArrayList());
 		
 		ServerSocket serverSocket = null;
 		try{
@@ -56,8 +54,6 @@ public class BattleshipController {
 			System.out.println("Accept failed on port 22222");
 		}
 		
-		gui.setMessage("Connection recieved from " + player2Socket.getLocalAddress());
-		
 		PrintWriter toPlayer2 = null;
 		BufferedReader fromPlayer2 = null;
 		
@@ -69,6 +65,11 @@ public class BattleshipController {
 			gui.setMessage("Error setting up input/output streams from Player 2");
 			System.out.println("Error setting up input/output streams from Player 2");
 		}
+		
+		gui.setMessage("Place your boats. Use any key to change orientation");
+		gui.placeBoats();
+		player1.setBoatsArrayList(gui.getPlayerBoats());
+		gui.setMessage("Waiting for player 2 to place their boats.");
 		
 		//Send boat locations to player 2
 		try{
@@ -148,8 +149,6 @@ public class BattleshipController {
 		gui.setTitle("Battleship : Player 2");
 	
 		Player player2 = new Player();
-		player2.randomGenerateBoats();
-		gui.addPlayerBoats(player2.getBoatsArrayList());
 		
 		//Wait until an IP address has been entered
 		while( !gui.getIPEntered()){
@@ -187,6 +186,11 @@ public class BattleshipController {
 			gui.setMessage("Error getting input/output streams from Player 1");
 			System.out.println("Error getting input/output streams from Player 1");
 		}
+		
+		gui.setMessage("Place your boats. Use any key to change orientation");
+		gui.placeBoats();
+		player2.setBoatsArrayList(gui.getPlayerBoats());
+		gui.setMessage("Waiting for player 1 to place their boats.");
 		
 		//Send boat locations to player 1
 		try{
@@ -263,7 +267,9 @@ public class BattleshipController {
 	
 		//Setup the players
 	    Player human = new Player();
-		human.randomGenerateBoats();
+		gui.setMessage("Place your boats. Use any key to change orientation");
+		gui.placeBoats();
+		human.setBoatsArrayList(gui.getPlayerBoats());
 	    Computer computer = new Computer(gui.getDifficulty());
 		
 		//Send information about ship locations to the GUI
