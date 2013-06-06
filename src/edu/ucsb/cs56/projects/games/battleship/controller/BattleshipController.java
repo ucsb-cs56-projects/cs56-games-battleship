@@ -88,7 +88,6 @@ public class BattleshipController {
 		try{
 			String boatLoc = fromPlayer2.readLine();
 			while( ! boatLoc.equals("DONE")){
-				System.out.println("Recieved " + boatLoc + " from player 2");
 				gui.addEnemyBoat(Integer.parseInt(boatLoc));
 				boatLoc = fromPlayer2.readLine();
 			}
