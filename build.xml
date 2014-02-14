@@ -1,12 +1,12 @@
 <!-- build.xml for battleship
- by Robert Waite and Aleskandr Zhang -->
+ by Wenjian Li -->
 
 <project default="compile">
   <property environment="env" />
   <property name="webRoot" value="${env.HOME}/public_html/cs56" />
   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
-  <property name="projectName" value="battleship" />
-  <property name="javadocDest" value="~/public_html/cs56/13S/~${env.USER}/cs56-games-battleship" /> 
+  <property name="projectName" value="cs56-games-battleship" />
+  <property name="javadocDest" value="${webRoot}/${projectName}" /> 
   <property name="javadocUrl" value="${webBaseUrl}/${projectName}/javadoc" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipController" />
 
@@ -18,7 +18,7 @@
     <javac srcdir="src" destdir="build" includeantruntime="false">
       <classpath>
 	<pathelement location="build" />
-	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar" />
+	<pathelement location="lib/junit-4.8.2.jar" />
       </classpath>
     </javac>
   </target>
@@ -48,7 +48,7 @@
    <javadoc  destdir="javadoc" author="true" version="true" use="true" >
       <fileset dir="src" includes="**/*.java"/>
       <classpath>
-          <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+          <pathelement location="lib/junit-4.8.2.jar"/>
      </classpath>
    </javadoc>
    <delete quiet="true" dir="${javadocDest}" />   

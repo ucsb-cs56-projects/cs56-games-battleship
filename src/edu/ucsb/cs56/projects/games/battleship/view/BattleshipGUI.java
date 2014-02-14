@@ -9,7 +9,6 @@ import java.util.*;
 
  *@author Keenan Reimer
  *@version CS56 Spring 2013
- *@see BattleshipMainGUI
 
  **/
 

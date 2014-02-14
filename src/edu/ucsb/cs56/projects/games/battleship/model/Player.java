@@ -60,7 +60,7 @@ public class Player {
 	/**
 	 * Check to see if a location exists on the game board
 	 * @param loc The location in question
-	 * @ return true if it is false if it is not
+	 * @return true if it is false if it is not
 	 **/
 	 
 	public boolean isValidLocal(int loc){
@@ -136,7 +136,7 @@ public class Player {
 	
 	/**
 	 * Get a list of boats from the GUI
-	 * @param a list of boat locations
+	 * @param playerBoats a list of boat locations
 	 **/
 	 
 	 public void setBoatsArrayList(ArrayList<Integer> playerBoats){
