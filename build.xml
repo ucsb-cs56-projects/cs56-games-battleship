@@ -7,7 +7,7 @@
   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
   <property name="projectName" value="cs56-games-battleship" />
   <property name="javadocDest" value="${webRoot}/${projectName}" /> 
-  <property name="javadocUrl" value="${webBaseUrl}/${projectName}/javadoc" />
+  <property name="javadocUrl" value="${webBaseUrl}/${projectName}" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipController" />
 
   <!-- beginning of targets -->

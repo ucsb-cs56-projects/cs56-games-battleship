@@ -8,7 +8,8 @@ import java.util.*;
  * A gui class for playing battleship.
 
  *@author Keenan Reimer
- *@version CS56 Spring 2013
+ *@author Wenjian Li (working since W14)
+ *@version CS56 Winter 2014
 
  **/
 
