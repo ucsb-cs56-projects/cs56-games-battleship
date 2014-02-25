@@ -16,6 +16,7 @@ import java.util.*;
 public class BattleshipGUI extends JFrame{
 
 	//GUI recorded information
+	//@@@ lacking javadoc comments for field discription! (WL)
     private String difficulty = null;
     private int gameType = 0;
 	private int lastMove;
@@ -130,7 +131,7 @@ public class BattleshipGUI extends JFrame{
     }
 	
 	/**
-	 * Main class used only for testing purposes.
+	 * Main method used only for testing purposes.
 	 *@param args not used
 	 **/
     public static void main(String[] args){
@@ -180,16 +181,17 @@ public class BattleshipGUI extends JFrame{
 	
 	public void placeBoats(){
 		this.placeBoats = true;
-		int[] boats = {2,3,3,4,5};
-		for( int boat: boats){
+		int[] boats = Player.shipSizes;
+		for(int boat: boats){
 			this.boatPlaced = false;
 			this.boatToPlace = boat;
 			while(!this.boatPlaced){
-				try{
+				/*try{
 					Thread.sleep(10);
 				}
 				catch (InterruptedException e){
-				}
+				}*/
+				BattleshipController.sleep();
 			}
 		}
 		this.placeBoats = false;
@@ -512,7 +514,7 @@ public class BattleshipGUI extends JFrame{
 	 * Listener for difficulty option buttons
 	 **/
 	
-    public class difficultyClick implements ActionListener{
+    public class difficultyClick implements ActionListener{ //@@@ to do: use less lines of code to implement
 	public void actionPerformed(ActionEvent e){
 	    if( e.getSource() == BattleshipGUI.this.easyButton){
 		difficulty = "EASY";

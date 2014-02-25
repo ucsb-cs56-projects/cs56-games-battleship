@@ -10,19 +10,27 @@ import java.util.ArrayList;
 
 public class BattleshipController {
     
-    public static void main(String[] args) {
+    public static void sleep(){
+	try{
+		Thread.sleep(10);
+	}
+	catch (InterruptedException e){
+	}
+    }
+
+    public void go() {
 		BattleshipGUI gui = new BattleshipGUI();
 		gui.reset();
 		gui.setOptions();
 		
 		//Makes program wait until options have been set.
 		while(gui.getDifficulty() == null || gui.getGameType() == 0){
-			try{
+			/*try{
 				Thread.sleep(10);
 			}
 			catch (InterruptedException e){
-			}
-		
+			}*/
+			BattleshipController.sleep();
 		}
 	
 	//Hosting a game
@@ -105,11 +113,12 @@ public class BattleshipController {
 				
 				//Wait until player 1 has completed their turn
 				while(gui.getPlayersTurn()){
-					try{
+					/*try{
 						Thread.sleep(10);
 					}
 					catch (InterruptedException e){
-					}
+					}*/
+					BattleshipController.sleep();
 				}
 				int p1Move = gui.getLastMove();
 				toPlayer2.println(p1Move); //Send move to player 2
@@ -152,11 +161,12 @@ public class BattleshipController {
 		
 		//Wait until an IP address has been entered
 		while( !gui.getIPEntered()){
-			try{
+			/*try{
 				Thread.sleep(10);
 			}
 			catch (InterruptedException e){
-			}
+			}*/
+			BattleshipController.sleep();
 		}
 		String connectTo = gui.getIP();
 
@@ -238,11 +248,12 @@ public class BattleshipController {
 				gui.setMessage("Your turn!");
 				//Halt the program until you've completed your move
 				while(gui.getPlayersTurn()){
-					try{
+					/*try{
 						Thread.sleep(10);
 					}
 					catch (InterruptedException e){
-					}
+					}*/
+					BattleshipController.sleep();
 				}
 				int p2Move = gui.getLastMove();
 				toPlayer1.println(p2Move);
@@ -283,11 +294,12 @@ public class BattleshipController {
 		gui.makeMove();
 		gui.setMessage("Your turn!");
 		while(gui.getPlayersTurn()){
-			try{
+			/*try{
 				Thread.sleep(10);
 			}
 			catch (InterruptedException e){
-			}
+			}*/
+			BattleshipController.sleep();
 		}
 		
 		//Get player's move from GUI and send it to model
@@ -318,5 +330,10 @@ public class BattleshipController {
 	String currentMessage = gui.getMessage();
 	gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
     }
+
+    public static void main(String[] args){
+		BattleshipController myController = new BattleshipController();
+		myController.go();
+	}
 
 }

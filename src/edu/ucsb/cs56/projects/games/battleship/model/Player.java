@@ -12,6 +12,8 @@ public class Player {
     
     private ArrayList<Integer> boats;
     private ArrayList<Integer> shots;
+    //I'm trying to make the {2,3,3,4,5} array into a static array variable;
+    public static int [] shipSizes = {2,3,3,4,5};
     
     /**
        default constructor
@@ -25,7 +27,7 @@ public class Player {
 	 * Randomly generate a set of boats for this player
 	 **/
 	public void randomGenerateBoats(){
-		int[] shipSizes = {2,3,3,4,5};
+		//int[] shipSizes = {2,3,3,4,5};
 		for(int shipSize: shipSizes){
 			int spawn = (int) (100*Math.random());
 			int orientation = (int) (4*Math.random());
