@@ -25,14 +25,11 @@ public class BattleshipController {
 		
 		//Makes program wait until options have been set.
 		while(gui.getDifficulty() == null || gui.getGameType() == 0){
-			/*try{
-				Thread.sleep(10);
-			}
-			catch (InterruptedException e){
-			}*/
 			BattleshipController.sleep();
 		}
 	
+	//@@@ TODO: check if the 3 modes have duplicated codes amongst each other
+
 	//Hosting a game
 	if(gui.getGameType() == 1){
 		gui.setTitle("Battleship : Player 1");
@@ -53,6 +50,7 @@ public class BattleshipController {
 			gui.setMessage("Unknown Host");
 			System.out.println("Uknown host exception: " + e);
 		}
+
 		Socket player2Socket = null;
 		try{
 			player2Socket = serverSocket.accept();
@@ -73,6 +71,7 @@ public class BattleshipController {
 			gui.setMessage("Error setting up input/output streams from Player 2");
 			System.out.println("Error setting up input/output streams from Player 2");
 		}
+
 		
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
@@ -278,6 +277,7 @@ public class BattleshipController {
 	
 		//Setup the players
 	    Player human = new Player();
+		//@@@ TODO: fix code so that window for selecting ship sizes come before the game frame comes
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
 		human.setBoatsArrayList(gui.getPlayerBoats());

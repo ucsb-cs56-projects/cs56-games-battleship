@@ -52,6 +52,10 @@ public class BattleshipGUI extends JFrame{
     private JButton easyButton = new JButton("Easy");
     private JButton mediumButton = new JButton("Medium");
     private JButton hardButton = new JButton("Hard");
+
+	//Select ship sizes frame popup
+	private JFrame shipSizePopUp = new JFrame();
+	private JLabel reminder = new JLabel("THIS FEATURE NOT IMPLEMENTED YET!!!");
 	
 	//Join IP frame popup
 	private JFrame ipPopUp = new JFrame();
@@ -86,7 +90,9 @@ public class BattleshipGUI extends JFrame{
 	this.pack(); // For some reason this code is necessary to give the board focus
 	this.setSize(500,500);
 	this.board.requestFocusInWindow();
-		
+	
+	//@@@ TODO: combine duplicated codes into methods in the following section
+			
 	//setup difficulty options popup
 	GridLayout threeButtonGrid = new GridLayout(1,3);
 	this.diffPopUp.setLayout(threeButtonGrid);
@@ -115,6 +121,13 @@ public class BattleshipGUI extends JFrame{
 	this.typePopUp.add(hostButton);
 	this.typePopUp.add(joinButton);
 	this.typePopUp.add(computerButton);
+
+	//Setup shipsize popup
+	this.shipSizePopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.shipSizePopUp.setSize(600,100);
+
+	//@@@ TODO: Add shipsize buttons listeners
+	this.shipSizePopUp.getContentPane().add(BorderLayout.SOUTH, reminder);
 	
 	//Setup IP popup
 	GridLayout threeWidgetVerticleGrid = new GridLayout(3,1);
@@ -239,6 +252,19 @@ public class BattleshipGUI extends JFrame{
 	
 		this.setVisible(false);
 	 }
+
+	//@@@ TODO: complete this method
+	/**
+	 * Method to pop-up new frame for user to select ship size
+	 **/
+
+	/*public void selectShipSizes(){
+		JFrame window = new JFrame();
+		JLabel reminder = new JLabel("THIS FEATURE NOT IMPLEMENTED YET!!!");
+		window.getContentPane().add(BorderLayout.SOUTH, reminder);
+		window.setSize(500,200);
+		window.setVisible(true);
+	}*/
 	
 	/**
 	 * Changes the title at the top of the gui.
@@ -555,6 +581,7 @@ public class BattleshipGUI extends JFrame{
 			else if ( e.getSource() == BattleshipGUI.this.computerButton){
 			gameType = 3;
 			BattleshipGUI.this.typePopUp.setVisible(false);
+			BattleshipGUI.this.shipSizePopUp.setVisible(true);
 			BattleshipGUI.this.diffPopUp.setVisible(true);
 			}
 		}
