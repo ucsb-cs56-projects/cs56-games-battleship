@@ -610,16 +610,23 @@ public class BattleshipGUI extends JFrame{
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource() == BattleshipGUI.this.reminder){
 				int [] inputSizes = Player.shipSizes;
+				boolean isValid = true;
 				//inputSizes[0] = Integer.parseInt(BattleshipGUI.this.ship1.getText());
 				//inputSizes[1] = Integer.parseInt(BattleshipGUI.this.ship2.getText());
 				//inputSizes[2] = Integer.parseInt(BattleshipGUI.this.ship3.getText());
 				//inputSizes[3] = Integer.parseInt(BattleshipGUI.this.ship4.getText());
 				//inputSizes[4] = Integer.parseInt(BattleshipGUI.this.ship5.getText());
 				for(int i=0; i<5; i++){
-					inputSizes[i] = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());
+					if(BattleshipGUI.this.inputBoxes[i].getText().equals("")) {isValid = false; break;}
+					int userInput = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());
+					if(userInput>9 || userInput<2) {isValid = false;}
+					else inputSizes[i] = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());
 				}
-				BattleshipGUI.this.shipSizePopUp.setVisible(false);
-				BattleshipGUI.this.diffPopUp.setVisible(true);
+				if(isValid==true){
+					BattleshipGUI.this.shipSizePopUp.setVisible(false);
+					BattleshipGUI.this.diffPopUp.setVisible(true);
+				}
+				else reminder.setText("plz input between 2 and 9");
 			}
 		}
 	}
