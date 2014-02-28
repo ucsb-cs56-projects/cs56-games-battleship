@@ -5,7 +5,9 @@ import java.io.*;
 import java.lang.Math.*;
 
 /**
-   The player class, holds a gameboard and takes in player input
+ * The player class, holds a gameboard and takes in player input
+ * @author Wenjian Li (working since W14)
+ * @version 2.0 (CS56 Winter 2014)
 */
 
 public class Player {
@@ -16,7 +18,7 @@ public class Player {
     public static int [] shipSizes = {2,3,3,4,5};
     
     /**
-       default constructor
+     * default constructor
     */
     public Player(){
 		boats = new ArrayList<Integer>();

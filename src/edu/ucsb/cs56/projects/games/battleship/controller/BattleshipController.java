@@ -5,11 +5,17 @@ import java.net.*;
 import java.util.ArrayList;
 
 /**
-   Main class for Battleship Game
+ * Main class for Battleship Game
+ * @author Wenjian Li (working since W14)
+ * @version 2.0 (CS56 Winter 2014)
 */
 
 public class BattleshipController {
     
+    /**
+     * Let the thread to sleep
+    */
+
     public static void sleep(){
 	try{
 		Thread.sleep(10);
@@ -17,6 +23,10 @@ public class BattleshipController {
 	catch (InterruptedException e){
 	}
     }
+
+    /**
+     * method for the game to run
+    */
 
     public void go() {
 		BattleshipGUI gui = new BattleshipGUI();
@@ -27,8 +37,6 @@ public class BattleshipController {
 		while(gui.getDifficulty() == null || gui.getGameType() == 0){
 			BattleshipController.sleep();
 		}
-	
-	//@@@ TODO: check if the 3 modes have duplicated codes amongst each other
 
 	//Hosting a game
 	if(gui.getGameType() == 1){
@@ -277,7 +285,7 @@ public class BattleshipController {
 	
 		//Setup the players
 	    Player human = new Player();
-		//@@@ TODO: fix code so that window for selecting ship sizes come before the game frame comes
+		
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
 		human.setBoatsArrayList(gui.getPlayerBoats());

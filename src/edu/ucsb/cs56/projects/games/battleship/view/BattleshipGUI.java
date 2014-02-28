@@ -7,16 +7,15 @@ import java.util.*;
 /**
  * A gui class for playing battleship.
 
- *@author Keenan Reimer
- *@author Wenjian Li (working since W14)
- *@version CS56 Winter 2014
+ * @author Keenan Reimer
+ * @author Wenjian Li (working since W14)
+ * @version 2.0 (CS56 Winter 2014)
 
- **/
+ */
 
 public class BattleshipGUI extends JFrame{
 
 	//GUI recorded information
-	//@@@ lacking javadoc comments for field discription! (WL)
     	private String difficulty = null;
     	private int gameType = 0;
 	private int lastMove;
@@ -53,9 +52,9 @@ public class BattleshipGUI extends JFrame{
    	private JButton mediumButton = new JButton("Medium");
     	private JButton hardButton = new JButton("Hard");
 
-	//@@@ TODO: complete this part: Select ship sizes frame popup
+	//Select ship sizes frame popup
 	private JFrame shipSizePopUp = new JFrame();
-	private JButton reminder = new JButton("click to proceed");
+	private JButton reminder = new JButton("input sizes of ships you want, click to proceed");
 	private JPanel shipSizePanel = new JPanel();
 	private JTextField ship1 = new JTextField(5);
 	private JTextField ship2 = new JTextField(5);
@@ -98,8 +97,6 @@ public class BattleshipGUI extends JFrame{
 	this.setSize(500,500);
 	this.board.requestFocusInWindow();
 	
-	//@@@ TODO: combine duplicated codes into methods in the following section
-			
 	//setup difficulty options popup
 	GridLayout threeButtonGrid = new GridLayout(1,3);
 	this.diffPopUp.setLayout(threeButtonGrid);
@@ -118,7 +115,7 @@ public class BattleshipGUI extends JFrame{
 	//Setup gametype popup
 	this.typePopUp.setLayout(threeButtonGrid);
 	this.typePopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.typePopUp.setSize(600,100);
+	this.typePopUp.setSize(800,100);
 		
 	//Add type buttons listeners
 	this.hostButton.addActionListener(this.new typeClick());
@@ -135,21 +132,10 @@ public class BattleshipGUI extends JFrame{
 
 	//Add shipsize buttons listeners
 	this.reminder.addActionListener(this.new sizeClick());
-	//this.shipSizePanel.addActionListener(this.new sizeClick());
-	//this.ship1.addActionListener(this.new sizeClick());
-	//this.ship2.addActionListener(this.new sizeClick());
-	//this.ship3.addActionListener(this.new sizeClick());
-	//this.ship4.addActionListener(this.new sizeClick());
-	//this.ship5.addActionListener(this.new sizeClick());
 	for(int i=0; i<5; i++){
 		this.inputBoxes[i].addActionListener(this.new sizeClick());
 	}
 	this.shipSizePopUp.getContentPane().add(BorderLayout.SOUTH, reminder);
-	//this.shipSizePanel.add(this.ship1);
-	//this.shipSizePanel.add(this.ship2);
-	//this.shipSizePanel.add(this.ship3);
-	//this.shipSizePanel.add(this.ship4);
-	//this.shipSizePanel.add(this.ship5);
 	for(int i=0; i<5; i++){
 		this.shipSizePanel.add(this.inputBoxes[i]);
 	}
@@ -292,7 +278,7 @@ public class BattleshipGUI extends JFrame{
 	
 	/**
 	 * Changes the message at the bottom of the gui.
-	 *@param message The new message to set.
+	 * @param message The new message to set.
 	 **/
     public void setMessage(String message){
 	this.messages.setText(message);
@@ -387,6 +373,11 @@ public class BattleshipGUI extends JFrame{
 		this.playersTurn = true;
 	}
 	
+	/**
+	 * Check if a spawn is valid for placing boat
+	 * @param spawn representing the specific spawn
+	 */
+
 	public boolean isValidSpawn(int spawn){
 		if(this.horzOrVert){
 			for(int i=0; i < boatToPlace; i++){
@@ -555,7 +546,7 @@ public class BattleshipGUI extends JFrame{
 	 * Listener for difficulty option buttons
 	 **/
 	
-    public class difficultyClick implements ActionListener{ //@@@ TODO: use less lines of code to implement
+    public class difficultyClick implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 	    if( e.getSource() == BattleshipGUI.this.easyButton){
 		difficulty = "EASY";
@@ -611,11 +602,7 @@ public class BattleshipGUI extends JFrame{
 			if(e.getSource() == BattleshipGUI.this.reminder){
 				int [] inputSizes = Player.shipSizes;
 				boolean isValid = true;
-				//inputSizes[0] = Integer.parseInt(BattleshipGUI.this.ship1.getText());
-				//inputSizes[1] = Integer.parseInt(BattleshipGUI.this.ship2.getText());
-				//inputSizes[2] = Integer.parseInt(BattleshipGUI.this.ship3.getText());
-				//inputSizes[3] = Integer.parseInt(BattleshipGUI.this.ship4.getText());
-				//inputSizes[4] = Integer.parseInt(BattleshipGUI.this.ship5.getText());
+				
 				for(int i=0; i<5; i++){
 					if(BattleshipGUI.this.inputBoxes[i].getText().equals("")) {isValid = false; break;}
 					int userInput = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());
