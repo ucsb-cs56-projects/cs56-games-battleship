@@ -120,11 +120,6 @@ public class BattleshipController {
 				
 				//Wait until player 1 has completed their turn
 				while(gui.getPlayersTurn()){
-					/*try{
-						Thread.sleep(10);
-					}
-					catch (InterruptedException e){
-					}*/
 					BattleshipController.sleep();
 				}
 				int p1Move = gui.getLastMove();
@@ -300,19 +295,15 @@ public class BattleshipController {
 		
 		//Start player's move
 		gui.makeMove();
-		gui.setMessage("Your turn!");
+		gui.setMessage("Your turn! (Now you've hitted: " + human.getHitCount() + " pixels)");
 		while(gui.getPlayersTurn()){
-			/*try{
-				Thread.sleep(10);
-			}
-			catch (InterruptedException e){
-			}*/
 			BattleshipController.sleep();
 		}
 		
 		//Get player's move from GUI and send it to model
 		int humanMove = gui.getLastMove();
 		computer.addShot(humanMove);
+		if(gui.getEnemyBoats().contains(humanMove)) {human.increaseHitCount();}
 		
 		//Check win status
 		if(computer.hasLost()) {

@@ -14,8 +14,8 @@ public class Player {
     
     private ArrayList<Integer> boats;
     private ArrayList<Integer> shots;
-    //I'm trying to make the {2,3,3,4,5} array into a static array variable;
-    public static int [] shipSizes = {2,3,3,4,5};
+    private int hitCount=0; //hit count, initialize to 0
+    public static int [] shipSizes = {2,3,3,4,5}; //default ship sizes
     
     /**
      * default constructor
@@ -24,6 +24,16 @@ public class Player {
 		boats = new ArrayList<Integer>();
 		shots = new ArrayList<Integer>();
     }
+
+	/**
+	 * Getter of hit count
+	*/
+	public int getHitCount() {return this.hitCount;}
+
+	/**
+	 * Increase hit count with 1
+	*/
+	public void increaseHitCount() {this.hitCount++;}
 	
 	/**
 	 * Randomly generate a set of boats for this player

@@ -35,6 +35,7 @@ public class BattleshipGUI extends JFrame{
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> enemyBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> shots = new ArrayList<Integer>();
+	public ArrayList<Integer> getEnemyBoats() {return this.enemyBoats;}
 
 	//GUI Texts
    	private JLabel title = new JLabel("Battleship",JLabel.CENTER);
