@@ -116,7 +116,7 @@ public class BattleshipController {
 		while(true){
 			try{
 				gui.makeMove();
-				gui.setMessage("Your turn!");
+				gui.setMessage("Your turn! Now you've hit " + player1.getHitCount() + " pixels" );
 				
 				//Wait until player 1 has completed their turn
 				while(gui.getPlayersTurn()){
@@ -124,6 +124,7 @@ public class BattleshipController {
 				}
 				int p1Move = gui.getLastMove();
 				toPlayer2.println(p1Move); //Send move to player 2
+				if(gui.getEnemyBoats().contains(p1Move)) {player1.increaseHitCount();}
 				
 				//Check if you've won
 				String p2VictoryStatus = fromPlayer2.readLine();
@@ -247,18 +248,14 @@ public class BattleshipController {
 					toPlayer1.println("CONTINUE");
 				
 				gui.makeMove();
-				gui.setMessage("Your turn!");
+				gui.setMessage("Your turn! Now you've hit " + player2.getHitCount() + " pixels");
 				//Halt the program until you've completed your move
 				while(gui.getPlayersTurn()){
-					/*try{
-						Thread.sleep(10);
-					}
-					catch (InterruptedException e){
-					}*/
 					BattleshipController.sleep();
 				}
 				int p2Move = gui.getLastMove();
 				toPlayer1.println(p2Move);
+				if(gui.getEnemyBoats().contains(p2Move)) {player2.increaseHitCount();}
 				
 				//Check to see if you've won
 				String p1VictoryStatus = fromPlayer1.readLine();
@@ -295,7 +292,7 @@ public class BattleshipController {
 		
 		//Start player's move
 		gui.makeMove();
-		gui.setMessage("Your turn! (Now you've hitted: " + human.getHitCount() + " pixels)");
+		gui.setMessage("Your turn! (Now you've hit: " + human.getHitCount() + " pixels)");
 		while(gui.getPlayersTurn()){
 			BattleshipController.sleep();
 		}
