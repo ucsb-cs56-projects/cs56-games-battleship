@@ -5,27 +5,40 @@ import java.io.*;
 import java.lang.Math.*;
 
 /**
-   The player class, holds a gameboard and takes in player input
+ * The player class, holds a gameboard and takes in player input
+ * @author Wenjian Li (working since W14)
+ * @version 2.0 (CS56 Winter 2014)
 */
 
 public class Player {
     
     private ArrayList<Integer> boats;
     private ArrayList<Integer> shots;
+    private int hitCount=0; //hit count, initialize to 0
+    public static int [] shipSizes = {2,3,3,4,5}; //default ship sizes
     
     /**
-       default constructor
+     * default constructor
     */
     public Player(){
 		boats = new ArrayList<Integer>();
 		shots = new ArrayList<Integer>();
     }
+
+	/**
+	 * Getter of hit count
+	*/
+	public int getHitCount() {return this.hitCount;}
+
+	/**
+	 * Increase hit count with 1
+	*/
+	public void increaseHitCount() {this.hitCount++;}
 	
 	/**
 	 * Randomly generate a set of boats for this player
 	 **/
 	public void randomGenerateBoats(){
-		int[] shipSizes = {2,3,3,4,5};
 		for(int shipSize: shipSizes){
 			int spawn = (int) (100*Math.random());
 			int orientation = (int) (4*Math.random());
@@ -60,7 +73,7 @@ public class Player {
 	/**
 	 * Check to see if a location exists on the game board
 	 * @param loc The location in question
-	 * @ return true if it is false if it is not
+	 * @return true if it is false if it is not
 	 **/
 	 
 	public boolean isValidLocal(int loc){
@@ -136,7 +149,7 @@ public class Player {
 	
 	/**
 	 * Get a list of boats from the GUI
-	 * @param a list of boat locations
+	 * @param playerBoats a list of boat locations
 	 **/
 	 
 	 public void setBoatsArrayList(ArrayList<Integer> playerBoats){

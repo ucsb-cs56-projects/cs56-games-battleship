@@ -7,17 +7,17 @@ import java.util.*;
 /**
  * A gui class for playing battleship.
 
- *@author Keenan Reimer
- *@version CS56 Spring 2013
- *@see BattleshipMainGUI
+ * @author Keenan Reimer
+ * @author Wenjian Li (working since W14)
+ * @version 2.0 (CS56 Winter 2014)
 
- **/
+ */
 
 public class BattleshipGUI extends JFrame{
 
 	//GUI recorded information
-    private String difficulty = null;
-    private int gameType = 0;
+    	private String difficulty = null;
+    	private int gameType = 0;
 	private int lastMove;
 	private int xLoc;
 	private int yLoc;
@@ -35,22 +35,34 @@ public class BattleshipGUI extends JFrame{
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> enemyBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> shots = new ArrayList<Integer>();
+	public ArrayList<Integer> getEnemyBoats() {return this.enemyBoats;}
 
 	//GUI Texts
-    private JLabel title = new JLabel("Battleship",JLabel.CENTER);
-    private JLabel messages = new JLabel("Messages go here:", JLabel.CENTER);
+   	private JLabel title = new JLabel("Battleship",JLabel.CENTER);
+	private JLabel messages = new JLabel("Messages go here:", JLabel.CENTER);
 	
 	//Gametype frame popup
-    private JFrame typePopUp = new JFrame();
-    private JButton hostButton = new JButton("Host a Game");
-    private JButton joinButton = new JButton("Join a Game");
-    private JButton computerButton = new JButton("Play Against a Computer");
+	private JFrame typePopUp = new JFrame();
+	private JButton hostButton = new JButton("Host a Game");
+	private JButton joinButton = new JButton("Join a Game");
+	private JButton computerButton = new JButton("Play Against a Computer");
 	
 	//Difficulty frame popup
-    private JFrame diffPopUp = new JFrame();
-    private JButton easyButton = new JButton("Easy");
-    private JButton mediumButton = new JButton("Medium");
-    private JButton hardButton = new JButton("Hard");
+	private JFrame diffPopUp = new JFrame();
+   	private JButton easyButton = new JButton("Easy");
+   	private JButton mediumButton = new JButton("Medium");
+    	private JButton hardButton = new JButton("Hard");
+
+	//Select ship sizes frame popup
+	private JFrame shipSizePopUp = new JFrame();
+	private JButton reminder = new JButton("input sizes of ships you want, click to proceed");
+	private JPanel shipSizePanel = new JPanel();
+	private JTextField ship1 = new JTextField(5);
+	private JTextField ship2 = new JTextField(5);
+	private JTextField ship3 = new JTextField(5);
+	private JTextField ship4 = new JTextField(5);
+	private JTextField ship5 = new JTextField(5);
+	private JTextField [] inputBoxes = {ship1, ship2, ship3, ship4, ship5};
 	
 	//Join IP frame popup
 	private JFrame ipPopUp = new JFrame();
@@ -59,7 +71,7 @@ public class BattleshipGUI extends JFrame{
 	private JLabel ipMessage = new JLabel("Hit enter to submit.", JLabel.CENTER);
 	
 	//Game board component
-    private GameGrid board = new GameGrid();
+    	private GameGrid board = new GameGrid();
 
 	/**
 	 * Default constructor for the class. Sets everything up.
@@ -85,7 +97,7 @@ public class BattleshipGUI extends JFrame{
 	this.pack(); // For some reason this code is necessary to give the board focus
 	this.setSize(500,500);
 	this.board.requestFocusInWindow();
-		
+	
 	//setup difficulty options popup
 	GridLayout threeButtonGrid = new GridLayout(1,3);
 	this.diffPopUp.setLayout(threeButtonGrid);
@@ -104,7 +116,7 @@ public class BattleshipGUI extends JFrame{
 	//Setup gametype popup
 	this.typePopUp.setLayout(threeButtonGrid);
 	this.typePopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.typePopUp.setSize(600,100);
+	this.typePopUp.setSize(800,100);
 		
 	//Add type buttons listeners
 	this.hostButton.addActionListener(this.new typeClick());
@@ -114,6 +126,21 @@ public class BattleshipGUI extends JFrame{
 	this.typePopUp.add(hostButton);
 	this.typePopUp.add(joinButton);
 	this.typePopUp.add(computerButton);
+
+	//Setup shipsize popup
+	this.shipSizePopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.shipSizePopUp.setSize(600,100);
+
+	//Add shipsize buttons listeners
+	this.reminder.addActionListener(this.new sizeClick());
+	for(int i=0; i<5; i++){
+		this.inputBoxes[i].addActionListener(this.new sizeClick());
+	}
+	this.shipSizePopUp.getContentPane().add(BorderLayout.SOUTH, reminder);
+	for(int i=0; i<5; i++){
+		this.shipSizePanel.add(this.inputBoxes[i]);
+	}
+	this.shipSizePopUp.getContentPane().add(BorderLayout.CENTER, shipSizePanel);
 	
 	//Setup IP popup
 	GridLayout threeWidgetVerticleGrid = new GridLayout(3,1);
@@ -130,7 +157,7 @@ public class BattleshipGUI extends JFrame{
     }
 	
 	/**
-	 * Main class used only for testing purposes.
+	 * Main method used only for testing purposes.
 	 *@param args not used
 	 **/
     public static void main(String[] args){
@@ -180,16 +207,17 @@ public class BattleshipGUI extends JFrame{
 	
 	public void placeBoats(){
 		this.placeBoats = true;
-		int[] boats = {2,3,3,4,5};
-		for( int boat: boats){
+		int[] boats = Player.shipSizes;
+		for(int boat: boats){
 			this.boatPlaced = false;
 			this.boatToPlace = boat;
 			while(!this.boatPlaced){
-				try{
+				/*try{
 					Thread.sleep(10);
 				}
 				catch (InterruptedException e){
-				}
+				}*/
+				BattleshipController.sleep();
 			}
 		}
 		this.placeBoats = false;
@@ -237,6 +265,8 @@ public class BattleshipGUI extends JFrame{
 	
 		this.setVisible(false);
 	 }
+
+
 	
 	/**
 	 * Changes the title at the top of the gui.
@@ -249,7 +279,7 @@ public class BattleshipGUI extends JFrame{
 	
 	/**
 	 * Changes the message at the bottom of the gui.
-	 *@param message The new message to set.
+	 * @param message The new message to set.
 	 **/
     public void setMessage(String message){
 	this.messages.setText(message);
@@ -344,6 +374,11 @@ public class BattleshipGUI extends JFrame{
 		this.playersTurn = true;
 	}
 	
+	/**
+	 * Check if a spawn is valid for placing boat
+	 * @param spawn representing the specific spawn
+	 */
+
 	public boolean isValidSpawn(int spawn){
 		if(this.horzOrVert){
 			for(int i=0; i < boatToPlace; i++){
@@ -533,7 +568,7 @@ public class BattleshipGUI extends JFrame{
     }
 	
 	/**
-	 * Lisener for the type options buttons
+	 * Listener for the type options buttons
 	 **/
 	 
     public class typeClick implements ActionListener{
@@ -553,7 +588,33 @@ public class BattleshipGUI extends JFrame{
 			else if ( e.getSource() == BattleshipGUI.this.computerButton){
 			gameType = 3;
 			BattleshipGUI.this.typePopUp.setVisible(false);
-			BattleshipGUI.this.diffPopUp.setVisible(true);
+			BattleshipGUI.this.shipSizePopUp.setVisible(true);
+			//BattleshipGUI.this.diffPopUp.setVisible(true);
+			}
+		}
+	}
+
+	/**
+	 * Listener for the ship sizes button
+	 **/
+
+	public class sizeClick implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			if(e.getSource() == BattleshipGUI.this.reminder){
+				int [] inputSizes = Player.shipSizes;
+				boolean isValid = true;
+				
+				for(int i=0; i<5; i++){
+					if(BattleshipGUI.this.inputBoxes[i].getText().equals("")) {isValid = false; break;}
+					int userInput = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());
+					if(userInput>9 || userInput<2) {isValid = false;}
+					else inputSizes[i] = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());
+				}
+				if(isValid==true){
+					BattleshipGUI.this.shipSizePopUp.setVisible(false);
+					BattleshipGUI.this.diffPopUp.setVisible(true);
+				}
+				else reminder.setText("plz input between 2 and 9");
 			}
 		}
 	}

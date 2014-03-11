@@ -3,7 +3,9 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.util.*;
 
 /**
-   The comptuer class, extends player and uses a guess generator
+ * The comptuer class, extends player and uses a guess generator
+ * @author Wenjian Li (working since W14)
+ * @version 2.0 (CS56 Winter 2014)
 */
 
 public class Computer extends Player {
@@ -11,8 +13,8 @@ public class Computer extends Player {
     private GuessGenerator gg;
 
     /**
-       Constructs a computer player with the specified difficulty
-       @param difficulty either "EASY", "MEDIUM" or "HARD"
+     * Constructs a computer player with the specified difficulty
+     * @param difficulty either "EASY", "MEDIUM" or "HARD"
     */
     public Computer(String difficulty) {
 	super();
@@ -22,8 +24,8 @@ public class Computer extends Player {
     }
 
     /**
-       Requests a move from the computer
-       @return an int from 0-99, coming from the GuessGenerator
+     * Requests a move from the computer
+     * @return an int from 0-99, coming from the GuessGenerator
     */
     public int makeMove() {
 	return gg.nextMove();

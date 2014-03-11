@@ -5,26 +5,39 @@ import java.net.*;
 import java.util.ArrayList;
 
 /**
-   Main class for Battleship Game
+ * Main class for Battleship Game
+ * @author Wenjian Li (working since W14)
+ * @version 2.0 (CS56 Winter 2014)
 */
 
 public class BattleshipController {
     
-    public static void main(String[] args) {
+    /**
+     * Let the thread to sleep
+    */
+
+    public static void sleep(){
+	try{
+		Thread.sleep(10);
+	}
+	catch (InterruptedException e){
+	}
+    }
+
+    /**
+     * method for the game to run
+    */
+
+    public void go() {
 		BattleshipGUI gui = new BattleshipGUI();
 		gui.reset();
 		gui.setOptions();
 		
 		//Makes program wait until options have been set.
 		while(gui.getDifficulty() == null || gui.getGameType() == 0){
-			try{
-				Thread.sleep(10);
-			}
-			catch (InterruptedException e){
-			}
-		
+			BattleshipController.sleep();
 		}
-	
+
 	//Hosting a game
 	if(gui.getGameType() == 1){
 		gui.setTitle("Battleship : Player 1");
@@ -45,6 +58,7 @@ public class BattleshipController {
 			gui.setMessage("Unknown Host");
 			System.out.println("Uknown host exception: " + e);
 		}
+
 		Socket player2Socket = null;
 		try{
 			player2Socket = serverSocket.accept();
@@ -65,6 +79,7 @@ public class BattleshipController {
 			gui.setMessage("Error setting up input/output streams from Player 2");
 			System.out.println("Error setting up input/output streams from Player 2");
 		}
+
 		
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
@@ -101,18 +116,15 @@ public class BattleshipController {
 		while(true){
 			try{
 				gui.makeMove();
-				gui.setMessage("Your turn!");
+				gui.setMessage("Your turn! Now you've hit " + player1.getHitCount() + " pixels" );
 				
 				//Wait until player 1 has completed their turn
 				while(gui.getPlayersTurn()){
-					try{
-						Thread.sleep(10);
-					}
-					catch (InterruptedException e){
-					}
+					BattleshipController.sleep();
 				}
 				int p1Move = gui.getLastMove();
 				toPlayer2.println(p1Move); //Send move to player 2
+				if(gui.getEnemyBoats().contains(p1Move)) {player1.increaseHitCount();}
 				
 				//Check if you've won
 				String p2VictoryStatus = fromPlayer2.readLine();
@@ -152,11 +164,12 @@ public class BattleshipController {
 		
 		//Wait until an IP address has been entered
 		while( !gui.getIPEntered()){
-			try{
+			/*try{
 				Thread.sleep(10);
 			}
 			catch (InterruptedException e){
-			}
+			}*/
+			BattleshipController.sleep();
 		}
 		String connectTo = gui.getIP();
 
@@ -235,17 +248,14 @@ public class BattleshipController {
 					toPlayer1.println("CONTINUE");
 				
 				gui.makeMove();
-				gui.setMessage("Your turn!");
+				gui.setMessage("Your turn! Now you've hit " + player2.getHitCount() + " pixels");
 				//Halt the program until you've completed your move
 				while(gui.getPlayersTurn()){
-					try{
-						Thread.sleep(10);
-					}
-					catch (InterruptedException e){
-					}
+					BattleshipController.sleep();
 				}
 				int p2Move = gui.getLastMove();
 				toPlayer1.println(p2Move);
+				if(gui.getEnemyBoats().contains(p2Move)) {player2.increaseHitCount();}
 				
 				//Check to see if you've won
 				String p1VictoryStatus = fromPlayer1.readLine();
@@ -267,6 +277,7 @@ public class BattleshipController {
 	
 		//Setup the players
 	    Player human = new Player();
+		
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
 		human.setBoatsArrayList(gui.getPlayerBoats());
@@ -281,18 +292,15 @@ public class BattleshipController {
 		
 		//Start player's move
 		gui.makeMove();
-		gui.setMessage("Your turn!");
+		gui.setMessage("Your turn! (Now you've hit: " + human.getHitCount() + " pixels)");
 		while(gui.getPlayersTurn()){
-			try{
-				Thread.sleep(10);
-			}
-			catch (InterruptedException e){
-			}
+			BattleshipController.sleep();
 		}
 		
 		//Get player's move from GUI and send it to model
 		int humanMove = gui.getLastMove();
 		computer.addShot(humanMove);
+		if(gui.getEnemyBoats().contains(humanMove)) {human.increaseHitCount();}
 		
 		//Check win status
 		if(computer.hasLost()) {
@@ -318,5 +326,10 @@ public class BattleshipController {
 	String currentMessage = gui.getMessage();
 	gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
     }
+
+    public static void main(String[] args){
+		BattleshipController myController = new BattleshipController();
+		myController.go();
+	}
 
 }

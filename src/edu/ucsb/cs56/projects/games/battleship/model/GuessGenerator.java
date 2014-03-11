@@ -3,7 +3,9 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.util.*;
 
 /**
-   Generates guesses for the Computer
+ * Generates guesses for the Computer
+ * @author Wenjian Li (working since W14)
+ * @version 2.0 (CS56 Winter 2014)
 */
 public class GuessGenerator {
     
@@ -13,6 +15,11 @@ public class GuessGenerator {
     private ArrayList<Integer>            diagonals;
     private ArrayList<ArrayList<Integer>> smartGuesses;
     private ArrayList<Integer>            currentDirection;
+
+    /**
+     * Default constructor
+     * @param difficulty difficulty of the game
+    */
 
     public GuessGenerator(String difficulty) {
 	this.difficulty = difficulty;
@@ -32,6 +39,10 @@ public class GuessGenerator {
 	smartGuesses = new ArrayList<ArrayList<Integer>>();
     }
     
+    /**
+     * @return the next move
+    */
+
     public int nextMove() {
 	if(difficulty.equals("EASY"))
 	    return genEasyMove();
