@@ -6,10 +6,10 @@ This is a version of the game Battleship.
 
 * Current version: 2.1
 * Previous versions:
-	* version 1: See "Original developer description"
-	* version 2.0: New feature added. Player can customize ship sizes in the "against computer" mode through a new window. Illegal ship sizes will be reported to the player.
-	* version 2.1: New feature added. There will be a hit count under the game board indicating how many pixels on the opponent's ship has the player already hit.
-	* version 2.1.1: Bug fix on checking ship sizes validity. In version 2.0, if user input is not a number, program will terminate. Now fixed.
+	* version 1: See "Original developer description" (see figure 0)
+	* version 2.0: New feature added. Player can customize ship sizes in the "against computer" mode through a new window.(see figure 1) Illegal ship sizes will be reported to the player. (see figure 2)
+	* version 2.1: New feature added. There will be a hit count under the game board indicating how many pixels on the opponent's ship has the player already hit. (see figure 3)
+	* <b>version 2.1.1</b>: Bug fix on checking ship sizes validity. In version 2.0, if user input is not a number, program will terminate. Now fixed. (see figure 4)
 
 * Game description - this Battleship game has 3 modes for user to choose from: hosting a game, joining a game, and playing against a computer.
 	
@@ -25,3 +25,16 @@ The code can also be found at these links
 
 
 ![](http://i.imgur.com/bLJD2Wi.jpg)
+figure 0
+
+![](http://imgur.com/E8tnJgH)
+figure 1
+
+![](http://imgur.com/jAmS9n9)
+figure 2
+
+![](http://imgur.com/t8NVd2M)
+figure 3
+
+![](http://imgur.com/ACUXISc)
+figure 4
