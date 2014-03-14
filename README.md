@@ -27,14 +27,14 @@ The code can also be found at these links
 ![](http://i.imgur.com/bLJD2Wi.jpg)
 figure 0
 
-![](http://imgur.com/E8tnJgH)
+![](http://i.imgur.com/E8tnJgH.png)
 figure 1
 
-![](http://imgur.com/jAmS9n9)
+![](http://i.imgur.com/jAmS9n9.png)
 figure 2
 
-![](http://imgur.com/t8NVd2M)
+![](http://i.imgur.com/t8NVd2M.png)
 figure 3
 
-![](http://imgur.com/ACUXISc)
+![](http://i.imgur.com/ACUXISc.png)
 figure 4
