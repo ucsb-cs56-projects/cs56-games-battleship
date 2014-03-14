@@ -24,22 +24,20 @@ public class BattleshipController {
 	}
     }
 
-    /**
-     * method for the game to run
-    */
 
-    public void go() {
-		BattleshipGUI gui = new BattleshipGUI();
-		gui.reset();
-		gui.setOptions();
-		
-		//Makes program wait until options have been set.
+	/**
+	 * Method to make program wait until options have been set
+	*/
+	public void wait(BattleshipGUI gui){
 		while(gui.getDifficulty() == null || gui.getGameType() == 0){
 			BattleshipController.sleep();
 		}
+	}
 
-	//Hosting a game
-	if(gui.getGameType() == 1){
+	/**
+	 * Method for hosting a game
+	*/
+	public void hostGame(BattleshipGUI gui){
 		gui.setTitle("Battleship : Player 1");
 	
 		Player player1 = new Player();
@@ -155,20 +153,17 @@ public class BattleshipController {
 			}
 		}
 	}
-	
-	//Joining a game
-	if(gui.getGameType() == 2){
+
+	/**
+	 * method for joining a game
+	*/
+	public void joinGame(BattleshipGUI gui){
 		gui.setTitle("Battleship : Player 2");
 	
 		Player player2 = new Player();
 		
 		//Wait until an IP address has been entered
 		while( !gui.getIPEntered()){
-			/*try{
-				Thread.sleep(10);
-			}
-			catch (InterruptedException e){
-			}*/
 			BattleshipController.sleep();
 		}
 		String connectTo = gui.getIP();
@@ -230,6 +225,7 @@ public class BattleshipController {
 			System.out.println("Error getting boats from player1 ");
 		}	
 		
+		//Begin game
 		while(true){
 			try{
 				//Wait for player 1's move
@@ -272,9 +268,11 @@ public class BattleshipController {
 			}
 		}
 	}
-	
-	if(gui.getGameType() == 3) {
-	
+
+	/** method for playing against computer
+	 *
+	*/
+	public void playComputer(BattleshipGUI gui){
 		//Setup the players
 	    Player human = new Player();
 		
@@ -322,10 +320,48 @@ public class BattleshipController {
 		//back up to player's move
 	    }
 	}
-	//Display end of game message
-	String currentMessage = gui.getMessage();
-	gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
+
+
+
+
+
+
+    /**
+     * method for the game to run
+    */
+
+    public void go() {
+		BattleshipGUI gui = new BattleshipGUI();
+		gui.reset();
+		gui.setOptions();
+		this.wait(gui);
+		
+		
+
+	//Hosting a game
+	if(gui.getGameType() == 1){
+		this.hostGame(gui);
+	}
+	
+	//Joining a game
+	if(gui.getGameType() == 2){
+		this.joinGame(gui);
+	}
+	
+	if(gui.getGameType() == 3) {
+		this.playComputer(gui);
+	}
+	this.endOfGame(gui);
     }
+
+	/**
+	 * method for displaying end of game message
+	*/
+	public void endOfGame(BattleshipGUI gui){
+		String currentMessage = gui.getMessage();
+		gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
+	}
+
 
     public static void main(String[] args){
 		BattleshipController myController = new BattleshipController();

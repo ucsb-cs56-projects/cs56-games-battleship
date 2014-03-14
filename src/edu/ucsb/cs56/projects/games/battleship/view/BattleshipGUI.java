@@ -589,13 +589,13 @@ public class BattleshipGUI extends JFrame{
 			gameType = 3;
 			BattleshipGUI.this.typePopUp.setVisible(false);
 			BattleshipGUI.this.shipSizePopUp.setVisible(true);
-			//BattleshipGUI.this.diffPopUp.setVisible(true);
 			}
 		}
 	}
 
 	/**
 	 * Listener for the ship sizes button
+	 * once the user clicks the proceed button, texts in the 5 text fields will be check by isValid() method, and if all of them are valid, program will read in the 5 numbers into the shipSizes array and send the message of clicking to GUI
 	 **/
 
 	public class sizeClick implements ActionListener{
