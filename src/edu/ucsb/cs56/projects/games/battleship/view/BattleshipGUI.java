@@ -589,13 +589,13 @@ public class BattleshipGUI extends JFrame{
 			gameType = 3;
 			BattleshipGUI.this.typePopUp.setVisible(false);
 			BattleshipGUI.this.shipSizePopUp.setVisible(true);
-			//BattleshipGUI.this.diffPopUp.setVisible(true);
 			}
 		}
 	}
 
 	/**
 	 * Listener for the ship sizes button
+	 * once the user clicks the proceed button, texts in the 5 text fields will be check by isValid() method, and if all of them are valid, program will read in the 5 numbers into the shipSizes array and send the message of clicking to GUI
 	 **/
 
 	public class sizeClick implements ActionListener{
@@ -605,10 +605,9 @@ public class BattleshipGUI extends JFrame{
 				boolean isValid = true;
 				
 				for(int i=0; i<5; i++){
-					if(BattleshipGUI.this.inputBoxes[i].getText().equals("")) {isValid = false; break;}
-					int userInput = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());
-					if(userInput>9 || userInput<2) {isValid = false;}
-					else inputSizes[i] = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());
+					String input = BattleshipGUI.this.inputBoxes[i].getText();
+					if(BattleshipGUI.isValid(input)==true) {inputSizes[i] = Integer.parseInt(BattleshipGUI.this.inputBoxes[i].getText());}
+					else {isValid=false; break;}
 				}
 				if(isValid==true){
 					BattleshipGUI.this.shipSizePopUp.setVisible(false);
@@ -617,6 +616,16 @@ public class BattleshipGUI extends JFrame{
 				else reminder.setText("plz input between 2 and 9");
 			}
 		}
+	}
+
+	/**
+	 * Method exlusively for ship sizes button listener to check validity of user input
+	 **/
+	public static boolean isValid(String input){
+		if(input.equals("") || input.length()!=1) return false;
+		char character = input.charAt(0);
+		if(character>'9' || character<'2') return false;
+		return true;
 	}
 	
 	/**
