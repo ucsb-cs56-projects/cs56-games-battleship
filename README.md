@@ -2,6 +2,12 @@
 
 This is an extended version of the game Battleship. 
 
+project history
+===============
+```
+ W14 | andrewberls 5pm | OliverHKU  | Battleship game
+```
+
 * Original developer description - the Milton Bradley board game that has won the hearts of children for over four decades. It will be single-player (vs. computer) and will have various difficulty settings (easy, normal, hard).  You can also host/join games and play against your friends online WITH THE POWER OF JAVA NETWORKING!
 
 * Current version: 2.1.1
