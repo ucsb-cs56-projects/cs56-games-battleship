@@ -16,8 +16,8 @@ import java.util.*;
 public class BattleshipGUI extends JFrame{
 
 	//GUI recorded information
-    	private String difficulty = null;
-    	private int gameType = 0;
+   	private String difficulty = null;
+   	private int gameType = 0;
 	private int lastMove;
 	private int xLoc;
 	private int yLoc;
