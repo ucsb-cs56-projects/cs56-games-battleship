@@ -287,39 +287,39 @@ public class BattleshipController {
 		
 		//Start the game
 	    while(true) {
-		
-		//Start player's move
-		gui.makeMove();
-		gui.setMessage("Your turn! (Now you've hit: " + human.getHitCount() + " pixels)");
-		while(gui.getPlayersTurn()){
-			BattleshipController.sleep();
-		}
-		
-		//Get player's move from GUI and send it to model
-		int humanMove = gui.getLastMove();
-		computer.addShot(humanMove);
-		if(gui.getEnemyBoats().contains(humanMove)) {human.increaseHitCount();}
-		
-		//Check win status
-		if(computer.hasLost()) {
-		    gui.setMessage("CONGRATULATIONS, YOU WIN!");
-		    break;
-		}
-		
-		//Start computer's move
-		int computerMove = computer.makeMove();
-		gui.addShot(gui.shiftToPlayerGrid(computerMove));
-		human.addShot(computerMove);
-		computer.updateGuessGrid(computerMove, gui.hitPlayer(gui.shiftToPlayerGrid(computerMove)));
-		
-		//Check win status
-		if(human.hasLost()) {
-		    gui.setMessage("OH NO, YOU LOSE!");
-		    break;
-		}
-		//back up to player's move
-	    }
-	}
+
+            //Start player's move
+            gui.makeMove();
+            gui.setMessage("Your turn! (Now you've hit: " + human.getHitCount() + " pixels)");
+            while(gui.getPlayersTurn()){
+                BattleshipController.sleep();
+            }
+
+            //Get player's move from GUI and send it to model
+            int humanMove = gui.getLastMove();
+            computer.addShot(humanMove);
+            if(gui.getEnemyBoats().contains(humanMove)) {human.increaseHitCount();}
+
+            //Check win status
+            if(computer.hasLost()) {
+                gui.setMessage("CONGRATULATIONS, YOU WIN!");
+                break;
+            }
+
+            //Start computer's move
+            int computerMove = computer.makeMove();
+            gui.addShot(gui.shiftToPlayerGrid(computerMove));
+            human.addShot(computerMove);
+            computer.updateGuessGrid(computerMove, gui.hitPlayer(gui.shiftToPlayerGrid(computerMove)));
+
+            //Check win status
+            if(human.hasLost()) {
+                gui.setMessage("OH NO, YOU LOSE!");
+                break;
+            }
+            //back up to player's move
+        }
+    }
 
 
 
@@ -338,20 +338,20 @@ public class BattleshipController {
 		
 		
 
-	//Hosting a game
-	if(gui.getGameType() == 1){
-		this.hostGame(gui);
-	}
+        //Hosting a game
+        if(gui.getGameType() == 1){
+            this.hostGame(gui);
+        }
 	
-	//Joining a game
-	if(gui.getGameType() == 2){
-		this.joinGame(gui);
-	}
+        //Joining a game
+        if(gui.getGameType() == 2){
+            this.joinGame(gui);
+        }
 	
-	if(gui.getGameType() == 3) {
-		this.playComputer(gui);
-	}
-	this.endOfGame(gui);
+        if(gui.getGameType() == 3) {
+            this.playComputer(gui);
+        }
+        this.endOfGame(gui);
     }
 
 	/**
