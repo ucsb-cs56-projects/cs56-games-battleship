@@ -30,10 +30,13 @@ public class Player {
 	*/
 	public int getHitCount() {return this.hitCount;}
 
+    // public int[] getShipSizes() {return this.shipSizes;}
+
 	/**
 	 * Increase hit count with 1
 	*/
 	public void increaseHitCount() {this.hitCount++;}
+
 	
 	/**
 	 * Randomly generate a set of boats for this player

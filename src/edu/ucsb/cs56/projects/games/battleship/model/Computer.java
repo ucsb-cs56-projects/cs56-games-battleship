@@ -17,10 +17,17 @@ public class Computer extends Player {
      * @param difficulty either "EASY", "MEDIUM" or "HARD"
     */
     public Computer(String difficulty) {
-	super();
-	super.randomGenerateBoats();
+        super();
+        super.randomGenerateBoats();
 
-	gg = new GuessGenerator(difficulty);
+        // gg = new GuessGenerator(difficulty);
+    }
+
+    public Computer(String difficulty, ArrayList<Integer> player_boats) {
+        super();
+        super.randomGenerateBoats();
+        
+        gg = new GuessGenerator(difficulty, player_boats);
     }
 
     /**
@@ -28,13 +35,13 @@ public class Computer extends Player {
      * @return an int from 0-99, coming from the GuessGenerator
     */
     public int makeMove() {
-	return gg.nextMove();
+        return gg.nextMove();
     }
     
 	/**
 	 * Sends information to the guess generator so we can have a 'smart' computer
 	 */
     public void updateGuessGrid(int location, String status) {
-	gg.processResult(location, status);
+        gg.processResult(location, status);
     }
 }
