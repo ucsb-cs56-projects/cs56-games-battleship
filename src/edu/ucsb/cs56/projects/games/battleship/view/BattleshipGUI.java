@@ -56,7 +56,7 @@ public class BattleshipGUI extends JFrame{
 
 	//Select ship sizes frame popup
 	private JFrame shipSizePopUp = new JFrame();
-	private JButton reminder = new JButton("input sizes of ships you want, click to proceed");
+	private JButton reminder = new JButton("Input sizes of ships (between 2 and 9), then click to proceed");
 	private JPanel shipSizePanel = new JPanel();
 	private JTextField ship1 = new JTextField(5);
 	private JTextField ship2 = new JTextField(5);
@@ -666,7 +666,7 @@ public class BattleshipGUI extends JFrame{
 					BattleshipGUI.this.shipSizePopUp.setVisible(false);
 					BattleshipGUI.this.diffPopUp.setVisible(true);
 				}
-				else reminder.setText("plz input between 2 and 9");
+				else reminder.setText("Please input sizes between 2 and 9");
 			}
 		}
 	}
