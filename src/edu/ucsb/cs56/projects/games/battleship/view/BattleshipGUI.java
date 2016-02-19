@@ -685,7 +685,6 @@ public class BattleshipGUI extends JFrame{
             else if(e.getSource() == BattleshipGUI.this.newShipsButton) {
                 replayType = 2;
                 BattleshipGUI.this.setVisible(false);
-                BattleshipGUI.this.shipSizePopUp.setVisible(true);
                 BattleshipGUI.this.playAgainPopUp.setVisible(false);
             }
             else if(e.getSource() == BattleshipGUI.this.mainMenuButton) {
