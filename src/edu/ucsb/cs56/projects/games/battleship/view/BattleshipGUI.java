@@ -174,6 +174,7 @@ public class BattleshipGUI extends JFrame{
         this.playAgainPopUp.setSize(600,100);
         
         //Add shipColor buttons and dropdown listeners *Incomplete*
+        this.colorSelect.addActionListener(this.new colorClick());
 
         //Setup IP popup
         GridLayout threeWidgetVerticleGrid = new GridLayout(3,1);
@@ -682,6 +683,19 @@ public class BattleshipGUI extends JFrame{
 			}
 		}
 	}
+
+    /**
+     * Listener for the color selection menu's continue button
+     * when the user clicks the button, check to see that the dropdown menu was checked
+     * and if it was checked, then continue, otherwise display a new message
+     * telling the user to select a color
+     **/
+
+    public class colorClick implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+
+        }
+    }
 
     /**
      * Listener for the play again options
