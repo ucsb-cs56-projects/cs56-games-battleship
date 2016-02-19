@@ -64,6 +64,12 @@ public class BattleshipGUI extends JFrame{
 	private JTextField ship4 = new JTextField(5);
 	private JTextField ship5 = new JTextField(5);
 	private JTextField [] inputBoxes = {ship1, ship2, ship3, ship4, ship5};
+
+    //Color selection frame popup *Incomplete*
+    private JFrame colorPopUp = new JFrame();
+    private JButton colorSelect = new JButton("Select a color, then click to proceed");
+    String [] colorList = {"Black", "Blue", "Green", "Orange", "Pink", "Red", "White", "Yellow"};
+    private JComboBox colorDrop = new JComboBox(colorList);
 	
 	//Join IP frame popup
 	private JFrame ipPopUp = new JFrame();
@@ -162,6 +168,12 @@ public class BattleshipGUI extends JFrame{
             this.shipSizePanel.add(this.inputBoxes[i]);
         }
         this.shipSizePopUp.getContentPane().add(BorderLayout.CENTER, shipSizePanel);
+
+        //Setup colorPopUp *Incomplete*
+        this.colorPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.playAgainPopUp.setSize(600,100);
+        
+        //Add shipColor buttons and dropdown listeners *Incomplete*
 
         //Setup IP popup
         GridLayout threeWidgetVerticleGrid = new GridLayout(3,1);
