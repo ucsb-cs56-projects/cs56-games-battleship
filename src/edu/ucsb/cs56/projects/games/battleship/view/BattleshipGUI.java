@@ -143,7 +143,7 @@ public class BattleshipGUI extends JFrame{
         //Setup playAgain popup
         this.playAgainPopUp.setLayout(threeButtonGrid);
         this.playAgainPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.playAgainPopUp.setSize(800,100);
+        this.playAgainPopUp.setSize(1200,100);
         
         //Add playAgain button listeners
         this.playAgainButton.addActionListener(this.new playAgainClick());
@@ -301,15 +301,32 @@ public class BattleshipGUI extends JFrame{
         }
 
 
-        public void resetShips(int game_type) {
+        public void resetPlace() {
             this.difficulty = null;
             this.prompt = true;
             this.lastMove = 0;
-            this.gameType = game_type; 
+            this.gameType = 3;
             this.playersTurn = false;
             this.ipEntered = false;
             this.replay = true;
+             
+            this.playerBoats = new ArrayList<Integer>();
+            this.enemyBoats = new ArrayList<Integer>();
+            this.shots = new ArrayList<Integer>();
+        
+            this.setVisible(false);
+            this.diffPopUp.setVisible(true);
+        
+        }
+
+        public void resetShips() {
+            this.difficulty = null;
             this.prompt = true;
+            this.lastMove = 0;
+            this.gameType = 3; 
+            this.playersTurn = false;
+            this.ipEntered = false;
+            this.replay = true;
 
 
             this.playerBoats = new ArrayList<Integer>();
