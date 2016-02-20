@@ -84,26 +84,6 @@
     </jar>
   </target>
 
-  <!-- publish -->
-  <target name="publish" depends="jar,javadoc,dist">
-    <mkdir dir="${webRoot}/${projectName}" />
-    <delete dir="${webRoot}/${projectName}/browse" />
-    <mkdir dir="${webRoot}/${projectName}/browse" />
-    <delete dir="${webRoot}/${projectName}/download" />
-    <mkdir dir="${webRoot}/${projectName}/download" />
-    <copy todir="${webRoot}/${projectName}/download" >
-      <fileset dir="download"/>
-      <fileset dir="dist" />
-    </copy>
-    <copy file="build.xml" todir="${webRoot}/${projectName}/browse"/>
-    <copy todir="${webRoot}/${projectName}/browse/src" >
-      <fileset dir="src"/>
-    </copy> 
-    <chmod dir="${webRoot}/${projectName}"
-	   perm="755" type="both" includes="**/*"/>
-    <echo>Project published to ${webBaseUrl}/${projectName}</echo>
-  </target> 
-
   <!-- dist -->
   <target name="dist" depends="compile">
     <delete quiet="true">                                                           
