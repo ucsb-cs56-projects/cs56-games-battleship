@@ -24,6 +24,7 @@ public class BattleshipGUI extends JFrame{
 	private int yLoc;
 	private int boatToPlace;
 	private int boatSpawn;
+    private Color shipColor = Color.DARK_GRAY;
 	private boolean playersTurn = false;
 	private boolean ipEntered = false;
 	private boolean replay = true;
@@ -67,8 +68,8 @@ public class BattleshipGUI extends JFrame{
 
     //Color selection frame popup *Incomplete*
     private JFrame colorPopUp = new JFrame();
-    private JButton colorSelect = new JButton("Select a color, then click to proceed");
-    String [] colorList = {"Black", "Blue", "Green", "Orange", "Pink", "Red", "White", "Yellow"};
+    private JButton colorSelectButton = new JButton("Select a color, then click to proceed");
+    String [] colorList = {"Black", "Blue", "Green", "Orange", "Pink", "White", "Yellow"};
     private JComboBox colorDrop = new JComboBox(colorList);
 	
 	//Join IP frame popup
@@ -136,6 +137,7 @@ public class BattleshipGUI extends JFrame{
         this.joinButton.addActionListener(this.new typeClick());
         this.computerButton.addActionListener(this.new typeClick());
 
+        //Add type buttons to window
         this.typePopUp.add(hostButton);
         this.typePopUp.add(joinButton);
         this.typePopUp.add(computerButton);
@@ -150,6 +152,7 @@ public class BattleshipGUI extends JFrame{
         this.newShipsButton.addActionListener(this.new playAgainClick());
         this.mainMenuButton.addActionListener(this.new playAgainClick());
 
+        //Add playAgain buttons to window
         this.playAgainPopUp.add(playAgainButton);
         this.playAgainPopUp.add(newShipsButton);
         this.playAgainPopUp.add(mainMenuButton);
@@ -171,10 +174,15 @@ public class BattleshipGUI extends JFrame{
 
         //Setup colorPopUp *Incomplete*
         this.colorPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.playAgainPopUp.setSize(600,100);
+        this.colorPopUp.setSize(600,100);
         
         //Add shipColor buttons and dropdown listeners *Incomplete*
-        this.colorSelect.addActionListener(this.new colorClick());
+        this.colorSelectButton.addActionListener(this.new colorClick());
+        //this.colorDrop.addActionListener(this.new colorDropSelect());
+
+        //Add buttons and dropdown to window
+        this.colorPopUp.getContentPane().add(BorderLayout.CENTER, colorDrop);
+        this.colorPopUp.getContentPane().add(BorderLayout.SOUTH, colorSelectButton);
 
         //Setup IP popup
         GridLayout threeWidgetVerticleGrid = new GridLayout(3,1);
@@ -556,7 +564,7 @@ public class BattleshipGUI extends JFrame{
                         else if(shots.contains(loc) && (playerBoats.contains(loc) || enemyBoats.contains(loc)))
                             g2d.setColor(Color.RED);
                         else if(playerBoats.contains(loc))
-                            g2d.setColor(Color.DARK_GRAY);
+                            g2d.setColor(shipColor);
                         else if(shots.contains(loc))
                             g2d.setColor(ocean.darker());
                         else g2d.setColor(ocean);
@@ -581,7 +589,7 @@ public class BattleshipGUI extends JFrame{
                 int topLeftX = xLoc - cellWidth/2;
                 int topLeftY = yLoc - cellWidth/2;
                 if(placeBoats && horzOrVert){ //Draw boat to be placed horizontally
-                    g2d.setColor(Color.DARK_GRAY);
+                    g2d.setColor(shipColor);
                     g2d.fillRect(topLeftX, topLeftY, boatToPlace*cellWidth, cellWidth);
 
                     g2d.setColor(Color.GRAY);
@@ -652,7 +660,7 @@ public class BattleshipGUI extends JFrame{
             else if ( e.getSource() == BattleshipGUI.this.computerButton){
                 gameType = 3;
                 BattleshipGUI.this.typePopUp.setVisible(false);
-                BattleshipGUI.this.shipSizePopUp.setVisible(true);
+                BattleshipGUI.this.colorPopUp.setVisible(true);
 			}
 		}
 	}
@@ -686,16 +694,31 @@ public class BattleshipGUI extends JFrame{
 
     /**
      * Listener for the color selection menu's continue button
-     * when the user clicks the button, check to see that the dropdown menu was checked
-     * and if it was checked, then continue, otherwise display a new message
-     * telling the user to select a color
+     * when the user clicks the button it will move onto the ship size
+     * selection menu
      **/
 
-    public class colorClick implements ActionListener{
+    public class colorClick implements ActionListener{ //*Incomplete*
         public void actionPerformed(ActionEvent e){
-
+            if (e.getSource() == BattleshipGUI.this.colorSelectButton){
+                BattleshipGUI.this.colorPopUp.setVisible(false);
+                BattleshipGUI.this.shipSizePopUp.setVisible(true);
+            }
         }
     }
+
+    /**
+    * Listener for the color selection menu's dropdown button
+    * when the user selects a color it will set shipColor to that color
+    **/
+
+    /*
+    public class colorDropSelect implements ActionListener{ //*Incomplete*
+        public void actionPerformed(ActionEvent e){
+            if(e.getSource() == BattleshipGUI.this.colorSelectButton)
+        }
+    }
+    */
 
     /**
      * Listener for the play again options
