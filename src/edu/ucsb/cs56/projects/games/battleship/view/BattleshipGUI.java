@@ -6,6 +6,7 @@ import java.util.*;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.URL;
+import java.net.MalformedURLException;
 
 /**
  * A gui class for playing battleship.
@@ -36,6 +37,8 @@ public class BattleshipGUI extends JFrame{
 	private boolean boatPlaced = false;
 	private boolean horzOrVert = true; //true for horizontal false for verticle
     private boolean audio = true;
+    private AudioClip shipPlace;
+    private URL audioURL;
 	
 	//GUI's knowledge bank. Used for GameGrid cell coloring
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
@@ -213,6 +216,10 @@ public class BattleshipGUI extends JFrame{
         this.ipPopUp.getContentPane().add(BorderLayout.NORTH,ipRequest);
         this.ipPopUp.getContentPane().add(BorderLayout.CENTER,ipField);
         this.ipPopUp.getContentPane().add(BorderLayout.SOUTH,ipMessage);
+        
+        audioURL = this.getClass().getResource("/../sfx/ship_play.wav");
+        shipPlace = Applet.newAudioClip(audioURL);
+        
     }
 
     /**
@@ -864,6 +871,11 @@ public class BattleshipGUI extends JFrame{
 					if(isValidSpawn(spawn)){ //Place the boat on click if the spawn location is valid
 						boatPlaced = true;
 						placeBoat(spawn);
+    
+                        if(audio){
+                            shipPlace.play();
+                        }
+    
 						BattleshipGUI.this.repaint();
 					}
 				}
@@ -895,3 +907,4 @@ public class BattleshipGUI extends JFrame{
 		public void keyTyped(KeyEvent e){}
 	}
 }
+
