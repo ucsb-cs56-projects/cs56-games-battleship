@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.URL;
 
 /**
  * A gui class for playing battleship.
@@ -32,6 +35,7 @@ public class BattleshipGUI extends JFrame{
 	private boolean placeBoats = false;
 	private boolean boatPlaced = false;
 	private boolean horzOrVert = true; //true for horizontal false for verticle
+    private boolean audio = true;
 	
 	//GUI's knowledge bank. Used for GameGrid cell coloring
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
@@ -87,6 +91,10 @@ public class BattleshipGUI extends JFrame{
     //Game board component
     private GameGrid board = new GameGrid();
 
+    //Audio muted/unmuted checkbox
+    private JPanel audioPanel = new JPanel();
+    private JCheckBox audioMute = new JCheckBox("Mute");
+
     /**
      * Default constructor for the class. Sets everything up.
      **/
@@ -103,6 +111,14 @@ public class BattleshipGUI extends JFrame{
         this.board.addMouseMotionListener(this.new mouseMove());
         this.board.addKeyListener(this.new changeOrientation());
         this.getContentPane().add(BorderLayout.CENTER,board);
+        this.getContentPane().setBackground(Color.WHITE);
+
+        //Add audio controls
+        audioPanel.setLayout(new BorderLayout());
+        audioPanel.setBackground(Color.WHITE);
+        this.getContentPane().add(BorderLayout.EAST,audioPanel);
+        audioMute.setBackground(Color.WHITE);
+        audioPanel.add(audioMute, BorderLayout.SOUTH);
 
 
         //Add messages
