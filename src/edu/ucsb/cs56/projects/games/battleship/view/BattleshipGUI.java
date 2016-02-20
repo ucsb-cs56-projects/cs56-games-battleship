@@ -91,7 +91,7 @@ public class BattleshipGUI extends JFrame{
     //Game board component
     private GameGrid board = new GameGrid();
 
-    //Audio muted/unmuted checkbox
+    //Audio muted/unmuted checkbox *Incomplete*
     private JPanel audioPanel = new JPanel();
     private JCheckBox audioMute = new JCheckBox("Mute");
 
@@ -113,12 +113,13 @@ public class BattleshipGUI extends JFrame{
         this.getContentPane().add(BorderLayout.CENTER,board);
         this.getContentPane().setBackground(Color.WHITE);
 
-        //Add audio controls
+        //Add audio controls *Incomplete*
         audioPanel.setLayout(new BorderLayout());
         audioPanel.setBackground(Color.WHITE);
         this.getContentPane().add(BorderLayout.EAST,audioPanel);
         audioMute.setBackground(Color.WHITE);
         audioPanel.add(audioMute, BorderLayout.SOUTH);
+        audioMute.addItemListener(new audioCheck());
 
 
         //Add messages
@@ -724,6 +725,21 @@ public class BattleshipGUI extends JFrame{
 			}
 		}
 	}
+
+    /**
+    * Listener for the mute check box
+    * audio is muted when checked and unmuted when unchecked
+    **/
+
+    public class audioCheck implements ItemListener{
+        public void itemStateChanged(ItemEvent e){
+            JCheckBox cb = (JCheckBox) e.getSource();
+            if(cb.isSelected())
+                audio = false;
+            else
+                audio = true;
+        }
+    }
 
     /**
      * Listener for the color selection menu's continue button
