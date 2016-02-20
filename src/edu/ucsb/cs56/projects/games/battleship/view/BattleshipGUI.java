@@ -69,7 +69,7 @@ public class BattleshipGUI extends JFrame{
     //Color selection frame popup *Incomplete*
     private JFrame colorPopUp = new JFrame();
     private JButton colorSelectButton = new JButton("Select a color, then click to proceed");
-    String [] colorList = {"Black", "Blue", "Green", "Orange", "Pink", "White", "Yellow"};
+    String [] colorList = {"Default", "Black", "Blue", "Green", "Orange", "Pink", "White", "Yellow"};
     private JComboBox colorDrop = new JComboBox(colorList);
 	
 	//Join IP frame popup
@@ -178,7 +178,7 @@ public class BattleshipGUI extends JFrame{
         
         //Add shipColor buttons and dropdown listeners *Incomplete*
         this.colorSelectButton.addActionListener(this.new colorClick());
-        //this.colorDrop.addActionListener(this.new colorDropSelect());
+        this.colorDrop.addActionListener(this.new colorDropSelect());
 
         //Add buttons and dropdown to window
         this.colorPopUp.getContentPane().add(BorderLayout.CENTER, colorDrop);
@@ -729,13 +729,40 @@ public class BattleshipGUI extends JFrame{
     * when the user selects a color it will set shipColor to that color
     **/
 
-    /*
     public class colorDropSelect implements ActionListener{ //*Incomplete*
         public void actionPerformed(ActionEvent e){
-            if(e.getSource() == BattleshipGUI.this.colorSelectButton)
+            JComboBox combo = (JComboBox)e.getSource();
+            switch((String)combo.getSelectedItem()){
+                case "Default":
+                    shipColor = Color.DARK_GRAY;
+                    break;
+                case "Black":
+                    shipColor = Color.BLACK;
+                    break;
+                case "Blue":
+                    shipColor = Color.BLUE;
+                    break;
+                case "Green":
+                    shipColor = Color.GREEN;
+                    break;
+                case "Orange":
+                    shipColor = Color.ORANGE;
+                    break;
+                case "Pink":
+                    shipColor = Color.PINK;
+                    break;
+                case "White":
+                    shipColor = Color.WHITE;
+                    break;
+                case "Yellow":
+                    shipColor = Color.YELLOW;
+                    break;
+                default:
+                    break;
+            }
         }
     }
-    */
+    
 
     /**
      * Listener for the play again options
