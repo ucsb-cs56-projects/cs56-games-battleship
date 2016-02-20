@@ -66,7 +66,7 @@ public class BattleshipGUI extends JFrame{
 	private JTextField ship5 = new JTextField(5);
 	private JTextField [] inputBoxes = {ship1, ship2, ship3, ship4, ship5};
 
-    //Color selection frame popup *Incomplete*
+    //Color selection frame popup 
     private JFrame colorPopUp = new JFrame();
     private JButton colorSelectButton = new JButton("Select a color, then click to proceed");
     String [] colorList = {"Default", "Black", "Blue", "Green", "Orange", "Pink", "White", "Yellow"};
@@ -172,11 +172,11 @@ public class BattleshipGUI extends JFrame{
         }
         this.shipSizePopUp.getContentPane().add(BorderLayout.CENTER, shipSizePanel);
 
-        //Setup colorPopUp *Incomplete*
+        //Setup colorPopUp
         this.colorPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.colorPopUp.setSize(600,100);
         
-        //Add shipColor buttons and dropdown listeners *Incomplete*
+        //Add shipColor buttons and dropdown listeners
         this.colorSelectButton.addActionListener(this.new colorClick());
         this.colorDrop.addActionListener(this.new colorDropSelect());
 
@@ -715,7 +715,7 @@ public class BattleshipGUI extends JFrame{
      * selection menu
      **/
 
-    public class colorClick implements ActionListener{ //*Incomplete*
+    public class colorClick implements ActionListener{ 
         public void actionPerformed(ActionEvent e){
             if (e.getSource() == BattleshipGUI.this.colorSelectButton){
                 BattleshipGUI.this.colorPopUp.setVisible(false);
@@ -729,7 +729,7 @@ public class BattleshipGUI extends JFrame{
     * when the user selects a color it will set shipColor to that color
     **/
 
-    public class colorDropSelect implements ActionListener{ //*Incomplete*
+    public class colorDropSelect implements ActionListener{
         public void actionPerformed(ActionEvent e){
             JComboBox combo = (JComboBox)e.getSource();
             switch((String)combo.getSelectedItem()){
