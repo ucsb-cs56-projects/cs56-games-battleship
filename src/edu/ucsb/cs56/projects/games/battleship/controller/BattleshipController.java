@@ -359,32 +359,31 @@ public class BattleshipController {
 	public void endOfGame(BattleshipGUI gui){
 		String currentMessage = gui.getMessage();
 		gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
-        gui.playAgain();
-        this.waitReplay(gui);
-        this.playAgain(gui);
+        if(gui.getGameType() == 3) {
+            gui.playAgain();
+            this.waitReplay(gui);
+            this.playAgain(gui);
+        }
         
 	}
 
     public void playAgain(BattleshipGUI gui){
         if(gui.getReplayType() == 1) {
             gui.end();
+            gui = new BattleshipGUI();
+            gui.resetPlace();
+            this.wait(gui);
+
+            this.playComputer(gui);
+            this.endOfGame(gui);
         }
         if(gui.getReplayType() == 2) {
             gui.end();
-            int game_type = gui.getGameType();
             gui = new BattleshipGUI();
-            gui.resetShips(game_type);
+            gui.resetShips();
             this.wait(gui);
 
-            if(gui.getGameType() == 1) {
-                this.hostGame(gui);
-            }
-            if(gui.getGameType() == 2) {
-                this.joinGame(gui);
-            }
-            if(gui.getGameType() == 3) {
-                this.playComputer(gui);
-            }
+            this.playComputer(gui);
             this.endOfGame(gui);
         }
         if(gui.getReplayType() == 3) {
