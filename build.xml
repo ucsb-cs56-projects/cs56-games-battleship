@@ -13,7 +13,7 @@
   <!-- beginning of targets -->
 
   <!-- compile -->
-  <target name="compile">
+  <target name="compile" description="Compile the code">
     <mkdir dir="build" />
     <javac srcdir="src" destdir="build" includeantruntime="false">
       <classpath>
@@ -34,7 +34,7 @@
   </target>
 
   <!-- clean -->
-  <target name="clean">
+  <target name="clean" description="Clean up the project directory.">
     <delete dir="build" quiet="true" />
     <delete dir="javadoc" quiet="true" />
     <delete dir="dist" quiet="true" />
@@ -43,7 +43,7 @@
   </target>
 
   <!-- javadoc -->
-  <target name="javadoc" depends="compile">
+  <target name="javadoc" depends="compile" description="Generate a javadoc in the javadoc subdirectory.">
         <delete dir="javadoc" quiet="true" />       
    <javadoc  destdir="javadoc" author="true" version="true" use="true" >
       <fileset dir="src" includes="**/*.java"/>
@@ -61,7 +61,7 @@
   </target>
 
   <!-- test -->
-  <target name="test" depends="compile">
+  <target name="test" depends="compile" description="Run junit tests">
     <junit haltonerror="no" haltonfailure="no">
      <classpath>
 	<pathelement location="lib/junit-4.8.2.jar" />
@@ -77,7 +77,7 @@
   </target>
 
   <!-- jar -->
-  <target name="jar" depends="compile">
+  <target name="jar" depends="compile" description="Generate a jar file in the dist directory">
     <jar destfile="${projectName}.jar" basedir="build" >
       <manifest>
 	<attribute name="Main-Class" value="${mainClass}" />      </manifest>
