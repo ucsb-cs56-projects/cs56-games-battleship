@@ -125,7 +125,7 @@ public class BattleshipGUI extends JFrame{
         this.getContentPane().add(BorderLayout.SOUTH, messages);
 
         this.pack(); // For some reason this code is necessary to give the board focus
-        this.setSize(500,500);
+        this.setSize(350,500);
         this.board.requestFocusInWindow();
 
         //setup difficulty options popup
@@ -577,7 +577,7 @@ public class BattleshipGUI extends JFrame{
             public void paintComponent(Graphics g)
             {
 
-                width = this.getWidth();
+                width = this.getWidth() + 50; //50 added to accomodate for mute box
                 height = this.getHeight();		
                 cellWidth = height/21;
                 startX = (width - (cellWidth*10))/2;
