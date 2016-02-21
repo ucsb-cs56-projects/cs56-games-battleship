@@ -660,7 +660,7 @@ public class BattleshipGUI extends JFrame{
                     }
                 }
                 else if(placeBoats){ //Draw boat to be places vertically 
-                    g2d.setColor(Color.DARK_GRAY);
+                    g2d.setColor(shipColor);
                     g2d.fillRect( topLeftX, topLeftY, cellWidth, boatToPlace*cellWidth);
 
                     g2d.setColor(Color.GRAY);
