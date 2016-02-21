@@ -6,7 +6,11 @@ import java.util.*;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.URL;
-import java.net.MalformedURLException;
+import java.io.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 
 /**
  * A gui class for playing battleship.
@@ -39,6 +43,7 @@ public class BattleshipGUI extends JFrame{
     private boolean audio = true;
     private AudioClip shipPlace;
     private URL audioURL;
+    private Clip clip;
 	
 	//GUI's knowledge bank. Used for GameGrid cell coloring
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
@@ -217,8 +222,19 @@ public class BattleshipGUI extends JFrame{
         this.ipPopUp.getContentPane().add(BorderLayout.CENTER,ipField);
         this.ipPopUp.getContentPane().add(BorderLayout.SOUTH,ipMessage);
         
-        audioURL = this.getClass().getResource("/../sfx/ship_play.wav");
-        shipPlace = Applet.newAudioClip(audioURL);
+        audioURL = this.getClass().getResource("sfx/ship_place.wav");
+        //shipPlace = Applet.newAudioClip(audioURL);
+        try{
+            AudioInputStream shipPlace = AudioSystem.getAudioInputStream(audioURL);
+            clip = AudioSystem.getClip();
+            clip.open(shipPlace);
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println(e);
+        } catch (LineUnavailableException e) {
+            System.out.println(e);
+        } catch (IOException e){
+            System.out.println(e);
+        }
         
     }
 
@@ -873,7 +889,8 @@ public class BattleshipGUI extends JFrame{
 						placeBoat(spawn);
     
                         if(audio){
-                            shipPlace.play();
+                            clip.start();
+                            clip.setMicrosecondPosition(0);
                         }
     
 						BattleshipGUI.this.repaint();
