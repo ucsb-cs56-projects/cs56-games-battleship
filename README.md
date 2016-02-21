@@ -56,29 +56,31 @@ Figure 1
 
 
 
-![](http://imgur.com/PnBQ9Lu)
+![](http://i.imgur.com/PnBQ9Lu.png)
 
 Figure 2
 
 
 
-![](http://imgur.com/1iNCHmp)
+![](http://i.imgur.com/1iNCHmp.png)
 
 Figure 3
 
 
 
-![](http://imgur.com/djezD7F)
+![](http://i.imgur.com/djezD7F.png)
 
 Figure 4
 
 
 
-![](http://imgur.com/svm5tkM)
+![](http://i.imgur.com/svm5tkM.png)
 
 Figure 5
 
-![](http://imgur.com/tFAAbk8)
+
+
+![](http://i.imgur.com/tFAAbk8.png)
 
 Figure 6
 
