@@ -47,6 +47,7 @@ public class BattleshipGUI extends JFrame{
     public URL missURL;
     public URL winURL;
     public URL loseURL;
+    public URL cantPlaceURL;
     public Clip clip;
 	
 	//GUI's knowledge bank. Used for GameGrid cell coloring
@@ -174,7 +175,7 @@ public class BattleshipGUI extends JFrame{
         //Setup playAgain popup
         this.playAgainPopUp.setLayout(threeButtonGrid);
         this.playAgainPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.playAgainPopUp.setSize(1200,100);
+        this.playAgainPopUp.setSize(800,100);
         
         //Add playAgain button listeners
         this.playAgainButton.addActionListener(this.new playAgainClick());
@@ -231,6 +232,7 @@ public class BattleshipGUI extends JFrame{
         missURL = this.getClass().getResource("sfx/miss_splash.wav");
         winURL = this.getClass().getResource("sfx/victory.wav");
         loseURL = this.getClass().getResource("sfx/failure.wav");
+        cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.wav");
         
         
         //shipPlace = Applet.newAudioClip(audioURL);
@@ -518,12 +520,19 @@ public class BattleshipGUI extends JFrame{
 	public boolean isValidSpawn(int spawn){
 		if(this.horzOrVert){
 			for(int i=0; i < boatToPlace; i++){
-				if((spawn + i)%10 > 9 || playerBoats.contains(spawn+i) || (spawn + i)/10 != spawn/10) return false;
+				if((spawn + i)%10 > 9 || playerBoats.contains(spawn+i) || (spawn + i)/10 != spawn/10){
+                    playAudioFile(cantPlaceURL);
+                    return false;
+                    
+                }
 			}
 		}
 		else{
 			for(int i=0; i<boatToPlace; i++){
-				if((spawn+10*i)/10 > 20 || playerBoats.contains(spawn+10*i)) return false;
+				if((spawn+10*i)/10 > 20 || playerBoats.contains(spawn+10*i)) {
+                    playAudioFile(cantPlaceURL);
+                    return false;
+                }
 			}
 		}
 		return true;
@@ -548,10 +557,6 @@ public class BattleshipGUI extends JFrame{
 	
 	public void addShot(int shot){
 		this.shots.add(shot);
-        
-        if(audio)
-            playAudioFile(shotURL);
-
 		this.repaint();
 	}
 	

@@ -309,7 +309,12 @@ public class BattleshipController {
             //Get player's move from GUI and send it to model
             int humanMove = gui.getLastMove();
             computer.addShot(humanMove);
-            if(gui.getEnemyBoats().contains(humanMove)) {human.increaseHitCount();}
+            if(gui.getEnemyBoats().contains(humanMove)) {
+                human.increaseHitCount();
+                gui.playAudioFile(gui.shotURL);
+            }
+            else
+                gui.playAudioFile(gui.missURL);
 
             //Check win status
             if(computer.hasLost()) {
@@ -319,6 +324,13 @@ public class BattleshipController {
             }
 
             //Start computer's move
+            /*
+            try{
+                Thread.sleep(300);
+            } catch(InterruptedException e){
+                System.out.println(e);
+            }
+            */
             int computerMove = computer.makeMove();
             gui.addShot(gui.shiftToPlayerGrid(computerMove));
             human.addShot(computerMove);

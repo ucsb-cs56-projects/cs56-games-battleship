@@ -56,7 +56,7 @@ public class Player {
 	
 	/**
 	 * Add an incoming shot to the player's knowledge
-	 * @param shot an incomming shot
+	 * @param shot an incoming shot
 	 **/
 	public void addShot(int shot){
 		this.shots.add(shot);
