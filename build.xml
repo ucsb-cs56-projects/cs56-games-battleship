@@ -14,8 +14,8 @@
 
   <!-- compile -->
   <target name="compile" description="Compile the code">
-    <mkdir dir="build" />
-    <copy todir="build">
+    <mkdir dir="build/edu/ucsb/cs56/projects/games/battleship/sfx" />
+    <copy todir="build/edu/ucsb/cs56/projects/games/battleship/sfx">
         <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/sfx"/>
     </copy>
     <javac srcdir="src" destdir="build" includeantruntime="false">
