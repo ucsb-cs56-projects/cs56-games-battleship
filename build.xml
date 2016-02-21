@@ -15,6 +15,9 @@
   <!-- compile -->
   <target name="compile" description="Compile the code">
     <mkdir dir="build" />
+    <copy todir="build">
+        <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/sfx"/>
+    </copy>
     <javac srcdir="src" destdir="build" includeantruntime="false">
       <classpath>
 	<pathelement location="build" />
@@ -78,7 +81,7 @@
 
   <!-- jar -->
   <target name="jar" depends="compile" description="Generate a jar file in the dist directory">
-    <jar destfile="${projectName}.jar" basedir="build" >
+    <jar destfile="${projectName}.jar" basedir="build">
       <manifest>
 	<attribute name="Main-Class" value="${mainClass}" />      </manifest>
     </jar>
