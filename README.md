@@ -43,46 +43,32 @@ The code can also be found at these links
 - [Archive page](https://foo.cs.ucsb.edu/cs56/issues/0000501/)
 
 
-
+Figure 0
 ![](http://i.imgur.com/AUr93FG.png)
 
-Figure 0
-
-
-
-![](http://i.imgur.com/Pc82RXX.png)
 
 Figure 1
+![](http://i.imgur.com/Pc82RXX.png)
 
-
-
-![](http://i.imgur.com/PnBQ9Lu.png)
 
 Figure 2
+![](http://i.imgur.com/PnBQ9Lu.png)
 
-
-
-![](http://i.imgur.com/1iNCHmp.png)
 
 Figure 3
+![](http://i.imgur.com/1iNCHmp.png)
 
-
-
-![](http://i.imgur.com/djezD7F.png)
 
 Figure 4
+![](http://i.imgur.com/djezD7F.png)
 
-
-
-![](http://i.imgur.com/svm5tkM.png)
 
 Figure 5
+![](http://i.imgur.com/svm5tkM.png)
 
-
-
-![](http://i.imgur.com/tFAAbk8.png)
 
 Figure 6
+![](http://i.imgur.com/tFAAbk8.png)
 
 
 <b>FAQ</b>
