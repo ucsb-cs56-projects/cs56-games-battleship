@@ -3,6 +3,9 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.URL;
 
 /**
  * Main class for Battleship Game
@@ -244,6 +247,7 @@ public class BattleshipController {
 				if(player2.hasLost()){
 					toPlayer1.println("LOSE");
 					gui.setMessage("OH NO, YOU LOSE!");
+                    gui.playAudioFile(gui.loseURL);
 					break;
 				}
 				else
@@ -263,6 +267,7 @@ public class BattleshipController {
 				String p1VictoryStatus = fromPlayer1.readLine();
 				if(p1VictoryStatus.equals("LOSE")){
 					gui.setMessage("CONGRATULATIONS, YOU WIN!");
+                    gui.playAudioFile(gui.loseURL);
 					break;
 				}
 				
@@ -309,6 +314,7 @@ public class BattleshipController {
             //Check win status
             if(computer.hasLost()) {
                 gui.setMessage("CONGRATULATIONS, YOU WIN!");
+                gui.playAudioFile(gui.winURL);
                 break;
             }
 
@@ -321,6 +327,7 @@ public class BattleshipController {
             //Check win status
             if(human.hasLost()) {
                 gui.setMessage("OH NO, YOU LOSE!");
+                gui.playAudioFile(gui.loseURL);
                 break;
             }
             //back up to player's move

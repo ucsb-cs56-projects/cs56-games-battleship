@@ -42,8 +42,12 @@ public class BattleshipGUI extends JFrame{
 	private boolean horzOrVert = true; //true for horizontal false for verticle
     private boolean audio = true;
     private AudioClip shipPlace;
-    private URL audioURL;
-    private Clip clip;
+    public URL placeURL;
+    public URL shotURL;
+    public URL missURL;
+    public URL winURL;
+    public URL loseURL;
+    public Clip clip;
 	
 	//GUI's knowledge bank. Used for GameGrid cell coloring
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
@@ -222,8 +226,15 @@ public class BattleshipGUI extends JFrame{
         this.ipPopUp.getContentPane().add(BorderLayout.CENTER,ipField);
         this.ipPopUp.getContentPane().add(BorderLayout.SOUTH,ipMessage);
         
-        audioURL = this.getClass().getResource("sfx/ship_place.wav");
+        placeURL = this.getClass().getResource("sfx/ship_place.wav");
+        shotURL = this.getClass().getResource("sfx/ship_hit.wav");
+        missURL = this.getClass().getResource("sfx/miss_splash.wav");
+        winURL = this.getClass().getResource("sfx/victory.wav");
+        loseURL = this.getClass().getResource("sfx/failure.wav");
+        
+        
         //shipPlace = Applet.newAudioClip(audioURL);
+        /*
         try{
             AudioInputStream shipPlace = AudioSystem.getAudioInputStream(audioURL);
             clip = AudioSystem.getClip();
@@ -235,6 +246,7 @@ public class BattleshipGUI extends JFrame{
         } catch (IOException e){
             System.out.println(e);
         }
+        */
         
     }
 
@@ -536,6 +548,10 @@ public class BattleshipGUI extends JFrame{
 	
 	public void addShot(int shot){
 		this.shots.add(shot);
+        
+        if(audio)
+            playAudioFile(shotURL);
+
 		this.repaint();
 	}
 	
@@ -618,12 +634,14 @@ public class BattleshipGUI extends JFrame{
                         int loc = j*10 + i;
                         if(j==10)
                             g2d.setColor(Color.BLACK);
-                        else if(shots.contains(loc) && (playerBoats.contains(loc) || enemyBoats.contains(loc)))
+                        else if(shots.contains(loc) && (playerBoats.contains(loc) || enemyBoats.contains(loc))){
                             g2d.setColor(Color.RED);
+                        }
                         else if(playerBoats.contains(loc))
                             g2d.setColor(shipColor);
-                        else if(shots.contains(loc))
+                        else if(shots.contains(loc)){
                             g2d.setColor(ocean.darker());
+                        }
                         else g2d.setColor(ocean);
 
                         g2d.fillRect(startX + (i*cellWidth),j*cellWidth,cellWidth,cellWidth);
@@ -888,10 +906,8 @@ public class BattleshipGUI extends JFrame{
 						boatPlaced = true;
 						placeBoat(spawn);
     
-                        if(audio){
-                            clip.start();
-                            clip.setMicrosecondPosition(0);
-                        }
+                        if(audio)
+                            playAudioFile(placeURL);
     
 						BattleshipGUI.this.repaint();
 					}
@@ -923,5 +939,21 @@ public class BattleshipGUI extends JFrame{
 		public void keyReleased(KeyEvent e){}
 		public void keyTyped(KeyEvent e){}
 	}
-}
 
+    public void playAudioFile(URL audioURL){
+        try{
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioURL);
+            this.clip = AudioSystem.getClip();
+            this.clip.open(audioStream);
+            clip.start();
+            clip.setMicrosecondPosition(0);
+        } catch(UnsupportedAudioFileException e) {
+            System.out.println(e);
+        } catch(LineUnavailableException e) {
+            System.out.println(e);
+        } catch(IOException e){
+            System.out.println(e);
+        }
+    }
+
+}
