@@ -935,13 +935,9 @@ public class BattleshipGUI extends JFrame{
             this.clip.open(audioStream);
             clip.start();
             clip.setMicrosecondPosition(0);
-        } catch(UnsupportedAudioFileException e) {
-            System.out.println(e);
-        } catch(LineUnavailableException e) {
-            System.out.println(e);
-        } catch(IOException e){
-            System.out.println(e);
-        }
+        } catch(Exception e) {
+            System.err.println(e);
+        } 
     }
 
 }
