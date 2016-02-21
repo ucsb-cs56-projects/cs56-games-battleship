@@ -44,13 +44,13 @@ The code can also be found at these links
 
 
 
-![](http://imgur.com/AUr93FG)
+![](http://i.imgur.com/AUr93FG.png)
 
 Figure 0
 
 
 
-![](http://imgur.com/Pc82RXX)
+![](http://i.imgur.com/Pc82RXX.png)
 
 Figure 1
 
