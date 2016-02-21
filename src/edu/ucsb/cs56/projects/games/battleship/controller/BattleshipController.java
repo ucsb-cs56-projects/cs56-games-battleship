@@ -3,9 +3,6 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.net.URL;
 
 /**
  * Main class for Battleship Game

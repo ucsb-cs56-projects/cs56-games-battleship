@@ -3,13 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.net.URL;
 import java.io.*;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.*;
 
 /**
@@ -41,7 +36,8 @@ public class BattleshipGUI extends JFrame{
 	private boolean boatPlaced = false;
 	private boolean horzOrVert = true; //true for horizontal false for verticle
     private boolean audio = true;
-    private AudioClip shipPlace;
+
+    //Public so that other classes can play sound files
     public URL placeURL;
     public URL shotURL;
     public URL missURL;
@@ -227,29 +223,13 @@ public class BattleshipGUI extends JFrame{
         this.ipPopUp.getContentPane().add(BorderLayout.CENTER,ipField);
         this.ipPopUp.getContentPane().add(BorderLayout.SOUTH,ipMessage);
         
+        //Initialize sound file locations
         placeURL = this.getClass().getResource("sfx/ship_place.wav");
         shotURL = this.getClass().getResource("sfx/ship_hit.wav");
         missURL = this.getClass().getResource("sfx/miss_splash.wav");
         winURL = this.getClass().getResource("sfx/victory.wav");
         loseURL = this.getClass().getResource("sfx/failure.wav");
         cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.wav");
-        
-        
-        //shipPlace = Applet.newAudioClip(audioURL);
-        /*
-        try{
-            AudioInputStream shipPlace = AudioSystem.getAudioInputStream(audioURL);
-            clip = AudioSystem.getClip();
-            clip.open(shipPlace);
-        } catch (UnsupportedAudioFileException e) {
-            System.out.println(e);
-        } catch (LineUnavailableException e) {
-            System.out.println(e);
-        } catch (IOException e){
-            System.out.println(e);
-        }
-        */
-        
     }
 
     /**
@@ -945,6 +925,9 @@ public class BattleshipGUI extends JFrame{
 		public void keyTyped(KeyEvent e){}
 	}
 
+    /**  
+    * Methods that plays audio clip referenced by audioURL
+    **/
     public void playAudioFile(URL audioURL){
         try{
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioURL);
