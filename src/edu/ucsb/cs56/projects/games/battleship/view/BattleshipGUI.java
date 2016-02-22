@@ -224,12 +224,12 @@ public class BattleshipGUI extends JFrame{
         this.ipPopUp.getContentPane().add(BorderLayout.SOUTH,ipMessage);
         
         //Initialize sound file locations
-        placeURL = this.getClass().getResource("sfx/ship_place.wav");
-        shotURL = this.getClass().getResource("sfx/ship_hit.wav");
-        missURL = this.getClass().getResource("sfx/miss_splash.wav");
-        winURL = this.getClass().getResource("sfx/victory.wav");
-        loseURL = this.getClass().getResource("sfx/failure.wav");
-        cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.wav");
+        placeURL = this.getClass().getResource("sfx/ship_place.aiff");
+        shotURL = this.getClass().getResource("sfx/ship_hit.aiff");
+        missURL = this.getClass().getResource("sfx/miss_splash.aiff");
+        winURL = this.getClass().getResource("sfx/victory.aiff");
+        loseURL = this.getClass().getResource("sfx/failure.aiff");
+        cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.aiff");
     }
 
     /**
