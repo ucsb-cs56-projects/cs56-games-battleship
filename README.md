@@ -17,7 +17,7 @@ project history
 	* version 2.1: New feature added. There will be a hit count under the game board indicating how many pixels on the opponent's ship has the player already hit. (see figure 3)
 	* <b>version 2.1.1</b>: Bug fix on checking ship sizes validity. In version 2.0, if user input is not a number, program will terminate. Now fixed. (see figure 4)
     * <b>version 2.2</b>: Game now has replay functionality, ship color selection, harder computer difficulty, and sound effects.
-        * Sound effects only work on local machine though, not CSIL
+        * <b>Note about sound effects</b> You must be on a CSIL machine or your own personal machine to get sound effects to work, you can't play them through ssh'ing. The sound effects are currently set to the lower bitrate sound effects so that they play better on CSIL, but there are higher quality sound effects that sound much better. To change to the higher bitrate sfx, edit BattleshipGUI.java and find the URL initializations and change all of the file extensions from .aiff to .wav.
 
 * Game description - this Battleship game has 3 modes for user to choose from: hosting a game, joining a game, and playing against a computer. (see figure 5)
 	
