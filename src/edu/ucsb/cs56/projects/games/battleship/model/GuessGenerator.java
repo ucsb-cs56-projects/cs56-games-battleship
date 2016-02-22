@@ -83,19 +83,6 @@ public class GuessGenerator {
             return player_boats.remove(0);
         }
 
-        //if(smartGuesses.isEmpty()) { //rando move
-        //    return genEasyMove();
-        //}
-        //else { // do a 'smart' move
-        //    while(currentDirection == null || currentDirection.size() == 0) {
-        //        if(smartGuesses.isEmpty())
-        //            return genEasyMove();
-        //        currentDirection = smartGuesses.remove(0);
-        //    }
-        //    int guess = currentDirection.remove(0);
-        //    guesses.add(guess);
-        //    return guess;
-        //}
 
     }
 
@@ -116,22 +103,6 @@ public class GuessGenerator {
             return player_boats.remove(0);
         }
 
-        //if(smartGuesses.isEmpty()){ //guess a diagonal
-        //    int index = (int)(Math.random() * diagonals.size());
-        //    int guess = diagonals.remove(index);
-        //    guesses.add(guess);
-        //    return guess;
-        //}
-        //else{ // do a smart move
-        //    while(currentDirection == null || currentDirection.size() == 0) {
-        //        if(smartGuesses.isEmpty())
-        //           return genHardMove();
-        //        currentDirection = smartGuesses.remove(0);
-        //    }
-        //   int guess = currentDirection.remove(0);
-        //    guesses.add(guess);
-        //    return guess;
-        //}
 
     }
 
