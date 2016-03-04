@@ -7,7 +7,9 @@ import java.util.ArrayList;
 /**
  * Main class for Battleship Game
  * @author Wenjian Li (working since W14)
- * @version 2.0 (CS56 Winter 2014)
+ * @author Chang Rey Tang (W16)
+ * @author Joseph Song (W16)
+ * @version 2.2 (CS56 Winter 2016)
 */
 
 public class BattleshipController {

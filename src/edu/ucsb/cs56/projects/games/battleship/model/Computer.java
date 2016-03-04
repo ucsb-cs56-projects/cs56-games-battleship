@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * The computer class, extends player and uses a guess generator
  * @author Wenjian Li (working since W14)
- * @version 2.0 (CS56 Winter 2014)
+ * @author Chang Rey Tang (W16)
+ * @version 2.2 (CS56 Winter 2016)
 */
 
 public class Computer extends Player {
