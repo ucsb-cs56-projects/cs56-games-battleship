@@ -100,7 +100,7 @@ public class BattleshipGUI extends JFrame{
     //Game board component
     private GameGrid board = new GameGrid();
 
-    //Audio muted/unmuted checkbox *Incomplete*
+    //Audio muted/unmuted checkbox
     private JPanel audioPanel = new JPanel();
     private JCheckBox audioMute = new JCheckBox("Mute");
 
@@ -122,7 +122,7 @@ public class BattleshipGUI extends JFrame{
         this.getContentPane().add(BorderLayout.CENTER,board);
         this.getContentPane().setBackground(Color.WHITE);
 
-        //Add audio controls *Incomplete*
+        //Add audio controls
         audioPanel.setLayout(new BorderLayout());
         audioPanel.setBackground(Color.WHITE);
         this.getContentPane().add(BorderLayout.EAST,audioPanel);
