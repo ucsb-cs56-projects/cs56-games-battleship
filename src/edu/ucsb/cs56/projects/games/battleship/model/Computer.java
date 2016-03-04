@@ -3,7 +3,7 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.util.*;
 
 /**
- * The comptuer class, extends player and uses a guess generator
+ * The computer class, extends player and uses a guess generator
  * @author Wenjian Li (working since W14)
  * @version 2.0 (CS56 Winter 2014)
 */
