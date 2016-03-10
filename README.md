@@ -17,7 +17,6 @@ project history
 	* version 2.1: New feature added. There will be a hit count under the game board indicating how many pixels on the opponent's ship has the player already hit. (see figure 3)
 	* <b>version 2.1.1</b>: Bug fix on checking ship sizes validity. In version 2.0, if user input is not a number, program will terminate. Now fixed. (see figure 4)
     * <b>version 2.2</b>: Game now has replay functionality, ship color selection, harder computer difficulty, and sound effects.
-        * <b>Note about sound effects</b> You must be on a CSIL machine or your own personal machine to get sound effects to work, you can't play them through ssh'ing. The sound effects are currently set to the lower bitrate sound effects so that they play better on CSIL, but there are higher quality sound effects that sound much better. To change to the higher bitrate sfx, edit BattleshipGUI.java and find the URL initializations and change all of the file extensions from .aiff to .wav.
 
 * Game description - this Battleship game has 3 modes for user to choose from: hosting a game, joining a game, and playing against a computer. (see figure 5)
 	
@@ -30,12 +29,18 @@ project history
 
 * For future developers:
 	* There are 5 classes included in the package. BattleshipController is the controller of the game including the main method to be run. BattleshipGUI is for setting up the GUI. The other three classes are player classes, representing individual players. I recommend that you start with looking at BattleshipGUI.java.
-	* Suggested improvement to be made:
-		* Improve the computer's algorithm. It is obvious that playing Battleship game involves two status, hunting (when you have zero knowledge of where a ship is) and targeting (when you've found at least one pixel on a ship). The current algorithm of the computer is fair enough on targeting, but it only does random selections in hunting. However, we know that the possibility of a pixel containing a part of a ship varies from pixel to pixel, and it envolves complicated calculation of probabilities. There's space to improve the computer's algorithm so that the "HARD" mode can become really hard. Here's a reference about the battleship algorithm: 
-(http://www.datagenetics.com/blog/december32011/index.html)
 
+* <b>W16 final remarks</b>
+    * This game is of the model-view-controller design pattern
+    * <b>Note about sound effects</b> You must be on a CSIL machine or your own personal machine to get sound effects to work, you can't play them through ssh'ing. The sound effects are currently set to the lower bitrate sound effects so that they play better on CSIL, but there are higher quality sound effects that sound much better. To change to the higher bitrate sfx, edit BattleshipGUI.java and find the URL initializations and change all of the file extensions from .aiff to .wav.
+    * When running sound effects on a CSIL machine, after the sounds haved played ~30 times the system can't handle them anymore and the sound effects will stop working.
+    * Test cases are very underdeveloped for this project, there's a lot of room for work there.
+
+	* Suggested improvement to be made:
 		* Make the game adaptable to the Internet. Currently the game can only be played within the same network, is it possible that it be played by 2 players 5000 miles from each other?
-		* More suggestions on improvement: see issues under this project.
+        * Somehow get the sound effects to not crash when playing them on a CSIL machine
+        * Add options to go back to previous windows when setting up a game
+        * Rework the GUI to use actual graphics instead of colored squares
 
 
 The code can also be found at these links
