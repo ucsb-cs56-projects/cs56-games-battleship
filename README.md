@@ -10,12 +10,14 @@ project history
 
 * Original developer description - the Milton Bradley board game that has won the hearts of children for over four decades. It will be single-player (vs. computer) and will have various difficulty settings (easy, normal, hard).  You can also host/join games and play against your friends online WITH THE POWER OF JAVA NETWORKING!
 
-* Current version: 2.1.1
+* Current version: 2.2
 * Previous versions:
 	* version 1: See "Original developer description" (see figure 0)
 	* version 2.0: New feature added. Player can customize ship sizes in the "against computer" mode through a new window.(see figure 1) Illegal ship sizes will be reported to the player. (see figure 2)
 	* version 2.1: New feature added. There will be a hit count under the game board indicating how many pixels on the opponent's ship has the player already hit. (see figure 3)
 	* <b>version 2.1.1</b>: Bug fix on checking ship sizes validity. In version 2.0, if user input is not a number, program will terminate. Now fixed. (see figure 4)
+    * <b>version 2.2</b>: Game now has replay functionality, ship color selection, harder computer difficulty, and sound effects.
+        * <b>Note about sound effects</b> You must be on a CSIL machine or your own personal machine to get sound effects to work, you can't play them through ssh'ing. The sound effects are currently set to the lower bitrate sound effects so that they play better on CSIL, but there are higher quality sound effects that sound much better. To change to the higher bitrate sfx, edit BattleshipGUI.java and find the URL initializations and change all of the file extensions from .aiff to .wav.
 
 * Game description - this Battleship game has 3 modes for user to choose from: hosting a game, joining a game, and playing against a computer. (see figure 5)
 	
@@ -41,40 +43,32 @@ The code can also be found at these links
 - [Archive page](https://foo.cs.ucsb.edu/cs56/issues/0000501/)
 
 
-
-![](http://i.imgur.com/bLJD2Wi.jpg)
-
-figure 0
+Figure 0
+![](http://i.imgur.com/AUr93FG.png)
 
 
-
-![](http://i.imgur.com/E8tnJgH.png)
-
-figure 1
+Figure 1
+![](http://i.imgur.com/Pc82RXX.png)
 
 
-
-![](http://i.imgur.com/jAmS9n9.png)
-
-figure 2
+Figure 2
+![](http://i.imgur.com/PnBQ9Lu.png)
 
 
-
-![](http://i.imgur.com/t8NVd2M.png)
-
-figure 3
+Figure 3
+![](http://i.imgur.com/1iNCHmp.png)
 
 
-
-![](http://i.imgur.com/ACUXISc.png)
-
-figure 4
+Figure 4
+![](http://i.imgur.com/djezD7F.png)
 
 
+Figure 5
+![](http://i.imgur.com/svm5tkM.png)
 
-![](http://i.imgur.com/9BjJ868.png)
 
-figure 5
+Figure 6
+![](http://i.imgur.com/tFAAbk8.png)
 
 
 <b>FAQ</b>

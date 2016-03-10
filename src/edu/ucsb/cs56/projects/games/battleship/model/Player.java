@@ -7,7 +7,9 @@ import java.lang.Math.*;
 /**
  * The player class, holds a gameboard and takes in player input
  * @author Wenjian Li (working since W14)
- * @version 2.0 (CS56 Winter 2014)
+ * @author Chang Rey Tang (W16)
+ * @author Joseph Song (W16)
+ * @version 2.2 (CS56 Winter 2016)
 */
 
 public class Player {
@@ -30,10 +32,13 @@ public class Player {
 	*/
 	public int getHitCount() {return this.hitCount;}
 
+    // public int[] getShipSizes() {return this.shipSizes;}
+
 	/**
 	 * Increase hit count with 1
 	*/
 	public void increaseHitCount() {this.hitCount++;}
+
 	
 	/**
 	 * Randomly generate a set of boats for this player
@@ -53,7 +58,7 @@ public class Player {
 	
 	/**
 	 * Add an incoming shot to the player's knowledge
-	 * @param shot an incomming shot
+	 * @param shot an incoming shot
 	 **/
 	public void addShot(int shot){
 		this.shots.add(shot);

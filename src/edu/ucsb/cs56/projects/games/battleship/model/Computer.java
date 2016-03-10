@@ -3,9 +3,10 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.util.*;
 
 /**
- * The comptuer class, extends player and uses a guess generator
+ * The computer class, extends player and uses a guess generator
  * @author Wenjian Li (working since W14)
- * @version 2.0 (CS56 Winter 2014)
+ * @author Chang Rey Tang (W16)
+ * @version 2.2 (CS56 Winter 2016)
 */
 
 public class Computer extends Player {
@@ -17,10 +18,17 @@ public class Computer extends Player {
      * @param difficulty either "EASY", "MEDIUM" or "HARD"
     */
     public Computer(String difficulty) {
-	super();
-	super.randomGenerateBoats();
+        super();
+        super.randomGenerateBoats();
 
-	gg = new GuessGenerator(difficulty);
+        // gg = new GuessGenerator(difficulty);
+    }
+
+    public Computer(String difficulty, ArrayList<Integer> player_boats) {
+        super();
+        super.randomGenerateBoats();
+        
+        gg = new GuessGenerator(difficulty, player_boats);
     }
 
     /**
@@ -28,13 +36,13 @@ public class Computer extends Player {
      * @return an int from 0-99, coming from the GuessGenerator
     */
     public int makeMove() {
-	return gg.nextMove();
+        return gg.nextMove();
     }
     
 	/**
 	 * Sends information to the guess generator so we can have a 'smart' computer
 	 */
     public void updateGuessGrid(int location, String status) {
-	gg.processResult(location, status);
+        gg.processResult(location, status);
     }
 }

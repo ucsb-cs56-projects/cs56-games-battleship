@@ -13,8 +13,11 @@
   <!-- beginning of targets -->
 
   <!-- compile -->
-  <target name="compile">
-    <mkdir dir="build" />
+  <target name="compile" description="Compile the code">
+    <mkdir dir="build/edu/ucsb/cs56/projects/games/battleship/sfx" />
+    <copy todir="build/edu/ucsb/cs56/projects/games/battleship/sfx">
+        <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/sfx"/>
+    </copy>
     <javac srcdir="src" destdir="build" includeantruntime="false">
       <classpath>
 	<pathelement location="build" />
@@ -34,7 +37,7 @@
   </target>
 
   <!-- clean -->
-  <target name="clean">
+  <target name="clean" description="Clean up the project directory.">
     <delete dir="build" quiet="true" />
     <delete dir="javadoc" quiet="true" />
     <delete dir="dist" quiet="true" />
@@ -43,7 +46,7 @@
   </target>
 
   <!-- javadoc -->
-  <target name="javadoc" depends="compile">
+  <target name="javadoc" depends="compile" description="Generate a javadoc in the javadoc subdirectory.">
         <delete dir="javadoc" quiet="true" />       
    <javadoc  destdir="javadoc" author="true" version="true" use="true" >
       <fileset dir="src" includes="**/*.java"/>
@@ -61,7 +64,7 @@
   </target>
 
   <!-- test -->
-  <target name="test" depends="compile">
+  <target name="test" depends="compile" description="Run junit tests">
     <junit haltonerror="no" haltonfailure="no">
      <classpath>
 	<pathelement location="lib/junit-4.8.2.jar" />
@@ -77,65 +80,11 @@
   </target>
 
   <!-- jar -->
-  <target name="jar" depends="compile">
-    <jar destfile="${projectName}.jar" basedir="build" >
+  <target name="jar" depends="compile" description="Generate a jar file in the dist directory">
+    <jar destfile="${projectName}.jar" basedir="build">
       <manifest>
 	<attribute name="Main-Class" value="${mainClass}" />      </manifest>
     </jar>
-  </target>
-
-  <!-- publish -->
-  <target name="publish" depends="jar,javadoc,dist">
-    <mkdir dir="${webRoot}/${projectName}" />
-    <delete dir="${webRoot}/${projectName}/browse" />
-    <mkdir dir="${webRoot}/${projectName}/browse" />
-    <delete dir="${webRoot}/${projectName}/download" />
-    <mkdir dir="${webRoot}/${projectName}/download" />
-    <copy todir="${webRoot}/${projectName}/download" >
-      <fileset dir="download"/>
-      <fileset dir="dist" />
-    </copy>
-    <copy file="build.xml" todir="${webRoot}/${projectName}/browse"/>
-    <copy todir="${webRoot}/${projectName}/browse/src" >
-      <fileset dir="src"/>
-    </copy> 
-    <chmod dir="${webRoot}/${projectName}"
-	   perm="755" type="both" includes="**/*"/>
-    <echo>Project published to ${webBaseUrl}/${projectName}</echo>
-  </target> 
-
-  <!-- dist -->
-  <target name="dist" depends="compile">
-    <delete quiet="true">                                                           
-     <fileset dir="temp" includes="**/*" />                                      
-     <fileset dir="download" includes="**/*" />                                    
-    </delete>
-    <mkdir dir="download" />                                                        
-    <mkdir dir="temp" />                                                            
-    <mkdir dir="temp/${projectName}" />
-    <copy todir="temp/${projectName}">                                            
-      <fileset dir="."                                                              
-	       excludes="build/**, javadoc/**, **/*~, temp/**, dist/**, download/**"/>       
-    </copy>
-
-    <jar destfile="download/${projectName}.jar" basedir="build" >
-      <manifest>
-      <attribute name="Main-Class" value="${mainClass}" />      </manifest>
-    </jar>
-
-    <tar destfile="temp/${projectName}.tar"                                         
-	 basedir="temp"                                                             
-	 includes="${projectName}/**"                                               
-	 />                                                                             
-    <gzip zipfile="download/${projectName}.tgz"                                      
-	 src="temp/${projectName}.tar" />
-    <zip destfile="download/${projectName}.zip"
-	 basedir="temp"
-	 includes="${projectName}/**"
-	 />
-    <delete quiet="true">
-      <fileset dir="temp" includes="**/*"/>
-    </delete>
   </target>
 
 </project>
