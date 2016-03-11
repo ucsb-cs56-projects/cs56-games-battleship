@@ -23,7 +23,7 @@ project history
 	* Hosting a game: User's IP address will be displayed, and user shall wait for someone else to join his game.
 	* Joining a game: User shall be told the host's IP address, and input the IP address to join a game.
 	* Playing with a computer:
-		* User can custimize ship sizes from 2 to 9. [since version 2.0]
+		* User can customize ship sizes from 2 to 9. [since version 2.0]
 		* There are 3 difficulty levels in the game, EASY, MEDIUM and HARD.
 
 
@@ -32,12 +32,13 @@ project history
 
 * <b>W16 final remarks</b>
     * This game is of the model-view-controller design pattern
-    * <b>Note about sound effects</b> You must be on a CSIL machine or your own personal machine to get sound effects to work, you can't play them through ssh'ing. The sound effects are currently set to the lower bitrate sound effects so that they play better on CSIL, but there are higher quality sound effects that sound much better. To change to the higher bitrate sfx, edit BattleshipGUI.java and find the URL initializations and change all of the file extensions from .aiff to .wav.
+    * <b>Note about sound effects:</b> You must be on a CSIL machine or your own personal machine to get sound effects to work, you can't play them through ssh'ing. 
+    * The sound effects are currently set to the lower bitrate sound effects so that they play better on CSIL, but there are higher quality sound effects that sound much better. To change to the higher bitrate sfx, edit BattleshipGUI.java and find the URL initializations and change all of the file extensions from .aiff to .wav.
     * When running sound effects on a CSIL machine, after the sounds haved played ~30 times the system can't handle them anymore and the sound effects will stop working.
     * Test cases are very underdeveloped for this project, there's a lot of room for work there.
 
 	* Suggested improvement to be made:
-		* Make the game adaptable to the Internet. Currently the game can only be played within the same network, is it possible that it be played by 2 players 5000 miles from each other?
+        * Make the game adaptable to the Internet. Currently the game can only be played within the same network, is it possible that it be played by 2 players 5000 miles from each other?
         * Somehow get the sound effects to not crash when playing them on a CSIL machine
         * Add options to go back to previous windows when setting up a game
         * Rework the GUI to use actual graphics instead of colored squares
@@ -81,3 +82,6 @@ Figure 6
 1. How to run the program?
 	* In Unix command line or MacOS terminal, simply type ant run.
 	* In Windows or Android machines with Java installed, run the .jar file directly.
+2. How come sound effects aren't playing?
+    * Sound effects won't play if you're trying to run the program over ssh
+    * You must run the program on a physical CSIL machine or run the .jar file locally on your own machine
