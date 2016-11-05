@@ -9,6 +9,7 @@
   <property name="javadocDest" value="${webRoot}/${projectName}" /> 
   <property name="javadocUrl" value="${webBaseUrl}/${projectName}" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipController" />
+  <property name="public_javadoc_absolute_path" location="../cs56-games-battleship_javadoc_EdwardGuardado_bkorycki97/javadoc"/>
 
   <!-- beginning of targets -->
 
@@ -61,6 +62,22 @@
    <chmod dir="${javadocDest}" perm="755"  type="dir" includes="**" /> 
    <chmod dir="${javadocDest}" perm="755"  type="file" includes="**/*" />
    <echo>Javadoc deployed to ${javadocUrl}</echo>
+    <echo>                                                                                       
+      javadoc written to file://${javadoc_absolute_path}/index.html                              
+      copying to ${public_javadoc_absolute_path}/index.html                                      
+    </echo>                                                                                      
+    <delete quiet="true">                                                                        
+      <fileset dir="${public_javadoc_absolute_path}" />                                          
+    </delete>                                                                                    
+    <mkdir dir="${public_javadoc_absolute_path}" />                                              
+    <copy todir="${public_javadoc_absolute_path}">                                               
+      <fileset dir="javadoc" />                                                                  
+    </copy>                                                                                      
+    <echo>                                                                                       
+      javadoc copied to ${public_javadoc_absolute_path}/index.html                               
+      TO PUBLISH: cd into that repo, then git add javadoc;                                       
+        git commit -m "update javadoc"; git push origin gh-pages                                
+    </echo>
   </target>
 
   <!-- test -->

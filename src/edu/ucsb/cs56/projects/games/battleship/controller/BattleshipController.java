@@ -58,7 +58,7 @@ public class BattleshipController {
 			System.out.println("Could not listen on port: 22222");
 		}
 		try{
-			gui.setMessage("Listening for player to connect on " + InetAddress.getLocalHost().getHostAddress() + " : " + serverSocket.getLocalPort());
+			gui.setMessage("Listening for player to connect on " + InetAddress.getLocalHost().getHostAddress());
 		}
 		catch(UnknownHostException e){
 			gui.setMessage("Unknown Host");
