@@ -289,6 +289,7 @@ public class BattleshipController {
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
 		human.setBoatsArrayList(gui.getPlayerBoats());
+		human.setGroupsArrayList(gui.getGroupBoats());
 	    Computer computer = new Computer(gui.getDifficulty(), human.getBoatsArrayList());
 		
 		//Send information about ship locations to the GUI
@@ -300,7 +301,7 @@ public class BattleshipController {
 
             //Start player's move
             gui.makeMove();
-            gui.setMessage("Your turn! (Now you've hit: " + human.getHitCount() + " pixels)");
+            gui.setMessage("Your turn! (Now you've hit " + human.getHitCount() + " pixels and sunk " + human.getBoatCount() + " boats)");
             while(gui.getPlayersTurn()){
                 BattleshipController.sleep();
             }
@@ -310,6 +311,7 @@ public class BattleshipController {
             computer.addShot(humanMove);
             if(gui.getEnemyBoats().contains(humanMove)) {
                 human.increaseHitCount();
+		human.checkBoatCount(humanMove);
                 gui.playAudioFile(gui.shotURL);
             }
             else

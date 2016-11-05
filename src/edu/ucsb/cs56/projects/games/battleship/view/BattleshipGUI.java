@@ -52,6 +52,7 @@ public class BattleshipGUI extends JFrame{
 	private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> enemyBoats = new ArrayList<Integer>();
 	private ArrayList<Integer> shots = new ArrayList<Integer>();
+    private ArrayList<ArrayList<Integer>> playerBoatGroups = new ArrayList<ArrayList<Integer>>();
 	public ArrayList<Integer> getEnemyBoats() {return this.enemyBoats;}
 
 	//GUI Texts
@@ -339,7 +340,7 @@ public class BattleshipGUI extends JFrame{
 
             this.playerBoats = new ArrayList<Integer>();
             this.enemyBoats = new ArrayList<Integer>();
-            this.shots = new ArrayList<Integer>();
+            this.shots= new ArrayList<Integer>();
 
             this.setVisible(false);
         }
@@ -521,15 +522,20 @@ public class BattleshipGUI extends JFrame{
 	}
 	
 	public void placeBoat(int spawn){
+	    ArrayList<Integer> spawns = new ArrayList<Integer>();
 		if(horzOrVert){
-			for(int i=0; i<this.boatToPlace; i++)
+		    for(int i=0; i<this.boatToPlace; i++){
 				this.playerBoats.add(spawn + i);
+				spawns.add(spawn + i);
+		    }
 		}
 		else{
 			for(int i=0; i<this.boatToPlace; i++){
 				this.playerBoats.add(spawn + 10*i);
+				spawns.add(spawn + 10*i);
 			}
 		}
+		this.playerBoatGroups.add(spawns);
 	}
 	
 	/**
@@ -576,6 +582,13 @@ public class BattleshipGUI extends JFrame{
 	public ArrayList<Integer> getPlayerBoats(){
 		return this.playerBoats;
 	}
+
+    /**
+     *controller class uses this method to set a player's boat list array
+     **/
+    public ArrayList<ArrayList<Integer>> getGroupBoats(){
+	return this.playerBoatGroups;
+    }
 	
 	/**
 	 * Returns the player's most recent move.

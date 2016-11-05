@@ -16,7 +16,9 @@ public class Player {
     
     private ArrayList<Integer> boats;
     private ArrayList<Integer> shots;
+    private ArrayList<ArrayList<Integer>> boatGroups;
     private int hitCount=0; //hit count, initialize to 0
+    private int boatCount = 0;
     public static int [] shipSizes = {2,3,3,4,5}; //default ship sizes
     
     /**
@@ -25,12 +27,15 @@ public class Player {
     public Player(){
 		boats = new ArrayList<Integer>();
 		shots = new ArrayList<Integer>();
+		boatGroups = new ArrayList<ArrayList<Integer>>();
     }
 
 	/**
 	 * Getter of hit count
 	*/
 	public int getHitCount() {return this.hitCount;}
+
+    public int getBoatCount() {return this.boatCount;}
 
     // public int[] getShipSizes() {return this.shipSizes;}
 
@@ -39,7 +44,26 @@ public class Player {
 	*/
 	public void increaseHitCount() {this.hitCount++;}
 
+    /**
+     **check whether a boat has been sunk, increment boat count if so
+     **/
+    public void checkBoatCount(int shot){
+	for(int i = 0; i < boatGroups.size(); i++){
+	    ArrayList<Integer> array = boatGroups.get(i);
+	    for (int j = 0; j < array.size(); j++){
+		if (array.get(j) == shot){
+		    array.remove(j);
+		}
+	    }
+	}
+	for(int i = 0; i < boatGroups.size(); i++){
+	    if (boatGroups.get(i).isEmpty()){
+		boatGroups.remove(i);
+		boatCount++;
+	    }
+	}
 	
+    }
 	/**
 	 * Randomly generate a set of boats for this player
 	 **/
@@ -166,7 +190,14 @@ public class Player {
 			boats.add(boat);
 		}
 	 }
-	
+    /**
+     *Set the player's list of boat groups
+     *@param groups is the matric from the GUI
+     **/
+    public void setGroupsArrayList(ArrayList<ArrayList<Integer>> groups){
+	boatGroups = groups;
+    }
+    
 	/**
 	 * Share the knowledge of this player's boat locations with the GUI
 	 * @return A list of boat locations
