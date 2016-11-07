@@ -118,7 +118,7 @@ public class BattleshipController {
 			gui.setMessage("Error getting boats from player2");
 			System.out.println("Error getting boats from player2");
 		}	
-/*
+
 		ArrayList<Integer> player2BoatsList = gui.getEnemyBoats();
 		ArrayList<ArrayList<Integer>> player2BoatGroups = new ArrayList<ArrayList<Integer>>();
 
@@ -136,12 +136,12 @@ public class BattleshipController {
 		}
 
 		player1.setBoatGroups(player2BoatGroups);
-*/		
+		
 		//Begin game
 		while(true){
 			try{
 				gui.makeMove();
-				gui.setMessage("Your turn! Now you've hit " + player1.getHitCount() + " pixels and sunk" + player1.getBoatCount() + " boats"  );
+				gui.setMessage("Your turn! Now you've hit " + player1.getHitCount() + " pixels and sunk " + player1.getBoatCount() + " boats"  );
 				
 				//Wait until player 1 has completed their turn
 				while(gui.getPlayersTurn()){
@@ -151,23 +151,22 @@ public class BattleshipController {
 				toPlayer2.println(p1Move); //Send move to player 2
 				if(gui.getEnemyBoats().contains(p1Move)){
 					player1.increaseHitCount();
-/*					ArrayList<ArrayList<Integer>> groups = player2.getBoatGroups();
-		 			for(int i = 0; i < groups.size(); i++){
-		     			ArrayList<Integer> array = groups.get(i);
+		 			for(int i = 0; i < player2BoatGroups.size(); i++){
+		     			ArrayList<Integer> array = player2BoatGroups.get(i);
 		     			for (int j = 0; j < array.size(); j++){
 			 				if (array.get(j) == p1Move){
 			     			array.remove(j);
 			 				}
 		     			}
 		 			}
-		 			for(int i = 0; i < groups.size(); i++){
-		     			if (groups.get(i).isEmpty()){
-			 				groups.remove(i);
+		 			for(int i = 0; i < player2BoatGroups.size(); i++){
+		     			if (player2BoatGroups.get(i).isEmpty()){
+			 				player2BoatGroups.remove(i);
 			 				player1.incrementBoatCount();
 		     			}
 				 	}
-		 			player2.setBoatGroups(groups);
-*/				}
+		 			player1.setBoatGroups(player2BoatGroups);
+				}
 				
 				//Check if you've won
 				String p2VictoryStatus = fromPlayer2.readLine();
@@ -290,7 +289,7 @@ public class BattleshipController {
 					toPlayer1.println("CONTINUE");
 				
 				gui.makeMove();
-				gui.setMessage("Your turn! Now you've hit " + player2.getHitCount() + " pixels");
+				gui.setMessage("Your turn! Now you've hit " + player2.getHitCount() + " pixels and sunk " + player2.getBoatCount() + " boats"  );
 				//Halt the program until you've completed your move
 				while(gui.getPlayersTurn()){
 					BattleshipController.sleep();
