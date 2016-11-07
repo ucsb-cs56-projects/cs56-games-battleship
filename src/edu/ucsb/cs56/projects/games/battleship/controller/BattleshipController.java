@@ -176,7 +176,7 @@ public class BattleshipController {
 				}
 				
 				//Get player 2's move
-				gui.setMessage("Waiting for player 2's move.");
+				gui.setMessage("Waiting for player 2's move. You have hit " + player1.getHitCount() + " pixels and sunk " + player1.getBoatCount() + " boats"  );
 				int p2Move = Integer.parseInt(fromPlayer2.readLine());
 				gui.addShot(gui.shiftToPlayerGrid(p2Move));
 				player1.addShot(p2Move);
@@ -291,7 +291,7 @@ public class BattleshipController {
 		while(true){
 			try{
 				//Wait for player 1's move
-				gui.setMessage("Waiting for player 1's move.");
+				gui.setMessage("Waiting for player 1's move. You have hit "+ player2.getHitCount() + " pixels and sunk " + player2.getBoatCount() + " boats"  );
 				int p1Move = Integer.parseInt(fromPlayer1.readLine());
 				gui.addShot(gui.shiftToPlayerGrid(p1Move));
 				player2.addShot(p1Move);
