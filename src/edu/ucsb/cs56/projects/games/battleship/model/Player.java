@@ -34,8 +34,8 @@ public class Player {
 	 * Getter of hit count
 	*/
 	public int getHitCount() {return this.hitCount;}
+    public int getBoatCount() { return this.boatCount;}
 
-    public int getBoatCount() {return this.boatCount;}
 
     // public int[] getShipSizes() {return this.shipSizes;}
 
@@ -43,27 +43,6 @@ public class Player {
 	 * Increase hit count with 1
 	*/
 	public void increaseHitCount() {this.hitCount++;}
-
-    /**
-     **check whether a boat has been sunk, increment boat count if so
-     **/
-    public void checkBoatCount(int shot){
-	for(int i = 0; i < boatGroups.size(); i++){
-	    ArrayList<Integer> array = boatGroups.get(i);
-	    for (int j = 0; j < array.size(); j++){
-		if (array.get(j) == shot){
-		    array.remove(j);
-		}
-	    }
-	}
-	for(int i = 0; i < boatGroups.size(); i++){
-	    if (boatGroups.get(i).isEmpty()){
-		boatGroups.remove(i);
-		boatCount++;
-	    }
-	}
-	
-    }
 	/**
 	 * Randomly generate a set of boats for this player
 	 **/
@@ -154,28 +133,46 @@ public class Player {
 	 **/
 	 
 	public void addShip(int spawn, int orientation, int shipSize){
+	    ArrayList<Integer> spawns = new ArrayList<Integer>();
 		if( orientation == 0){ //up
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn - 10*i);
+				spawns.add(spawn - 10*i);
 			}
 		}
 		if( orientation == 1){ //right
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn + i);
+				spawns.add(spawn + i);
 			}
 		}
 		if( orientation == 2){ //down
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn + 10*i);
+				spawns.add(spawn+  10*i);
 			}
 		}
 		if( orientation == 3){ //left
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn - i);
+				spawns.add(spawn - i);
 			}
 		}
+		boatGroups.add(spawns);
 	}
-	
+
+    /**
+     **return the BoatGroup matrix to the controller
+     **/
+    public ArrayList<ArrayList<Integer>> getBoatGroups(){
+	return boatGroups;
+    }
+    public void setBoatGroups(ArrayList<ArrayList<Integer>> groups){
+	boatGroups = groups;
+    }
+    public void incrementBoatCount(){
+	boatCount++;
+    }
 	/**
 	 * Get a list of boats from the GUI
 	 * @param playerBoats a list of boat locations
@@ -190,14 +187,7 @@ public class Player {
 			boats.add(boat);
 		}
 	 }
-    /**
-     *Set the player's list of boat groups
-     *@param groups is the matric from the GUI
-     **/
-    public void setGroupsArrayList(ArrayList<ArrayList<Integer>> groups){
-	boatGroups = groups;
-    }
-    
+  
 	/**
 	 * Share the knowledge of this player's boat locations with the GUI
 	 * @return A list of boat locations

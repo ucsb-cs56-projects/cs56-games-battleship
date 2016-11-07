@@ -122,7 +122,7 @@ public class BattleshipController {
 		while(true){
 			try{
 				gui.makeMove();
-				gui.setMessage("Your turn! Now you've hit " + player1.getHitCount() + " pixels" );
+				gui.setMessage("Your turn! Now you've hit " + player1.getHitCount() + " pixels and sunk" + player1.getBoatCount() + " boats"  );
 				
 				//Wait until player 1 has completed their turn
 				while(gui.getPlayersTurn()){
@@ -289,7 +289,7 @@ public class BattleshipController {
 		gui.setMessage("Place your boats. Use any key to change orientation");
 		gui.placeBoats();
 		human.setBoatsArrayList(gui.getPlayerBoats());
-		human.setGroupsArrayList(gui.getGroupBoats());
+        
 	    Computer computer = new Computer(gui.getDifficulty(), human.getBoatsArrayList());
 		
 		//Send information about ship locations to the GUI
@@ -301,7 +301,7 @@ public class BattleshipController {
 
             //Start player's move
             gui.makeMove();
-            gui.setMessage("Your turn! (Now you've hit " + human.getHitCount() + " pixels and sunk " + human.getBoatCount() + " boats)");
+            gui.setMessage("Your turn! (Now you've hit " + human.getHitCount() + " pixels and sunk "  + human.getBoatCount() + " boats)");
             while(gui.getPlayersTurn()){
                 BattleshipController.sleep();
             }
@@ -311,8 +311,25 @@ public class BattleshipController {
             computer.addShot(humanMove);
             if(gui.getEnemyBoats().contains(humanMove)) {
                 human.increaseHitCount();
-		human.checkBoatCount(humanMove);
                 gui.playAudioFile(gui.shotURL);
+		//checkBoatCount(humanMove);
+
+	         ArrayList<ArrayList<Integer>> groups = computer.getBoatGroups();
+		 for(int i = 0; i < groups.size(); i++){
+		     ArrayList<Integer> array = groups.get(i);
+		     for (int j = 0; j < array.size(); j++){
+			 if (array.get(j) == humanMove){
+			     array.remove(j);
+			 }
+		     }
+		 }
+		 for(int i = 0; i < groups.size(); i++){
+		     if (groups.get(i).isEmpty()){
+			 groups.remove(i);
+			 human.incrementBoatCount();
+		     }
+		 }
+		 computer.setBoatGroups(groups);
             }
             else
                 gui.playAudioFile(gui.missURL);
@@ -346,6 +363,24 @@ public class BattleshipController {
             //back up to player's move
         }
     }
+    /*   public void checkBoatCount(int shot){
+	   ArrayList<ArrayList<Integer>> groups = computer.getBoatGroups();
+	for(int i = 0; i < groups.size(); i++){
+	    ArrayList<Integer> array = groups.get(i);
+	    for (int j = 0; j < array.size(); j++){
+		if (array.get(j) == shot){
+		    array.remove(j);
+		}
+	    }
+	}
+	for(int i = 0; i < groups.size(); i++){
+	    if (groups.get(i).isEmpty()){
+		groups.remove(i);
+		human.increaseBoatCount();
+	    }
+	}
+	computer.setBoatGroups(groups);
+	}*/
 
      /** 
      * method for the game to run
