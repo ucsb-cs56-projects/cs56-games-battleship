@@ -268,6 +268,24 @@ public class BattleshipController {
 			gui.setMessage("Error getting boats from player 1");
 			System.out.println("Error getting boats from player1 ");
 		}	
+
+		ArrayList<Integer> player1BoatsList = gui.getEnemyBoats();
+		ArrayList<ArrayList<Integer>> player1BoatGroups = new ArrayList<ArrayList<Integer>>();
+
+
+	 	int[] player2ShipSizes = player2.getShipSizes();
+		int iterator =0; 
+
+		for (int i : player2ShipSizes){
+			ArrayList<Integer> player1BoatConvert = new ArrayList<Integer>();
+			for (int j=0; j<i ; j++){
+				player1BoatConvert.add(player1BoatsList.get(iterator));
+				iterator++;
+			}
+			player1BoatGroups.add(player1BoatConvert);
+		}
+
+		player2.setBoatGroups(player1BoatGroups);
 		
 		//Begin game
 		while(true){
@@ -296,7 +314,24 @@ public class BattleshipController {
 				}
 				int p2Move = gui.getLastMove();
 				toPlayer1.println(p2Move);
-				if(gui.getEnemyBoats().contains(p2Move)) {player2.increaseHitCount();}
+				if(gui.getEnemyBoats().contains(p2Move)){
+					player2.increaseHitCount();
+					for(int i = 0; i < player1BoatGroups.size(); i++){
+		     			ArrayList<Integer> array = player1BoatGroups.get(i);
+		     			for (int j = 0; j < array.size(); j++){
+			 				if (array.get(j) == p2Move){
+			     			array.remove(j);
+			 				}
+		     			}
+		 			}
+		 			for(int i = 0; i < player1BoatGroups.size(); i++){
+		     			if (player1BoatGroups.get(i).isEmpty()){
+			 				player1BoatGroups.remove(i);
+			 				player2.incrementBoatCount();
+		     			}
+				 	}
+		 			player2.setBoatGroups(player1BoatGroups);
+				}
 				
 				//Check to see if you've won
 				String p1VictoryStatus = fromPlayer1.readLine();
