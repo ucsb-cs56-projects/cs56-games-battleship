@@ -96,9 +96,14 @@ public class BattleshipGUI extends JFrame{
 	
     //Play again popup
     private JFrame playAgainPopUp = new JFrame();
+    private JFrame networkPlayAgainPopUp = new JFrame();
     private JButton playAgainButton = new JButton("Play Again");
+    private JButton networkPlayAgainButton = new JButton("Play Again");
     private JButton newShipsButton = new JButton("Play Again w/ New Ship Sizes");
+    private JButton playAgainWithNewIPButton = new JButton( "Join a new game");
+    private JButton playAgainAsHostButton = new JButton ("Start a new game as a host");
     private JButton mainMenuButton = new JButton("Main Menu");
+    private JButton networkMainMenuButton = new JButton("Main Menu");
 
     //Game board component
     private GameGrid board = new GameGrid();
@@ -175,16 +180,32 @@ public class BattleshipGUI extends JFrame{
         this.playAgainPopUp.setLayout(threeButtonGrid);
         this.playAgainPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.playAgainPopUp.setSize(800,100);
+
+	//Setup networkPlayAgain popup
+	GridLayout fourButtonGrid = new GridLayout(1,4);
+        this.networkPlayAgainPopUp.setLayout(fourButtonGrid);
+        this.networkPlayAgainPopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.networkPlayAgainPopUp.setSize(800,100);
         
         //Add playAgain button listeners
         this.playAgainButton.addActionListener(this.new playAgainClick());
         this.newShipsButton.addActionListener(this.new playAgainClick());
         this.mainMenuButton.addActionListener(this.new playAgainClick());
+	this.playAgainWithNewIPButton.addActionListener(this.new networkPlayAgainClick());
+	this.playAgainAsHostButton.addActionListener(this.new networkPlayAgainClick());
+	this.networkMainMenuButton.addActionListener(this.new networkPlayAgainClick());
+        this.networkPlayAgainButton.addActionListener(this.new networkPlayAgainClick());
 
         //Add playAgain buttons to window
         this.playAgainPopUp.add(playAgainButton);
         this.playAgainPopUp.add(newShipsButton);
         this.playAgainPopUp.add(mainMenuButton);
+
+	 //Add networkPlayAgain buttons to window
+	this.networkPlayAgainPopUp.add(networkPlayAgainButton);
+        this.networkPlayAgainPopUp.add(playAgainWithNewIPButton);
+        this.networkPlayAgainPopUp.add(playAgainAsHostButton);
+	this.networkPlayAgainPopUp.add(networkMainMenuButton);
         
         //Setup shipsize popup
         this.shipSizePopUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -382,9 +403,13 @@ public class BattleshipGUI extends JFrame{
             this.shipSizePopUp.setVisible(true);
         }
 
-        public void playAgain() {
+        public void computerPlayAgain() {
             this.playAgainPopUp.setVisible(true);
         }
+
+        public void networkPlayAgain() {
+	    this.networkPlayAgainPopUp.setVisible(true);
+	}
 
 
 
@@ -860,6 +885,38 @@ public class BattleshipGUI extends JFrame{
             }
         } 
     }
+
+    /**
+     * Listener for the network play again options
+     **/
+
+    public class networkPlayAgainClick implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == BattleshipGUI.this.networkPlayAgainButton) {
+                replayType = 4;
+                BattleshipGUI.this.setVisible(false);
+                BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
+            }
+	    
+            else if(e.getSource() == BattleshipGUI.this.playAgainWithNewIPButton) {
+                replayType = 5;
+                BattleshipGUI.this.setVisible(false);
+                BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
+            }
+
+	    else if(e.getSource() == BattleshipGUI.this.playAgainAsHostButton) {
+                replayType = 6;
+                BattleshipGUI.this.setVisible(false);
+                BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
+            }
+	    
+            else if(e.getSource() == BattleshipGUI.this.networkMainMenuButton) {
+                replayType = 3;
+                BattleshipGUI.this.setVisible(false);
+                BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
+            }
+        } 
+    }    
 
 	/**
 	 * Method exlusively for ship sizes button listener to check validity of user input

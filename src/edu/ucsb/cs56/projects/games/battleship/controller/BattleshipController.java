@@ -485,15 +485,19 @@ public class BattleshipController {
 	public void endOfGame(BattleshipGUI gui){
 		String currentMessage = gui.getMessage();
 		gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
-        if(gui.getGameType() == 3) {
-            gui.playAgain();
-            this.waitReplay(gui);
-            this.playAgain(gui);
-        }
-        
+		if(gui.getGameType() == 3) {
+		    gui.computerPlayAgain();
+		    this.waitReplay(gui);
+		    this.computerPlayAgain(gui);
+		}
+		else{
+		  gui.networkPlayAgain();
+		  this.waitReplay(gui);
+		  this.networkPlayAgain(gui);
+		}    
 	}
 
-    public void playAgain(BattleshipGUI gui){
+    public void computerPlayAgain(BattleshipGUI gui){
         if(gui.getReplayType() == 1) {
             gui.end();
             gui = new BattleshipGUI();
@@ -532,6 +536,36 @@ public class BattleshipController {
         }
     }
 
+     public void networkPlayAgain(BattleshipGUI gui){
+        if(gui.getReplayType() == 1) {
+            gui.end();
+            gui = new BattleshipGUI();
+            gui.resetPlace();
+            this.wait(gui);
+
+            this.playComputer(gui);
+            this.endOfGame(gui);
+        }
+
+        if(gui.getReplayType() == 3) {
+            gui.end();
+            gui = new BattleshipGUI();
+            gui.reset();
+            gui.setOptions();
+            this.wait(gui);
+
+            if(gui.getGameType() == 1) {
+                this.hostGame(gui);
+            }
+            if(gui.getGameType() == 2) {
+                this.joinGame(gui);
+            }
+            if(gui.getGameType() == 3) {
+                this.playComputer(gui);
+            }
+            this.endOfGame(gui);
+        }
+    }
 
     public static void main(String[] args){
 		BattleshipController myController = new BattleshipController();
