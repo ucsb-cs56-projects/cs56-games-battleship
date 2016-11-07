@@ -92,6 +92,7 @@ public class BattleshipController {
 		player1.setBoatsArrayList(gui.getPlayerBoats());
 		gui.setMessage("Waiting for player 2 to place their boats.");
 		
+		
 		//Send boat locations to player 2
 		try{
 			ArrayList<Integer> player1Boats = player1.getBoatsArrayList();
@@ -105,7 +106,7 @@ public class BattleshipController {
 			System.out.println("Error sending player1's boats");
 		}
 		
-		//Get player 1's boat locations
+		//Get player 2's boat locations
 		try{
 			String boatLoc = fromPlayer2.readLine();
 			while( ! boatLoc.equals("DONE")){
@@ -117,7 +118,25 @@ public class BattleshipController {
 			gui.setMessage("Error getting boats from player2");
 			System.out.println("Error getting boats from player2");
 		}	
-		
+/*
+		ArrayList<Integer> player2BoatsList = gui.getEnemyBoats();
+		ArrayList<ArrayList<Integer>> player2BoatGroups = new ArrayList<ArrayList<Integer>>();
+
+
+	 	int[] player1ShipSizes = player1.getShipSizes();
+		int iterator =0; 
+
+		for (int i : player1ShipSizes){
+			ArrayList<Integer> player2BoatConvert = new ArrayList<Integer>();
+			for (int j=0; j<i ; j++){
+				player2BoatConvert.add(player2BoatsList.get(iterator));
+				iterator++;
+			}
+			player2BoatGroups.add(player2BoatConvert);
+		}
+
+		player1.setBoatGroups(player2BoatGroups);
+*/		
 		//Begin game
 		while(true){
 			try{
@@ -130,7 +149,25 @@ public class BattleshipController {
 				}
 				int p1Move = gui.getLastMove();
 				toPlayer2.println(p1Move); //Send move to player 2
-				if(gui.getEnemyBoats().contains(p1Move)) {player1.increaseHitCount();}
+				if(gui.getEnemyBoats().contains(p1Move)){
+					player1.increaseHitCount();
+/*					ArrayList<ArrayList<Integer>> groups = player2.getBoatGroups();
+		 			for(int i = 0; i < groups.size(); i++){
+		     			ArrayList<Integer> array = groups.get(i);
+		     			for (int j = 0; j < array.size(); j++){
+			 				if (array.get(j) == p1Move){
+			     			array.remove(j);
+			 				}
+		     			}
+		 			}
+		 			for(int i = 0; i < groups.size(); i++){
+		     			if (groups.get(i).isEmpty()){
+			 				groups.remove(i);
+			 				player1.incrementBoatCount();
+		     			}
+				 	}
+		 			player2.setBoatGroups(groups);
+*/				}
 				
 				//Check if you've won
 				String p2VictoryStatus = fromPlayer2.readLine();

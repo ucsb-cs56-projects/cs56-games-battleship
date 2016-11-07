@@ -35,9 +35,7 @@ public class Player {
 	*/
 	public int getHitCount() {return this.hitCount;}
     public int getBoatCount() { return this.boatCount;}
-
-
-    // public int[] getShipSizes() {return this.shipSizes;}
+	public int[] getShipSizes() {return this.shipSizes;}
 
 	/**
 	 * Increase hit count with 1
