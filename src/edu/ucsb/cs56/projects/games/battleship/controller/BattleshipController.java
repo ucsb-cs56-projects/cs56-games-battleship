@@ -537,7 +537,7 @@ public class BattleshipController {
     }
 
      public void networkPlayAgain(BattleshipGUI gui){
-        if(gui.getReplayType() == 1) {
+        if(gui.getReplayType() == 4) {		//Play Again
             gui.end();
             gui = new BattleshipGUI();
             gui.resetPlace();
@@ -547,7 +547,7 @@ public class BattleshipController {
             this.endOfGame(gui);
         }
 
-        if(gui.getReplayType() == 3) {
+        if(gui.getReplayType() == 3) {		//Main Menu
             gui.end();
             gui = new BattleshipGUI();
             gui.reset();
@@ -565,6 +565,18 @@ public class BattleshipController {
             }
             this.endOfGame(gui);
         }
+        if(gui.getReplayType() == 5){ 		//5: play Again with new IP
+			gui.end();
+            gui = new BattleshipGUI();
+            gui.reset();
+            gui.setOptions();
+            this.wait(gui);
+			this.joinGame(gui);
+        }								
+       if(gui.getReplayType() == 6){ 		//6: Play again as a host
+
+        }		
+        this.endOfGame(gui);						
     }
 
     public static void main(String[] args){
