@@ -374,17 +374,21 @@ public class BattleshipController {
 		String connectTo = previousIP;
 
 		Socket player1Socket = null;
-		try{
-			player1Socket = new Socket(connectTo,22222);
+		boolean ex = true;
+		do{
+			try{
+				player1Socket = new Socket(connectTo,22222);
+				ex = false;
+			}
+			catch(UnknownHostException e){
+				ex = true;
+			}
+			catch(IOException e){
+				ex = true;
+				gui.setMessage("Waiting for host to play with you again...");
+			}
 		}
-		catch(UnknownHostException e){
-			gui.setMessage("Can't find host: " + connectTo);
-			System.out.println("Can't find host:" + connectTo);
-		}
-		catch(IOException e){
-			gui.setMessage("IOException when connecting to host.");
-			System.out.println("IOException when connecting to host.");
-		}
+		while(ex);
 		
 		gui.setMessage("Connected to " + player1Socket.getLocalAddress());
 		
@@ -727,7 +731,7 @@ public class BattleshipController {
             this.endOfGame(gui);
         }
 		if(gui.getReplayType() == 4) {		//Play again
-			if(gui.getGameType == 1){		//hosting again
+			if(gui.getGameType() == 1){		//hosting again
             	gui.end();
            		gui = new BattleshipGUI();
             	gui.resetForHost();
@@ -745,7 +749,7 @@ public class BattleshipController {
 
 				this.joinGameAgain(gui);
 
-				this.endOfGame();
+				this.endOfGame(gui);
 
 			}
         }
