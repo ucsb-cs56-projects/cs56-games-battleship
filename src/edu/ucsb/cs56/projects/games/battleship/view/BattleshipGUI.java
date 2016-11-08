@@ -402,6 +402,40 @@ public class BattleshipGUI extends JFrame{
         
         }
 
+        public void resetForJoinAgain() {
+            this.setVisible(false);
+            this.difficulty = "INTERNET";
+            this.prompt = true;
+            this.lastMove = 0;
+            this.gameType = 2;
+            this.ipEntered = false;
+            this.replay = true;
+             
+            this.playerBoats = new ArrayList<Integer>();
+            this.enemyBoats = new ArrayList<Integer>();
+            this.shots = new ArrayList<Integer>();
+        
+            this.setVisible(true);
+        
+        }
+        
+        public void resetForHost() {
+            this.setVisible(false);
+            this.difficulty = "INTERNET";
+            this.prompt = true;
+            this.lastMove = 0;
+            this.gameType = 1;
+            this.ipEntered = false;
+            this.replay = true;
+             
+            this.playerBoats = new ArrayList<Integer>();
+            this.enemyBoats = new ArrayList<Integer>();
+            this.shots = new ArrayList<Integer>();
+        
+            this.setVisible(true);
+        
+        }
+
         public void resetShips() {
             this.difficulty = null;
             this.prompt = true;

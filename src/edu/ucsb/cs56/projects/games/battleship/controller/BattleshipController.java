@@ -13,7 +13,7 @@ import java.util.ArrayList;
 */
 
 public class BattleshipController {
-    
+    private String previousIP = "";		//keep track of IP address that game joiner previously used
     /**
      * Let the thread to sleep
     */
@@ -219,6 +219,7 @@ public class BattleshipController {
 			BattleshipController.sleep();
 		}
 		String connectTo = gui.getIP();
+		previousIP = connectTo;
 
 		Socket player1Socket = null;
 		try{
@@ -357,9 +358,161 @@ public class BattleshipController {
 			}
 		}
 		try{
-		player1Socket.close();
-		toPlayer1.close();
-		fromPlayer1.close();
+			player1Socket.close();
+			toPlayer1.close();
+			fromPlayer1.close();
+		}
+		catch (IOException e){
+		}
+	}
+
+	public void joinGameAgain(BattleshipGUI gui){
+		gui.setTitle("Battleship : Player 2");
+	
+		Player player2 = new Player();
+		
+		String connectTo = previousIP;
+
+		Socket player1Socket = null;
+		try{
+			player1Socket = new Socket(connectTo,22222);
+		}
+		catch(UnknownHostException e){
+			gui.setMessage("Can't find host: " + connectTo);
+			System.out.println("Can't find host:" + connectTo);
+		}
+		catch(IOException e){
+			gui.setMessage("IOException when connecting to host.");
+			System.out.println("IOException when connecting to host.");
+		}
+		
+		gui.setMessage("Connected to " + player1Socket.getLocalAddress());
+		
+		PrintWriter toPlayer1 = null;
+		BufferedReader fromPlayer1 = null;
+		
+		try{
+			toPlayer1 = new PrintWriter(player1Socket.getOutputStream(),true);
+			fromPlayer1 = new BufferedReader(new InputStreamReader(player1Socket.getInputStream()));
+		}
+		catch(IOException e){
+			gui.setMessage("Error getting input/output streams from Player 1");
+			System.out.println("Error getting input/output streams from Player 1");
+		}
+		
+		gui.setMessage("Place your boats. Use any key to change orientation");
+		gui.placeBoats();
+		player2.setBoatsArrayList(gui.getPlayerBoats());
+		gui.setMessage("Waiting for player 1 to place their boats.");
+		
+		//Send boat locations to player 1
+		try{
+			ArrayList<Integer> player2Boats = player2.getBoatsArrayList();
+			for( Integer boatLoc: player2Boats){
+				toPlayer1.println(boatLoc);
+			}
+			toPlayer1.println("DONE");
+		}
+		catch(Exception e){
+			gui.setMessage("Error sending player2's boats");
+			System.out.println("Error sending player2's boats");
+		}
+		 //Get boat locations from player 1
+		try{
+			String boatLoc = fromPlayer1.readLine();
+			while( ! boatLoc.equals("DONE")){
+				gui.addEnemyBoat(Integer.parseInt(boatLoc));
+				boatLoc = fromPlayer1.readLine();
+			}
+		}
+		catch(Exception e){
+			gui.setMessage("Error getting boats from player 1");
+			System.out.println("Error getting boats from player1 ");
+		}	
+
+		ArrayList<Integer> player1BoatsList = gui.getEnemyBoats();
+		ArrayList<ArrayList<Integer>> player1BoatGroups = new ArrayList<ArrayList<Integer>>();
+
+
+	 	int[] player2ShipSizes = player2.getShipSizes();
+		int iterator =0; 
+
+		for (int i : player2ShipSizes){
+			ArrayList<Integer> player1BoatConvert = new ArrayList<Integer>();
+			for (int j=0; j<i ; j++){
+				player1BoatConvert.add(player1BoatsList.get(iterator));
+				iterator++;
+			}
+			player1BoatGroups.add(player1BoatConvert);
+		}
+
+		player2.setBoatGroups(player1BoatGroups);
+		
+		//Begin game
+		while(true){
+			try{
+				//Wait for player 1's move
+				gui.setMessage("Waiting for player 1's move. You have hit "+ player2.getHitCount() + " pixels and sunk " + player2.getBoatCount() + " boats"  );
+				int p1Move = Integer.parseInt(fromPlayer1.readLine());
+				gui.addShot(gui.shiftToPlayerGrid(p1Move));
+				player2.addShot(p1Move);
+				
+				//Check to see if you've lost
+				if(player2.hasLost()){
+					toPlayer1.println("LOSE");
+					gui.setMessage("OH NO, YOU LOSE!");
+                    gui.playAudioFile(gui.loseURL);
+					break;
+				}
+				else
+					toPlayer1.println("CONTINUE");
+				
+				gui.makeMove();
+				gui.setMessage("Your turn! Now you've hit " + player2.getHitCount() + " pixels and sunk " + player2.getBoatCount() + " boats"  );
+				//Halt the program until you've completed your move
+				while(gui.getPlayersTurn()){
+					BattleshipController.sleep();
+				}
+				int p2Move = gui.getLastMove();
+				toPlayer1.println(p2Move);
+				if(gui.getEnemyBoats().contains(p2Move)){
+					player2.increaseHitCount();
+					for(int i = 0; i < player1BoatGroups.size(); i++){
+		     			ArrayList<Integer> array = player1BoatGroups.get(i);
+		     			for (int j = 0; j < array.size(); j++){
+			 				if (array.get(j) == p2Move){
+			     			array.remove(j);
+			 				}
+		     			}
+		 			}
+		 			for(int i = 0; i < player1BoatGroups.size(); i++){
+		     			if (player1BoatGroups.get(i).isEmpty()){
+			 				player1BoatGroups.remove(i);
+			 				player2.incrementBoatCount();
+		     			}
+				 	}
+		 			player2.setBoatGroups(player1BoatGroups);
+				}
+				
+				//Check to see if you've won
+				String p1VictoryStatus = fromPlayer1.readLine();
+				if(p1VictoryStatus.equals("LOSE")){
+					gui.setMessage("CONGRATULATIONS, YOU WIN!");
+                    gui.playAudioFile(gui.loseURL);
+					break;
+				}
+				
+			}
+			catch(IOException e){
+				System.out.println("Something went wrong while reading from or writing to player 1");
+				gui.setMessage("Something went wrong while reading from or writing to player 1");
+				System.exit(-1);
+			}
+		}
+		try{
+			player1Socket.close();
+			toPlayer1.close();
+			fromPlayer1.close();
 		}
 		catch (IOException e){
 		}
@@ -513,7 +666,7 @@ public class BattleshipController {
 	}
 
     public void computerPlayAgain(BattleshipGUI gui){
-        if(gui.getReplayType() == 1) {
+        if(gui.getReplayType() == 1) {	
             gui.end();
             gui = new BattleshipGUI();
             gui.resetPlace();
@@ -553,7 +706,7 @@ public class BattleshipController {
 
      public void networkPlayAgain(BattleshipGUI gui){
 
-		if(gui.getReplayType() == 5) {
+		if(gui.getReplayType() == 5) {		//join game
             gui.end();
             gui = new BattleshipGUI();
             gui.resetForIP();
@@ -563,7 +716,40 @@ public class BattleshipController {
             this.endOfGame(gui);
         }
 
-		if(gui.getReplayType() == 3) {
+		if(gui.getReplayType() == 6) {		//host game
+            gui.end();
+            gui = new BattleshipGUI();
+            gui.resetForHost();
+            this.wait(gui);
+
+            this.hostGame(gui);
+
+            this.endOfGame(gui);
+        }
+		if(gui.getReplayType() == 4) {		//Play again
+			if(gui.getGameType == 1){		//hosting again
+            	gui.end();
+           		gui = new BattleshipGUI();
+            	gui.resetForHost();
+            	this.wait(gui);
+
+            	this.hostGame(gui);
+
+            	this.endOfGame(gui);
+			}
+			else{							//joining again
+				gui.end();
+				gui = new BattleshipGUI();
+				gui.resetForJoinAgain();
+				this.wait(gui);
+
+				this.joinGameAgain(gui);
+
+				this.endOfGame();
+
+			}
+        }
+		if(gui.getReplayType() == 3) {		//main menu
             gui.end();
             gui = new BattleshipGUI();
             gui.reset();
