@@ -385,6 +385,23 @@ public class BattleshipGUI extends JFrame{
         
         }
 
+        public void resetForIP() {
+            this.difficulty = "INTERNET";
+            this.prompt = true;
+            this.lastMove = 0;
+            this.gameType = 2;
+            this.ipEntered = false;
+            this.replay = true;
+             
+            this.playerBoats = new ArrayList<Integer>();
+            this.enemyBoats = new ArrayList<Integer>();
+            this.shots = new ArrayList<Integer>();
+        
+            this.setVisible(false);
+            this.ipPopUp.setVisible(true);
+        
+        }
+
         public void resetShips() {
             this.difficulty = null;
             this.prompt = true;

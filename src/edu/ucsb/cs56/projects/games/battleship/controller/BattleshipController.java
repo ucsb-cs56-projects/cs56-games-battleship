@@ -196,6 +196,14 @@ public class BattleshipController {
 				System.exit(-1);
 			}
 		}
+		try{
+		serverSocket.close();
+		player2Socket.close();
+		toPlayer2.close();
+		fromPlayer2.close();
+		}
+		catch (IOException e){
+		}
 	}
 
 	/**
@@ -347,6 +355,13 @@ public class BattleshipController {
 				gui.setMessage("Something went wrong while reading from or writing to player 1");
 				System.exit(-1);
 			}
+		}
+		try{
+		player1Socket.close();
+		toPlayer1.close();
+		fromPlayer1.close();
+		}
+		catch (IOException e){
 		}
 	}
 
@@ -537,17 +552,18 @@ public class BattleshipController {
     }
 
      public void networkPlayAgain(BattleshipGUI gui){
-        if(gui.getReplayType() == 4) {		//Play Again
+
+		if(gui.getReplayType() == 5) {
             gui.end();
             gui = new BattleshipGUI();
-            gui.resetPlace();
+            gui.resetForIP();
             this.wait(gui);
 
-            this.playComputer(gui);
+            this.joinGame(gui);
             this.endOfGame(gui);
         }
 
-        if(gui.getReplayType() == 3) {		//Main Menu
+		if(gui.getReplayType() == 3) {
             gui.end();
             gui = new BattleshipGUI();
             gui.reset();
@@ -565,19 +581,7 @@ public class BattleshipController {
             }
             this.endOfGame(gui);
         }
-        if(gui.getReplayType() == 5){ 		//5: play Again with new IP
-			gui.end();
-            gui = new BattleshipGUI();
-            gui.reset();
-            gui.setOptions();
-            this.wait(gui);
-			this.joinGame(gui);
-        }								
-       if(gui.getReplayType() == 6){ 		//6: Play again as a host
-
-        }		
-        this.endOfGame(gui);						
-    }
+	 }
 
     public static void main(String[] args){
 		BattleshipController myController = new BattleshipController();
