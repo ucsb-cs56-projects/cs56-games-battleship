@@ -7,12 +7,12 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
-  public class GameGrid extends JComponent{
-        public int width;
-        public int height;
-        public int cellWidth;
-        public int startX;
-        private ArrayList<Integer> shots = new ArrayList<Integer>();
+public class GameGrid extends JComponent{
+    public int width;
+    public int height;
+    public int cellWidth; 
+    public int startX;
+    private ArrayList<Integer> shots = new ArrayList<Integer>();
 
             //GUI's knowledge bank. Used for GameGrid cell coloring
     private ArrayList<Integer> playerBoats = new ArrayList<Integer>();
@@ -21,7 +21,7 @@ import javax.sound.sampled.*;
     public ArrayList<Integer> getEnemyBoats() {return this.enemyBoats;}
 
     private boolean placeBoats = false;
-    private int[] playerShipSizes;
+    private int[] playerShipSizes = Player.shipSizes;
     private boolean boatPlaced = false;
     private int boatToPlace;
     private boolean playersTurn = false;
@@ -41,7 +41,6 @@ import javax.sound.sampled.*;
     JCheckBox audioMute = new JCheckBox("Mute");
 
 
-        @Override
             public void paintComponent(Graphics g)
             {
 
@@ -287,7 +286,7 @@ import javax.sound.sampled.*;
 
         public void placeBoats() {
             this.placeBoats = true;
-            int[] boats = this.playerShipSizes; 
+            int[] boats = playerShipSizes; 
             for(int boat: boats){
                 this.boatPlaced = false;
                 this.boatToPlace = boat;
@@ -296,7 +295,7 @@ import javax.sound.sampled.*;
                 }
             }
             this.placeBoats = false;
-            this.repaint();
+            repaint();
         }
         public void setShipSizes(int[] sizes){
             this.playerShipSizes = sizes;

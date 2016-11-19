@@ -237,36 +237,6 @@ public class BattleshipGUI extends JFrame{
         board.cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.aiff");
     }
 
-    /**
-     * Main method used only for testing purposes.
-     *@param args not used
-     **/
-        public static void main(String[] args){
-
-            // Player human = new Player();
-            // human.randomGenerateBoats();
-            // BattleshipGUI gui = new BattleshipGUI();
-
-            // gui.setOptions();
-            // gui.setVisible(true);
-
-            // ArrayList<Integer> boats = human.getBoatsArrayList();
-            // gui.addPlayerBoats(boats);
-
-            // Computer computer = new Computer("HARD");
-            // ArrayList<Integer> boatList = computer.getBoatsArrayList();
-            // gui.addEnemyBoats(boatList);
-
-            // for(int i = 0; i<20; i++){
-            //     int move = computer.makeMove();
-            //     gui.addShot(move);
-            //     computer.updateGuessGrid( move, gui.hitEnemy(move));
-            // }
-
-        }
-
-
-
         /**
          * Method to initiate option prompts to the user.
          **/
@@ -460,32 +430,16 @@ public class BattleshipGUI extends JFrame{
         this.getContentPane().removeAll();
     }
 	
-	public void placeBoats(){
-        board.placeBoats();
-    }
-    public ArrayList<Integer> getPlayerBoats(){
-        return board.getPlayerBoats();
-    }
-    public void addPlayerBoats(ArrayList<Integer> boatList){
-        board.addPlayerBoats(boatList);
-    }
-    public void addEnemyBoats(ArrayList<Integer> boatList){
-        board.addEnemyBoats(boatList);
-    }
-    public void makeMove(){
-        board.makeMove();
-    }
-    public boolean getPlayersTurn(){
-        return board.getPlayersTurn();
-    }
-    public int getLastMove(){
-        return board.getLastMove();
-    }
+	public void placeBoats(){ board.placeBoats(); }
+    public ArrayList<Integer> getPlayerBoats(){ return board.getPlayerBoats();}
+    public void addPlayerBoats(ArrayList<Integer> boatList){ board.addPlayerBoats(boatList);}
+    public void addEnemyBoats(ArrayList<Integer> boatList){board.addEnemyBoats(boatList);}
+    public void makeMove(){board.makeMove();}
+    public boolean getPlayersTurn(){ return board.getPlayersTurn();}
+    public int getLastMove(){ return board.getLastMove();}
     public ArrayList<Integer> getEnemyBoats() {return board.getEnemyBoats();}
     public void playAudioFile(URL audioURL){    board.playAudioFile(audioURL);}
-    public int shiftToPlayerGrid(int loc){
-        return board.shiftToPlayerGrid(loc);
-    }
+    public int shiftToPlayerGrid(int loc){return board.shiftToPlayerGrid(loc);}
     public void addShot(int shot){ board.addShot(shot);}
     public String hitPlayer(int shot){ return board.hitPlayer(shot);}
     public void addEnemyBoat(int boatLoc){ board.addEnemyBoat(boatLoc);}
@@ -700,6 +654,5 @@ public class BattleshipGUI extends JFrame{
 			BattleshipGUI.this.setVisible(true);
 		}
 	}
-	
 	
 }

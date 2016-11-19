@@ -19,7 +19,7 @@
     <copy todir="build/edu/ucsb/cs56/projects/games/battleship/sfx">
         <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/sfx"/>
     </copy>
-    <javac srcdir="src" destdir="build" includeantruntime="false">
+    <javac srcdir="src" destdir="build" includeantruntime="false" debug="true">
       <classpath>
 	<pathelement location="build" />
 	<pathelement location="lib/junit-4.8.2.jar" />
