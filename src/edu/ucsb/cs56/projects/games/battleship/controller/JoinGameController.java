@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 public class JoinGameController extends NetworkController{
-	private String previousIP = "";	
+	private String connectTo = "";	
 	Player player2;
 	Socket player1Socket = null;
 	PrintWriter toPlayer1 = null;
@@ -25,8 +25,7 @@ public class JoinGameController extends NetworkController{
 		while( !gui.getIPEntered()){
 			BattleshipController.sleep();
 		}
-		String connectTo = gui.getIP();
-		previousIP = connectTo;
+		connectTo = gui.getIP();
 
 		player1Socket = null;
 		try{
@@ -188,8 +187,6 @@ public class JoinGameController extends NetworkController{
 	
 		player2 = new Player();
 		
-		String connectTo = previousIP;
-
 		player1Socket = null;
 		boolean ex = true;
 		do{
