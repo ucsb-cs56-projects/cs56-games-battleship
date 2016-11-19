@@ -206,8 +206,8 @@ public class JoinGameController extends NetworkController{
 		
 		gui.setMessage("Connected to " + player1Socket.getLocalAddress());
 		
-		PrintWriter toPlayer1 = null;
-		BufferedReader fromPlayer1 = null;
+	    toPlayer1 = null;
+		fromPlayer1 = null;
 		
 		try{
 			toPlayer1 = new PrintWriter(player1Socket.getOutputStream(),true);
