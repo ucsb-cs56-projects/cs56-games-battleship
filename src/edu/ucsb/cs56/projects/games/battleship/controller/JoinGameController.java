@@ -7,13 +7,19 @@ import java.util.ArrayList;
 
 public class JoinGameController extends NetworkController{
 	private String previousIP = "";	
+	Player player2;
+	Socket player1Socket = null;
+	PrintWriter toPlayer1 = null;
+	BufferedReader fromPlayer1 = null;
+	ArrayList<Integer> player1BoatsList;
+	ArrayList<ArrayList<Integer>> player1BoatGroups;
 	/**
 	 * method for joining a game
 	*/
 	public void go(BattleshipGUI gui){
 		gui.setTitle("Battleship : Player 2");
 	
-		Player player2 = new Player();
+		player2 = new Player();
 		
 		//Wait until an IP address has been entered
 		while( !gui.getIPEntered()){
@@ -22,7 +28,7 @@ public class JoinGameController extends NetworkController{
 		String connectTo = gui.getIP();
 		previousIP = connectTo;
 
-		Socket player1Socket = null;
+		player1Socket = null;
 		try{
 			player1Socket = new Socket(connectTo,22222);
 		}
@@ -36,9 +42,6 @@ public class JoinGameController extends NetworkController{
 		}
 		
 		gui.setMessage("Connected to " + player1Socket.getLocalAddress());
-		
-		PrintWriter toPlayer1 = null;
-		BufferedReader fromPlayer1 = null;
 		
 		try{
 			toPlayer1 = new PrintWriter(player1Socket.getOutputStream(),true);
@@ -79,8 +82,8 @@ public class JoinGameController extends NetworkController{
 			System.out.println("Error getting boats from player1 ");
 		}	
 
-		ArrayList<Integer> player1BoatsList = gui.getEnemyBoats();
-		ArrayList<ArrayList<Integer>> player1BoatGroups = new ArrayList<ArrayList<Integer>>();
+		player1BoatsList = gui.getEnemyBoats();
+		player1BoatGroups = new ArrayList<ArrayList<Integer>>();
 
 
 	 	int[] player2ShipSizes = player2.getShipSizes();
@@ -96,8 +99,18 @@ public class JoinGameController extends NetworkController{
 		}
 
 		player2.setBoatGroups(player1BoatGroups);
-		
-		//Begin game
+		joinGamePlay(gui, player2);
+
+		try{
+			player1Socket.close();
+			toPlayer1.close();
+			fromPlayer1.close();
+		}
+		catch (IOException e){
+		}
+	}
+
+	public void joinGamePlay(BattleshipGUI gui, Player player2){
 		while(true){
 			try{
 				//Wait for player 1's move
@@ -158,14 +171,8 @@ public class JoinGameController extends NetworkController{
 				System.exit(-1);
 			}
 		}
-		try{
-			player1Socket.close();
-			toPlayer1.close();
-			fromPlayer1.close();
-		}
-		catch (IOException e){
-		}
 	}
+
 	public void playAgainSameIP(BattleshipGUI gui){
 		gui.end();
 		gui = new BattleshipGUI();
@@ -176,14 +183,14 @@ public class JoinGameController extends NetworkController{
 		this.joinGameAgain(gui);
 		this.endOfGame(gui);
 	}
-		public void joinGameAgain(BattleshipGUI gui){
+	public void joinGameAgain(BattleshipGUI gui){
 		gui.setTitle("Battleship : Player 2");
 	
-		Player player2 = new Player();
+		player2 = new Player();
 		
 		String connectTo = previousIP;
 
-		Socket player1Socket = null;
+		player1Socket = null;
 		boolean ex = true;
 		do{
 			try{
@@ -244,8 +251,8 @@ public class JoinGameController extends NetworkController{
 			System.out.println("Error getting boats from player1 ");
 		}	
 
-		ArrayList<Integer> player1BoatsList = gui.getEnemyBoats();
-		ArrayList<ArrayList<Integer>> player1BoatGroups = new ArrayList<ArrayList<Integer>>();
+		player1BoatsList = gui.getEnemyBoats();
+		player1BoatGroups = new ArrayList<ArrayList<Integer>>();
 
 
 	 	int[] player2ShipSizes = player2.getShipSizes();
@@ -261,68 +268,7 @@ public class JoinGameController extends NetworkController{
 		}
 
 		player2.setBoatGroups(player1BoatGroups);
-		
-		//Begin game
-		while(true){
-			try{
-				//Wait for player 1's move
-				gui.setMessage("Waiting for player 1's move. You have hit "+ player2.getHitCount() + " pixels and sunk " + player2.getBoatCount() + " boats"  );
-				int p1Move = Integer.parseInt(fromPlayer1.readLine());
-				gui.addShot(gui.shiftToPlayerGrid(p1Move));
-				player2.addShot(p1Move);
-				
-				//Check to see if you've lost
-				if(player2.hasLost()){
-					toPlayer1.println("LOSE");
-					gui.setMessage("OH NO, YOU LOSE!");
-                    gui.playAudioFile(gui.loseURL);
-					break;
-				}
-				else
-					toPlayer1.println("CONTINUE");
-				
-				gui.makeMove();
-				gui.setMessage("Your turn! Now you've hit " + player2.getHitCount() + " pixels and sunk " + player2.getBoatCount() + " boats"  );
-				//Halt the program until you've completed your move
-				while(gui.getPlayersTurn()){
-					BattleshipController.sleep();
-				}
-				int p2Move = gui.getLastMove();
-				toPlayer1.println(p2Move);
-				if(gui.getEnemyBoats().contains(p2Move)){
-					player2.increaseHitCount();
-					for(int i = 0; i < player1BoatGroups.size(); i++){
-		     			ArrayList<Integer> array = player1BoatGroups.get(i);
-		     			for (int j = 0; j < array.size(); j++){
-			 				if (array.get(j) == p2Move){
-			     			array.remove(j);
-			 				}
-		     			}
-		 			}
-		 			for(int i = 0; i < player1BoatGroups.size(); i++){
-		     			if (player1BoatGroups.get(i).isEmpty()){
-			 				player1BoatGroups.remove(i);
-			 				player2.incrementBoatCount();
-		     			}
-				 	}
-		 			player2.setBoatGroups(player1BoatGroups);
-				}
-				
-				//Check to see if you've won
-				String p1VictoryStatus = fromPlayer1.readLine();
-				if(p1VictoryStatus.equals("LOSE")){
-					gui.setMessage("CONGRATULATIONS, YOU WIN!");
-                    gui.playAudioFile(gui.loseURL);
-					break;
-				}
-				
-			}
-			catch(IOException e){
-				System.out.println("Something went wrong while reading from or writing to player 1");
-				gui.setMessage("Something went wrong while reading from or writing to player 1");
-				System.exit(-1);
-			}
-		}
+		joinGamePlay(gui, player2);
 		try{
 			player1Socket.close();
 			toPlayer1.close();
@@ -330,6 +276,7 @@ public class JoinGameController extends NetworkController{
 		}
 		catch (IOException e){
 		}
+
 	}
 
 }
