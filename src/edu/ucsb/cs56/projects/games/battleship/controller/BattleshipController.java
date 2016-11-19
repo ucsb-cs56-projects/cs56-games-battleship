@@ -14,11 +14,11 @@ import java.util.ArrayList;
 */
 
 public class BattleshipController {
-    //private String previousIP = "";		//keep track of IP address that game joiner previously used
+    BattleshipGUI gui;
+
     /**
      * Let the thread to sleep
     */
-
 	public static void sleep(){
         try{
             Thread.sleep(10);
@@ -32,10 +32,8 @@ public class BattleshipController {
 		}
 	}
 
-
-
     public void go() {
-		BattleshipGUI gui = new BattleshipGUI();
+		gui = new BattleshipGUI();
 		gui.reset();
 		gui.setOptions();
 		this.wait(gui);
