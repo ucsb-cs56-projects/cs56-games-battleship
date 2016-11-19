@@ -173,8 +173,8 @@ public class JoinGameController extends NetworkController{
 		this.wait(gui);
 
 		JoinGameController joinGame = new JoinGameController();
-		joinGame.joinGameAgain(gui);
-		joinGame.endOfGame(gui);
+		this.joinGameAgain(gui);
+		this.endOfGame(gui);
 	}
 		public void joinGameAgain(BattleshipGUI gui){
 		gui.setTitle("Battleship : Player 2");
