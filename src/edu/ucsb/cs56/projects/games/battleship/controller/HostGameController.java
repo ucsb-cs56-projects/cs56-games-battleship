@@ -178,6 +178,7 @@ public class HostGameController extends NetworkController{
         this.wait(gui);
         HostGameController hostGame = new HostGameController();
         hostGame.go(gui);
+
 		this.endOfGame(gui);
 	}
 

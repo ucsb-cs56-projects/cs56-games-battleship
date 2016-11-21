@@ -40,6 +40,12 @@ public class GameGrid extends JComponent{
     //Audio muted/unmuted checkbox
     JCheckBox audioMute = new JCheckBox("Mute");
 
+    public GameGrid(){
+        this.setSize(100,210);
+        this.addMouseListener(this.new cellClick());
+        this.addMouseMotionListener(this.new mouseMove());
+        this.addKeyListener(this.new changeOrientation());
+    }
 
             public void paintComponent(Graphics g)
             {

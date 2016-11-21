@@ -95,7 +95,7 @@ public class ComputerGameController extends GameController{
             gui.end();
             gui = new BattleshipGUI();
             gui.resetPlace();
-            this.wait(gui);
+            this.waitForGameType(gui);
 
             this.go(gui);
             this.endOfGame(gui);
@@ -104,7 +104,7 @@ public class ComputerGameController extends GameController{
             gui.end();
             gui = new BattleshipGUI();
             gui.resetShips();
-            this.wait(gui);
+            this.waitForSizes(gui);
 
             this.go(gui);
             this.endOfGame(gui);
@@ -118,19 +118,23 @@ public class ComputerGameController extends GameController{
 
 
             if(gui.getGameType() == 1) {
+                
+                gui.setDefaultShipSizes();
             	HostGameController hostGame = new HostGameController();
                 hostGame.go(gui);
-                //this.hostGame(gui);
+                hostGame.endOfGame(gui);
             }
             if(gui.getGameType() == 2) {
+                gui.setDefaultShipSizes();
             	JoinGameController joinGame = new JoinGameController();
                 joinGame.go(gui);
+                joinGame.endOfGame(gui);
             }
             if(gui.getGameType() == 3) {
             	ComputerGameController computerGame = new ComputerGameController();
                 computerGame.go(gui);
+                this.endOfGame(gui);
             }
-            this.endOfGame(gui);
         }
 	}
 	public void endOfGame(BattleshipGUI gui){

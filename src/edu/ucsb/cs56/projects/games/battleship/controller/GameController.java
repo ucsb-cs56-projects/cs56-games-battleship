@@ -21,10 +21,25 @@ public abstract class GameController{
     }
 
     public void wait(BattleshipGUI gui){
-        while(gui.getDifficulty() == null || gui.getGameType() == 0 ){
+        while(gui.getIPEntered() == false || gui.getGameType() == 0 ){
 			this.sleep();
 		}
 	}
+
+    public void waitForGameType(BattleshipGUI gui){
+        while( gui.getGameType() == 0 ){
+            this.sleep();
+        }
+    }
+    public void waitForSizes(BattleshipGUI gui){
+        while(gui.shipSizePopUpVisibile() || gui.colorPopUpVisible()){
+             try{
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e){}
+        }
+    }
+    
 	public static void sleep(){
         try{
             Thread.sleep(10);

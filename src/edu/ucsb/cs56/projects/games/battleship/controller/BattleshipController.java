@@ -27,10 +27,19 @@ public class BattleshipController {
         }
     }
 	public void wait(BattleshipGUI gui){
-        while(gui.getDifficulty() == null || gui.getGameType() == 0 ){
+        while(gui.getGameType() == 0 ){
 			BattleshipController.sleep();
 		}
 	}
+
+    public void waitForSizes(BattleshipGUI gui){
+        while(gui.shipSizePopUpVisibile() || gui.colorPopUpVisible()){
+             try{
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e){}
+        }
+    }
 
     public void go() {
 		gui = new BattleshipGUI();
@@ -56,6 +65,7 @@ public class BattleshipController {
         }
 	
         if(gui.getGameType() == 3) {
+            this.waitForSizes(gui);
             game = new ComputerGameController();
             game.go(gui);
             game.endOfGame(gui);

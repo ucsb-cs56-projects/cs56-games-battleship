@@ -16,6 +16,7 @@ public abstract class NetworkController extends GameController{
 	public void playAgain(BattleshipGUI gui){
 		String currentMessage = gui.getMessage();
 		gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
+        
 		if(gui.getReplayType() == 5) {		//join game
             gui.end();
             gui = new BattleshipGUI();
@@ -45,24 +46,28 @@ public abstract class NetworkController extends GameController{
 		if(gui.getReplayType() == 3) {		//main menu
             gui.end();
             gui = new BattleshipGUI();
+
             gui.reset();
             gui.setOptions();
-            this.wait(gui);
+            this.waitForGameType(gui);
 
             if(gui.getGameType() == 1) {
             	HostGameController hostGame = new HostGameController();
             	hostGame.go(gui);
-                //this.hostGame(gui);
+                this.endOfGame(gui);
             }
             if(gui.getGameType() == 2) {
             	JoinGameController joinGame = new JoinGameController();
             	joinGame.go(gui);
+                this.endOfGame(gui);
+
             }
             if(gui.getGameType() == 3) {
+                this.waitForSizes(gui);
                 ComputerGameController computerGame = new ComputerGameController();
                 computerGame.go(gui);
+                computerGame.endOfGame(gui);
             }
-            this.endOfGame(gui);
         }
 	 }
 

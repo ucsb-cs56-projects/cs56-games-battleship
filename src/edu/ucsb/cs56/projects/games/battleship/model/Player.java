@@ -30,12 +30,17 @@ public class Player {
 		boatGroups = new ArrayList<ArrayList<Integer>>();
     }
 
+    public void setDefaultShipSizes(){
+    	int[] array = {2,3,3,4,5};
+    	this.shipSizes = array;
+    }
 	/**
 	 * Getter of hit count
 	*/
 	public int getHitCount() {return this.hitCount;}
     public int getBoatCount() { return this.boatCount;}
 	public int[] getShipSizes() {return this.shipSizes;}
+	//public int[] getDefaultShipSizes() {
 
 	/**
 	 * Increase hit count with 1
