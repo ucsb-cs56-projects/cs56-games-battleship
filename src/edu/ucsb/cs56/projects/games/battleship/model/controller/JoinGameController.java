@@ -21,7 +21,6 @@ public class JoinGameController extends NetworkController{
 	
 		player2 = new Player();
 		
-		System.out.println("before enter");
 		//Wait until an IP address has been entered
 		while( !gui.getIPEntered()){
 			BattleshipController.sleep();
@@ -184,7 +183,6 @@ public class JoinGameController extends NetworkController{
 		this.endOfGame(gui);
 	}
 	public void joinGameAgain(BattleshipGUI gui){
-		System.out.println("join Game again");
 		gui.setTitle("Battleship : Player 2");
 	
 		player2 = new Player();
