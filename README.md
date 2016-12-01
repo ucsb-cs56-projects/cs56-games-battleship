@@ -68,8 +68,7 @@ Figure 5
 
 
 Figure 6
-![](http://i.imgur.com/I3RjZ.png)
-
+![](http://i.imgur.com/tFAAbk8.png)		
 
 <b>FAQ</b>
 
