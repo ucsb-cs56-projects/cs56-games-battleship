@@ -10,7 +10,7 @@ project history
 
 * Original developer description - the Milton Bradley board game that has won the hearts of children for over four decades. It will be single-player (vs. computer) and will have various difficulty settings (easy, normal, hard).  You can also host/join games and play against your friends online WITH THE POWER OF JAVA NETWORKING!
 
-* Current version: 2.2
+* Current version: 2.3
 * Previous versions:
 	* version 1: See "Original developer description" (see figure 0)
 	* version 2.0: New feature added. Player can customize ship sizes in the "against computer" mode through a new window.(see figure 1) Illegal ship sizes will be reported to the player. (see figure 2)
@@ -18,6 +18,8 @@ project history
 	* <b>version 2.1.1</b>: Bug fix on checking ship sizes validity. In version 2.0, if user input is not a number, program will terminate. Now fixed. (see figure 4)
     * <b>version 2.2</b>: Game now has replay functionality, ship color selection, harder computer difficulty, and sound effects.
         * <b>Note about sound effects</b> You must be on a CSIL machine or your own personal machine to get sound effects to work, you can't play them through ssh'ing. The sound effects are currently set to the lower bitrate sound effects so that they play better on CSIL, but there are higher quality sound effects that sound much better. To change to the higher bitrate sfx, edit BattleshipGUI.java and find the URL initializations and change all of the file extensions from .aiff to .wav.
+
+    * <b>version 2.3</b>: Game now has replay functionality for multiplayer games and also has a boat count, so the user can keep track of how many boats have been sunk. Also, the port number has been removed in order to limit confusion when setting up multiplayer games.
 
 * Game description - this Battleship game has 3 modes for user to choose from: hosting a game, joining a game, and playing against a computer. (see figure 5)
 	
@@ -29,10 +31,17 @@ project history
 
 
 * For future developers:
-	* There are 5 classes included in the package. BattleshipController is the controller of the game including the main method to be run. BattleshipGUI is for setting up the GUI. The other three classes are player classes, representing individual players. I recommend that you start with looking at BattleshipGUI.java.
+	* There are 16 classes included in the package. BattleshipController is the controller of the game including the main method to be run. The other 5 classes in the controller directory are helper classes. BattleshipGUI is for setting up the GUI. The 6 other classes in the directory are helper classes that hold elements of the gui. The final three classes in the model directory are player classes, representing individual players. I recommend that you start with looking at BattleshipGUI.java.
 	* Suggested improvement to be made:
 		* Improve the computer's algorithm. It is obvious that playing Battleship game involves two status, hunting (when you have zero knowledge of where a ship is) and targeting (when you've found at least one pixel on a ship). The current algorithm of the computer is fair enough on targeting, but it only does random selections in hunting. However, we know that the possibility of a pixel containing a part of a ship varies from pixel to pixel, and it envolves complicated calculation of probabilities. There's space to improve the computer's algorithm so that the "HARD" mode can become really hard. Here's a reference about the battleship algorithm: 
 (http://www.datagenetics.com/blog/december32011/index.html)
+
+```
+ F16 | EdwardGuardado | bkorycki97  | F16 final remarks:
+```
+	
+* For whomever takes over the project next, we have refactored the code very much so that the helper classes are pretty much all seperated from botht the GUI and the Controller, but there is still a lot the can be done. The current code runs and creates a game that allows people to play eachother or the computer. We have tested our code with the minimal test suite and also by trial and error, which isn't the greatest way to test code, so we advise that you create stronger test coverage that simulates all the game types. The strongest issues we see still are the ability to go back once a game mode ha been chosen (Issue #15) and the revamp of the boat shapes and sizes (Issue #27). We believe the refactor was very in-depth, but most likely more can be done in the GUI, which might help you attack a GUI revamp. Just as the people before us advised, you should check out how the controller and gui talk to eachother and how the GUI helper classes talk to eachother heading into your work. With that, best of luck and Allons-Y. :)
+
 
 		* Make the game adaptable to the Internet. Currently the game can only be played within the same network, is it possible that it be played by 2 players 5000 miles from each other?
 		* More suggestions on improvement: see issues under this project.
@@ -68,8 +77,7 @@ Figure 5
 
 
 Figure 6
-![](http://i.imgur.com/tFAAbk8.png)
-
+![](http://i.imgur.com/pHAfWoO.png)		
 
 <b>FAQ</b>
 
