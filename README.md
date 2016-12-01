@@ -37,9 +37,8 @@ project history
 (http://www.datagenetics.com/blog/december32011/index.html)
 
 ```
- F16 | EdwardGuardado | bkorycki97  | Battleship game
+ F16 | EdwardGuardado | bkorycki97  | F16 final remarks:
 ```
-* F16 final remarks:
 	* For whomever takes over the project next, we have refactored the code very much so that the helper classes are pretty much all seperated from botht the GUI and the Controller, but there is still a lot the can be done. The current code runs and creates a game that allows people to play eachother or the computer. We have tested our code with the minimal test suite and also by trial and error, which isn't the greatest way to test code, so we advise that you create stronger test coverage that simulates all the game types. The strongest issues we see still are the ability to go back once a game mode ha been chosen (Issue #15) and the revamp of the boat shapes and sizes (Issue #27). We believe the refactor was very in-depth, but most likely more can be done in the GUI, which might help you attack a GUI revamp. Just as the people before us advised, you should check out how the controller and gui talk to eachother and how the GUI helper classes talk to eachother heading into your work. With that, best of luck and Allons-Y. :)
 
 
