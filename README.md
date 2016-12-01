@@ -50,6 +50,7 @@ project history
 The code can also be found at these links
 
 - [Archive page](https://foo.cs.ucsb.edu/cs56/issues/0000501/)
+- [JavaDoc] (https://ucsb-cs56-f16.github.io/cs56-games-battleship_javadoc/javadoc/index.html)
 
 
 Figure 0
