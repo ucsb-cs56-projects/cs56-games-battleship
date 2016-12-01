@@ -9,7 +9,7 @@
   <property name="javadocDest" value="${webRoot}/${projectName}" /> 
   <property name="javadocUrl" value="${webBaseUrl}/${projectName}" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipController" />
-  <property name="public_javadoc_absolute_path" location="../cs56-games-battleship_javadoc_EdwardGuardado_bkorycki97/javadoc"/>
+  <property name="public_javadoc_absolute_path" location="../cs56-games-battleship_javadoc/javadoc"/>
 
   <!-- beginning of targets -->
 
