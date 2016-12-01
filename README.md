@@ -36,6 +36,9 @@ project history
 		* Improve the computer's algorithm. It is obvious that playing Battleship game involves two status, hunting (when you have zero knowledge of where a ship is) and targeting (when you've found at least one pixel on a ship). The current algorithm of the computer is fair enough on targeting, but it only does random selections in hunting. However, we know that the possibility of a pixel containing a part of a ship varies from pixel to pixel, and it envolves complicated calculation of probabilities. There's space to improve the computer's algorithm so that the "HARD" mode can become really hard. Here's a reference about the battleship algorithm: 
 (http://www.datagenetics.com/blog/december32011/index.html)
 
+```
+ F16 | EdwardGuardado | bkorycki97  | Battleship game
+```
 * F16 final remarks:
 	* For whomever takes over the project next, we have refactored the code very much so that the helper classes are pretty much all seperated from botht the GUI and the Controller, but there is still a lot the can be done. The current code runs and creates a game that allows people to play eachother or the computer. We have tested our code with the minimal test suite and also by trial and error, which isn't the greatest way to test code, so we advise that you create stronger test coverage that simulates all the game types. The strongest issues we see still are the ability to go back once a game mode ha been chosen (Issue #15) and the revamp of the boat shapes and sizes (Issue #27). We believe the refactor was very in-depth, but most likely more can be done in the GUI, which might help you attack a GUI revamp. Just as the people before us advised, you should check out how the controller and gui talk to eachother and how the GUI helper classes talk to eachother heading into your work. With that, best of luck and Allons-Y. :)
 
