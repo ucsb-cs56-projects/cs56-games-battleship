@@ -51,6 +51,7 @@ The code can also be found at these links
 
 - [Archive page](https://foo.cs.ucsb.edu/cs56/issues/0000501/)
 - [JavaDoc] (https://ucsb-cs56-f16.github.io/cs56-games-battleship_javadoc/javadoc/index.html)
+- [Git JavaDoc Repo] (https://github.com/UCSB-CS56-F16/cs56-games-battleship_javadoc)
 
 
 Figure 0
