@@ -34,7 +34,7 @@ project history
 
 
 * For future developers:
-<<<<<<< HEAD
+
 	* There are 5 classes included in the package. BattleshipController is the controller of the game including the main method to be run. BattleshipGUI is for setting up the GUI. The other three classes are player classes, representing individual players. I recommend that you start with looking at BattleshipGUI.java.
 
 * <b>W16 final remarks</b>
@@ -49,10 +49,8 @@ project history
         * Somehow get the sound effects to not crash when playing them on a CSIL machine
         * Add options to go back to previous windows when setting up a game
         * Rework the GUI to use actual graphics instead of colored squares
-=======
-=======
-=======
->>>>>>> 26bb19900492d31ae03afffa13c8beb3ed2405a7
+
+
 	* There are 16 classes included in the package. BattleshipController is the controller of the game including the main method to be run. The other 5 classes in the controller directory are helper classes. BattleshipGUI is for setting up the GUI. The 6 other classes in the directory are helper classes that hold elements of the gui. The final three classes in the model directory are player classes, representing individual players. I recommend that you start with looking at BattleshipGUI.java.
 	* Suggested improvement to be made:
 		* Improve the computer's algorithm. It is obvious that playing Battleship game involves two status, hunting (when you have zero knowledge of where a ship is) and targeting (when you've found at least one pixel on a ship). The current algorithm of the computer is fair enough on targeting, but it only does random selections in hunting. However, we know that the possibility of a pixel containing a part of a ship varies from pixel to pixel, and it envolves complicated calculation of probabilities. There's space to improve the computer's algorithm so that the "HARD" mode can become really hard. Here's a reference about the battleship algorithm: 
