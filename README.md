@@ -20,6 +20,8 @@ project history
 
     * <b>version 2.3</b>: Game now has replay functionality for multiplayer games and also has a boat count, so the user can keep track of how many boats have been sunk. Also, the port number has been removed in order to limit confusion when setting up multiplayer games.
 
+    * <b>version 2.3</b>: Game now has replay functionality for multiplayer games and also has a boat count, so the user can keep track of how many boats have been sunk. Also, the port number has been removed in order to limit confusion when setting up multiplayer games.
+
 * Game description - this Battleship game has 3 modes for user to choose from: hosting a game, joining a game, and playing against a computer. (see figure 5)
 	
 	* Hosting a game: User's IP address will be displayed, and user shall wait for someone else to join his game.
@@ -30,6 +32,7 @@ project history
 
 
 * For future developers:
+<<<<<<< HEAD
 <<<<<<< HEAD
 	* There are 5 classes included in the package. BattleshipController is the controller of the game including the main method to be run. BattleshipGUI is for setting up the GUI. The other three classes are player classes, representing individual players. I recommend that you start with looking at BattleshipGUI.java.
 
@@ -46,6 +49,8 @@ project history
         * Add options to go back to previous windows when setting up a game
         * Rework the GUI to use actual graphics instead of colored squares
 =======
+=======
+>>>>>>> 80c1fa053c84001bd61fceb8be98956b1ed7670b
 	* There are 16 classes included in the package. BattleshipController is the controller of the game including the main method to be run. The other 5 classes in the controller directory are helper classes. BattleshipGUI is for setting up the GUI. The 6 other classes in the directory are helper classes that hold elements of the gui. The final three classes in the model directory are player classes, representing individual players. I recommend that you start with looking at BattleshipGUI.java.
 	* Suggested improvement to be made:
 		* Improve the computer's algorithm. It is obvious that playing Battleship game involves two status, hunting (when you have zero knowledge of where a ship is) and targeting (when you've found at least one pixel on a ship). The current algorithm of the computer is fair enough on targeting, but it only does random selections in hunting. However, we know that the possibility of a pixel containing a part of a ship varies from pixel to pixel, and it envolves complicated calculation of probabilities. There's space to improve the computer's algorithm so that the "HARD" mode can become really hard. Here's a reference about the battleship algorithm: 
