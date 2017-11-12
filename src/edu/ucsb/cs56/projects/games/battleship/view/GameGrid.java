@@ -7,6 +7,8 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
+import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
+
 public class GameGrid extends JComponent{
     public int width;
     public int height;
