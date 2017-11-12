@@ -575,10 +575,10 @@ public class BattleshipGUI extends JFrame{
 	 * @return whether or not the shot was a hit or miss 
 	 **/ 
     public String hitPlayer(int shot){ return board.hitPlayer(shot);}
-	/** 
-	 * Plays the specified audio file 
-	 * @param audioURL audio URL for specific audio file 
-	 **/ 
+	/**
+     * Adds locations for enemy's boats to the enemyBoats list.
+     * @param boatList A list of boat locations.
+     */
     public void addEnemyBoat(int boatLoc){ board.addEnemyBoat(boatLoc);}
      
     /**
