@@ -6,17 +6,16 @@ import java.util.ArrayList;
 
 public class ComputerGameController extends GameController{
 
+
     /** method for playing against computer
      *
      **/
     public void go(BattleshipGUI gui){
         //Setup the players
         Player human = new Player();
-
         gui.setMessage("Place your boats. Use any key to change orientation");
         gui.placeBoats();
         human.setBoatsArrayList(gui.getPlayerBoats());
-
         Computer computer = new Computer(gui.getDifficulty(), human.getBoatsArrayList());
 
         //Send information about ship locations to the GUI
@@ -25,7 +24,6 @@ public class ComputerGameController extends GameController{
 
         //Start the game
         while(true) {
-
             //Start player's move
             gui.makeMove();
             gui.setMessage("Your turn! (Now you've hit " + human.getHitCount() + " pixels and sunk "  + human.getBoatCount() + " boats)");
@@ -40,6 +38,9 @@ public class ComputerGameController extends GameController{
                 human.increaseHitCount();
                 if(gui.getIsAudioMuted()) {
                     gui.playAudioFile(gui.shotURL);
+                }
+                else{
+                    gui.loopAudioFile(gui.loseURL);
                 }
                 //checkBoatCount(humanMove);
 
@@ -64,11 +65,17 @@ public class ComputerGameController extends GameController{
             if(gui.getIsAudioMuted()) {
                 gui.playAudioFile(gui.missURL);
             }
+            else{
+                gui.loopAudioFile(gui.loseURL);
+            }
             //Check win status
             if(computer.hasLost()) {
                 gui.setMessage("CONGRATULATIONS, YOU WIN!");
                 if(gui.getIsAudioMuted()) {
                     gui.playAudioFile(gui.winURL);
+                }
+                else{
+                    gui.loopAudioFile(gui.loseURL);
                 }
                 break;
             }
@@ -91,6 +98,9 @@ public class ComputerGameController extends GameController{
                 gui.setMessage("OH NO, YOU LOSE!");
                 if(gui.getIsAudioMuted()) {
                     gui.playAudioFile(gui.loseURL);
+                }
+                else{
+                    gui.loopAudioFile(gui.loseURL);
                 }
                 break;
             }

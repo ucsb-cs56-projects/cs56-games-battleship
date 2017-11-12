@@ -141,7 +141,7 @@ public class BattleshipGUI extends JFrame{
         shotURL = this.getClass().getResource("sfx/ship_hit.aiff");
         missURL = this.getClass().getResource("sfx/miss_splash.aiff");
         winURL = this.getClass().getResource("sfx/victory.aiff");
-        loseURL = this.getClass().getResource("sfx/failure.aiff");
+        board.loseURL = this.getClass().getResource("sfx/failure.aiff");
         board.cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.aiff");
     }
 
@@ -548,7 +548,7 @@ public class BattleshipGUI extends JFrame{
     public int getLastMove(){ return board.getLastMove();}
 	/** 
 	 * Returns the ArrayList of the enemy boats 
-	 * @return ArrayList of enemy boats   
+	 * @return ArrayList of enemy boats
 	 **/ 
     public ArrayList<Integer> getEnemyBoats() {return board.getEnemyBoats();}
 	/** 
@@ -560,7 +560,8 @@ public class BattleshipGUI extends JFrame{
 	 * Plays and loops the specified audio file 
 	 * @param audioURL audio URL for specific audio file 
 	 **/ 
-	public void loopAudioFile(URL audioURL){	board.loopAudioFile(audioURL);}
+	public void loopAudioFile(URL audioURL1){	board.loopAudioFile(audioURL1);}
+
 	/** 
 	 * Shifts some location to player's Gamegrid 
 	 * @param loc The location that wants to be shift  

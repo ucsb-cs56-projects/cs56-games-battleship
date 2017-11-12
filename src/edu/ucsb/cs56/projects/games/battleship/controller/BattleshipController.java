@@ -46,8 +46,8 @@ public class BattleshipController {
 		gui.reset();
 		gui.setOptions();
 		this.wait(gui);
-
 		GameController game;
+        gui.loopAudioFile(gui.loseURL);
 
         //Hosting a game
         if(gui.getGameType() == 1){

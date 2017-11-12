@@ -36,7 +36,9 @@ public class GameGrid extends JComponent{
 
     public URL placeURL;
     public URL cantPlaceURL;
+    public URL loseURL;
     public Clip clip;
+    public Clip clip1;
 
 
     //Audio muted/unmuted checkbox
@@ -343,13 +345,20 @@ public class GameGrid extends JComponent{
         } 
     }
 
-    public void loopAudioFile(URL audioURL){
+    public void loopAudioFile(URL audioURL1){
         try{
+            if(getIsAudioMuted()){
+                AudioInputStream loopStream = AudioSystem.getAudioInputStream(audioURL1);
+                this.clip1 = AudioSystem.getClip();
+                this.clip1.open(loopStream);
+                clip1.start();
+                clip1.loop(LOOP_CONTINUOUSLY);
+            }
+            if(!getIsAudioMuted()){
+                clip1.stop();
+                clip1.setMicrosecondPosition(0);
+            }
 
-            AudioInputStream loopStream = AudioSystem.getAudioInputStream(audioURL);
-            Clip clip = AudioSystem.getClip();
-            clip.open(loopStream);
-            clip.loop(LOOP_CONTINUOUSLY);
         }
         catch(Exception e){
             System.err.println(e);
