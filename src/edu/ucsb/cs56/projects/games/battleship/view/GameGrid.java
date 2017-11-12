@@ -323,6 +323,9 @@ public class GameGrid extends JComponent{
             return this.playersTurn;
         }
 
+        public void setIsAudioMuted(boolean isMuted){ this.audio = isMuted;}
+
+        public boolean getIsAudioMuted(){return this.audio;}
     /**  
     * Methods that plays audio clip referenced by audioURL
     **/
@@ -336,6 +339,19 @@ public class GameGrid extends JComponent{
         } catch(Exception e) {
             System.err.println(e);
         } 
+    }
+
+    public void loopAudioFile(URL audioURL){
+        try{
+
+            AudioInputStream loopStream = AudioSystem.getAudioInputStream(audioURL);
+            Clip clip = AudioSystem.getClip();
+            clip.open(loopStream);
+            clip.loop(LOOP_CONTINUOUSLY);
+        }
+        catch(Exception e){
+            System.err.println(e);
+        }
     }
 
     public class mouseMove implements MouseMotionListener{

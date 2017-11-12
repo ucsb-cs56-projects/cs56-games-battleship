@@ -541,7 +541,10 @@ public class BattleshipGUI extends JFrame{
 	/** 
 	 * Returns the player's last turn 
 	 * @return the player's last turn 
-	 **/ 
+	 **/
+
+    public boolean getIsAudioMuted(){return board.getIsAudioMuted();}
+
     public int getLastMove(){ return board.getLastMove();}
 	/** 
 	 * Returns the ArrayList of the enemy boats 
