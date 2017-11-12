@@ -15,6 +15,7 @@ public class ComputerGameController extends GameController{
         Player human = new Player();
         gui.setMessage("Place your boats. Use any key to change orientation");
         gui.placeBoats();
+        gui.loopAudioFile(gui.loseURL);
         human.setBoatsArrayList(gui.getPlayerBoats());
         Computer computer = new Computer(gui.getDifficulty(), human.getBoatsArrayList());
 
@@ -39,9 +40,6 @@ public class ComputerGameController extends GameController{
                 if(gui.getIsAudioMuted()) {
                     gui.playAudioFile(gui.shotURL);
                 }
-                else{
-                    gui.loopAudioFile(gui.loseURL);
-                }
                 //checkBoatCount(humanMove);
 
                 ArrayList<ArrayList<Integer>> groups = computer.getBoatGroups();
@@ -65,17 +63,11 @@ public class ComputerGameController extends GameController{
             if(gui.getIsAudioMuted()) {
                 gui.playAudioFile(gui.missURL);
             }
-            else{
-                gui.loopAudioFile(gui.loseURL);
-            }
             //Check win status
             if(computer.hasLost()) {
                 gui.setMessage("CONGRATULATIONS, YOU WIN!");
                 if(gui.getIsAudioMuted()) {
                     gui.playAudioFile(gui.winURL);
-                }
-                else{
-                    gui.loopAudioFile(gui.loseURL);
                 }
                 break;
             }
@@ -98,9 +90,6 @@ public class ComputerGameController extends GameController{
                 gui.setMessage("OH NO, YOU LOSE!");
                 if(gui.getIsAudioMuted()) {
                     gui.playAudioFile(gui.loseURL);
-                }
-                else{
-                    gui.loopAudioFile(gui.loseURL);
                 }
                 break;
             }

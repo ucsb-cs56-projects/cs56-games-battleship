@@ -41,6 +41,7 @@ public class BattleshipGUI extends JFrame{
     public URL loseURL;
 	
     private JPanel audioPanel = new JPanel();
+    //private JPanel loopPanel = new JPanel();
 
 	//GUI Texts
    	private JLabel title = new JLabel("Battleship",JLabel.CENTER);
@@ -97,6 +98,13 @@ public class BattleshipGUI extends JFrame{
         board.audioMute.setBackground(Color.WHITE);
         audioPanel.add(board.audioMute, BorderLayout.SOUTH);
         board.audioMute.addItemListener(board.new audioCheck());
+
+        //audioPanel.setLayout(new BorderLayout());
+        //audioPanel.setBackground(Color.WHITE);
+        this.getContentPane().add(BorderLayout.EAST,audioPanel);
+        board.bgmMute.setBackground(Color.WHITE);
+        audioPanel.add(board.bgmMute, BorderLayout.NORTH);
+        board.bgmMute.addItemListener(board.new bgmCheck());
 
         //Add messages
         this.getContentPane().add(BorderLayout.SOUTH, messages);

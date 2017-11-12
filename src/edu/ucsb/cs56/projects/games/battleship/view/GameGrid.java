@@ -42,7 +42,9 @@ public class GameGrid extends JComponent{
 
 
     //Audio muted/unmuted checkbox
-    JCheckBox audioMute = new JCheckBox("Mute");
+    JCheckBox audioMute = new JCheckBox("Mute1");
+
+    JCheckBox bgmMute = new JCheckBox("Mute2");
 
     public GameGrid(){
         this.setSize(100,210);
@@ -399,6 +401,18 @@ public class GameGrid extends JComponent{
                 audio = false;
             else
                 audio = true;
+        }
+    }
+
+    public class bgmCheck implements ItemListener{
+        public void itemStateChanged(ItemEvent e){
+            JCheckBox bgmCB = (JCheckBox) e.getSource();
+            if(!bgmCB.isSelected()){
+                loopAudioFile(loseURL);
+            }
+            else{
+                clip1.stop();
+            }
         }
     }
             /**
