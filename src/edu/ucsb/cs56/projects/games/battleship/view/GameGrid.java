@@ -42,17 +42,15 @@ public class GameGrid extends JComponent{
 
 
     //Audio muted/unmuted checkbox
-    JCheckBox audioMute = new JCheckBox("SFX");
+    JCheckBox audioMute = new JCheckBox("Mute1");
 
-    JCheckBox bgmMute = new JCheckBox("Music");
+    JCheckBox bgmMute = new JCheckBox("Mute2");
 
     public GameGrid(){
         this.setSize(100,210);
         this.addMouseListener(this.new cellClick());
         this.addMouseMotionListener(this.new mouseMove());
         this.addKeyListener(this.new changeOrientation());
-        bgmMute.setFocusable(false);
-        audioMute.setFocusable(false);
     }
 
             public void paintComponent(Graphics g)
@@ -351,17 +349,17 @@ public class GameGrid extends JComponent{
 
     public void loopAudioFile(URL audioURL1){
         try{
-            //if(!getIsAudioMuted()){
+            if(getIsAudioMuted()){
                 AudioInputStream loopStream = AudioSystem.getAudioInputStream(audioURL1);
                 this.clip1 = AudioSystem.getClip();
                 this.clip1.open(loopStream);
                 clip1.start();
                 clip1.loop(LOOP_CONTINUOUSLY);
-           /* }
-            else{
+            }
+            if(!getIsAudioMuted()){
                 clip1.stop();
                 clip1.setMicrosecondPosition(0);
-            }*/
+            }
 
         }
         catch(Exception e){
@@ -393,33 +391,27 @@ public class GameGrid extends JComponent{
     }
     /**
     * Listener for the mute check box
-    * audio is muted when unchecked and unmuted when checked
+    * audio is muted when checked and unmuted when unchecked
     **/
 
     public class audioCheck implements ItemListener{
         public void itemStateChanged(ItemEvent e){
             JCheckBox cb = (JCheckBox) e.getSource();
-            if(!cb.isSelected()){
+            if(cb.isSelected())
                 audio = false;
-                cb.setFocusPainted(false);
-            }
-            else{
+            else
                 audio = true;
-                cb.setFocusPainted(false);
-            }
         }
     }
 
-    public class bgmCheck implements ItemListener{ 
+    public class bgmCheck implements ItemListener{
         public void itemStateChanged(ItemEvent e){
             JCheckBox bgmCB = (JCheckBox) e.getSource();
             if(!bgmCB.isSelected()){
-                clip1.stop();
-                bgmCB.setFocusPainted(false);
+                loopAudioFile(loseURL);
             }
             else{
-                loopAudioFile(loseURL);
-                bgmCB.setFocusPainted(false);
+                clip1.stop();
             }
         }
     }
