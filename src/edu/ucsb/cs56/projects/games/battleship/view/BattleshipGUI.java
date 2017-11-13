@@ -81,7 +81,6 @@ public class BattleshipGUI extends JFrame{
      * Default constructor for the class. Sets everything up.
      **/
     BattleshipGUI(){
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Add Title
@@ -99,8 +98,6 @@ public class BattleshipGUI extends JFrame{
         audioPanel.add(board.audioMute, BorderLayout.SOUTH);
         board.audioMute.addItemListener(board.new audioCheck());
 
-        //audioPanel.setLayout(new BorderLayout());
-        //audioPanel.setBackground(Color.WHITE);
         this.getContentPane().add(BorderLayout.EAST,audioPanel);
         board.bgmMute.setBackground(Color.WHITE);
         audioPanel.add(board.bgmMute, BorderLayout.NORTH);
