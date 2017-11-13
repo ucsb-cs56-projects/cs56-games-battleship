@@ -43,10 +43,12 @@ public class GameGrid extends JComponent{
 
     //Audio muted/unmuted checkbox
     JCheckBox audioMute = new JCheckBox("Mute1");
-
-    JCheckBox bgmMute = new JCheckBox("Mute2");
+	JCheckBox bgmMute = new JCheckBox("Mute2");
 
     public GameGrid(){
+		audioMute.setFocusable(false);
+		bgmMute.setFocusable(false); 
+	
         this.setSize(100,210);
         this.addMouseListener(this.new cellClick());
         this.addMouseMotionListener(this.new mouseMove());
@@ -191,6 +193,7 @@ public class GameGrid extends JComponent{
             /**
      * Check if a spawn is valid for placing boat
      * @param spawn representing the specific spawn
+	 * @return validity of spawn  
      */
 
     public boolean isValidSpawn(int spawn){
@@ -258,6 +261,7 @@ public class GameGrid extends JComponent{
     
     /**
      * Adds a single boat location to enemyBoats
+	 * @param boatLoc location of boat 
      **/
     
     public void addEnemyBoat(int boatLoc){
@@ -266,14 +270,16 @@ public class GameGrid extends JComponent{
     
     /**
      * Method for retrieving player boats. Used when GUI is used to place boats.
-     **/
+     * @return arrayList of playerBoats 
+	 **/
     
     public ArrayList<Integer> getPlayerBoats(){
         return this.playerBoats;
     }
 
     /**
-     *controller class uses this method to set a player's boat list array
+     * Controller class uses this method to set a player's boat list array
+	 * @return player boat list array 
      **/
     public ArrayList<ArrayList<Integer>> getGroupBoats(){
        return this.playerBoatGroups;
@@ -281,6 +287,7 @@ public class GameGrid extends JComponent{
     
     /**
      * Returns the player's most recent move.
+	 * @return the player's last move
      **/
     
     public int getLastMove(){
@@ -333,7 +340,8 @@ public class GameGrid extends JComponent{
 
         public boolean getIsAudioMuted(){return this.audio;}
     /**  
-    * Methods that plays audio clip referenced by audioURL
+    * Method to that plays audio clip referenced by audioURL
+	* @param audioURL audio clip to play
     **/
     public void playAudioFile(URL audioURL){
         try{
@@ -346,7 +354,10 @@ public class GameGrid extends JComponent{
             System.err.println(e);
         } 
     }
-
+	/*
+	* method to loop audio file for BGM
+	* @param audioURL1 audio clip to loop
+	*/ 
     public void loopAudioFile(URL audioURL1){
         try{
             if(getIsAudioMuted()){
