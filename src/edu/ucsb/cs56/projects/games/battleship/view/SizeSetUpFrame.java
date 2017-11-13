@@ -7,6 +7,11 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
+/**
+ * Class for setting up the size of ships 
+ * @version 2.4 (CS56 Fall 2017)
+*/
+
 public class SizeSetUpFrame extends JFrame implements ActionListener{
 
 	ImageIcon icon = new ImageIcon(getClass().getResource("images/battleshipnew.png"));
@@ -77,6 +82,8 @@ public class SizeSetUpFrame extends JFrame implements ActionListener{
 	public int[] getShipSizes(){ return this.shipSizes;}
 	/**
 	 * Method exlusively for ship sizes button listener to check validity of user input
+	 * @param input input from user for ship size
+	 * @return validity of input 
 	 **/
 	public static boolean isValid(String input){
 		if(input.equals("") || input.length()!=1) return false;

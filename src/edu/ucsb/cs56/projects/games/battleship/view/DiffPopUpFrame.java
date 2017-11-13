@@ -7,6 +7,11 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
+/**
+	 * Class for choosing difficulty when playing against computer 
+	 * @version 2.4 
+	*/
+
 public class DiffPopUpFrame extends JFrame implements ActionListener{
     private JButton easyButton = new JButton();
     private JButton mediumButton = new JButton();

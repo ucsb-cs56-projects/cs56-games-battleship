@@ -9,6 +9,11 @@ import javax.sound.sampled.*;
 
 import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
 
+/**
+	 * Class for setting up the actual game's GUI 
+	 * @version 2.4 
+	*/
+
 public class GameGrid extends JComponent{
     public int width;
     public int height;
@@ -193,6 +198,7 @@ public class GameGrid extends JComponent{
             /**
      * Check if a spawn is valid for placing boat
      * @param spawn representing the specific spawn
+	 * @return validity of spawn
      */
 
     public boolean isValidSpawn(int spawn){
@@ -260,6 +266,7 @@ public class GameGrid extends JComponent{
     
     /**
      * Adds a single boat location to enemyBoats
+	 * @param boatLoc boat location 
      **/
     
     public void addEnemyBoat(int boatLoc){
@@ -268,7 +275,8 @@ public class GameGrid extends JComponent{
     
     /**
      * Method for retrieving player boats. Used when GUI is used to place boats.
-     **/
+	 * @return player boats 	     
+	**/
     
     public ArrayList<Integer> getPlayerBoats(){
         return this.playerBoats;
@@ -276,14 +284,16 @@ public class GameGrid extends JComponent{
 
     /**
      *controller class uses this method to set a player's boat list array
-     **/
+     * @return player boat list array 
+	 **/
     public ArrayList<ArrayList<Integer>> getGroupBoats(){
        return this.playerBoatGroups;
     }
     
     /**
      * Returns the player's most recent move.
-     **/
+     * @return the player's last move 
+	 **/
     
     public int getLastMove(){
         return this.lastMove;
@@ -335,7 +345,8 @@ public class GameGrid extends JComponent{
 
         public boolean getIsAudioMuted(){return this.audio;}
     /**  
-    * Methods that plays audio clip referenced by audioURL
+    * Method that plays audio clip referenced by audioURL
+	* @param audioURL audio clip to be played 
     **/
     public void playAudioFile(URL audioURL){
         try{
@@ -349,6 +360,10 @@ public class GameGrid extends JComponent{
         } 
     }
 
+	/**
+	* Method to loop audio clip 
+	* @param audioURL1 audio clip to be looped 
+	**/ 
     public void loopAudioFile(URL audioURL1){
         try{
             AudioInputStream loopStream = AudioSystem.getAudioInputStream(audioURL1);

@@ -7,6 +7,11 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
+/**
+	 * Class for choosing the color of the player's boats 
+	 * @version 2.4
+	*/
+
 public class ColorPopUpFrame extends JFrame implements ActionListener{
 
 	private JButton colorSelectButton = new JButton("Select a color, then click to proceed");

@@ -35,12 +35,21 @@ public class Player {
     	this.shipSizes = array;
     }
 	/**
-	 * Getter of hit count
+	 * Getter of hit count 
+	 * @return hitCount
 	*/
 	public int getHitCount() {return this.hitCount;}
+/**
+	 * Getter of boat count 
+	 * @return boatCount
+	*/
     public int getBoatCount() { return this.boatCount;}
+/**
+	 * Getter of ship sizes 
+	 * @return shipSizes
+	*/
 	public int[] getShipSizes() {return this.shipSizes;}
-	//public int[] getDefaultShipSizes() {
+
 
 	/**
 	 * Increase hit count with 1
@@ -72,6 +81,7 @@ public class Player {
 	
 	/**
 	 * Compare all shots taken to boat locations to see if this player has lost
+	 * @return whether or not player has lost 
 	 **/
 	 
 	public boolean hasLost(){
@@ -165,8 +175,9 @@ public class Player {
 	}
 
     /**
-     **return the BoatGroup matrix to the controller
-     **/
+     * return the BoatGroup matrix to the controller
+     * @return boat group matrix
+	 **/
     public ArrayList<ArrayList<Integer>> getBoatGroups(){
 	return boatGroups;
     }

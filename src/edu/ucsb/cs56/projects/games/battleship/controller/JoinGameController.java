@@ -4,6 +4,11 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+	 * Join game controller class, controller for handling joining a game
+	 * @version 2.4 
+	 */
+
 
 public class JoinGameController extends NetworkController{
 	private String connectTo = "";	

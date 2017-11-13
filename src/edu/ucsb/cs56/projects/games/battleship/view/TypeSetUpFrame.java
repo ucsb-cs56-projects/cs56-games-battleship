@@ -7,6 +7,11 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
+/**
+	 * Class for setting up the game type 
+	 * @version 2.4 
+	*/
+
 public class TypeSetUpFrame extends JFrame implements ActionListener{
 	private JButton hostButton = new JButton();
 	private JButton joinButton = new JButton();

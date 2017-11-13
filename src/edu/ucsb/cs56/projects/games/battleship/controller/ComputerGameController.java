@@ -4,11 +4,17 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+	 * Computer game controller class, controller for handling when playing against a computer
+	 * @version 2.4
+	 */
+
+
 public class ComputerGameController extends GameController{
 
 
     /** method for playing against computer
-     *
+     * @param gui BattleshipGUI
      **/
     public void go(BattleshipGUI gui){
         //Setup the players

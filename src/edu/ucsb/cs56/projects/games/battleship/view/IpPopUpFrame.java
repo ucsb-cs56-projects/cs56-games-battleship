@@ -7,6 +7,11 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
+/**
+	 * Class for entering IP when you want to join a game 
+	 * @version 2.4 
+	*/
+
 public class IpPopUpFrame extends JFrame implements ActionListener{
 
 	ImageIcon icon = new ImageIcon(getClass().getResource("images/Wifi-icon.png"));

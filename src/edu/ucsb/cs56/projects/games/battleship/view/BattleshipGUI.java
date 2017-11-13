@@ -524,18 +524,16 @@ public class BattleshipGUI extends JFrame{
     public ArrayList<Integer> getPlayerBoats(){ return board.getPlayerBoats();}
 	/** 
 	 * Returns the locations of the player boats 
-	 * @return list of player boat locations  
+	 * @param boatList list of player boat locations  
 	 **/ 
     public void addPlayerBoats(ArrayList<Integer> boatList){ board.addPlayerBoats(boatList);}
 	/** 
 	 * Returns the locations of the enemy boats 
 	 * @param boatList array of Player Boats 
-	 * @return list of enemy boat locations  
 	 **/ 
     public void addEnemyBoats(ArrayList<Integer> boatList){board.addEnemyBoats(boatList);}
 	/** 
-	 * Lets the GUI knows its the player's turn
-	 * @param boatList list of boats for enemy boats     
+	 * Lets the GUI knows its the player's turn     
 	 **/ 
     public void makeMove(){board.makeMove();}
 	/** 
@@ -547,9 +545,6 @@ public class BattleshipGUI extends JFrame{
 	 * Returns the player's last turn 
 	 * @return the player's last turn 
 	 **/
-
-    public boolean getIsAudioMuted(){return board.getIsAudioMuted();}
-
     public int getLastMove(){ return board.getLastMove();}
 	/** 
 	 * Returns the ArrayList of the enemy boats 
@@ -563,7 +558,7 @@ public class BattleshipGUI extends JFrame{
     public void playAudioFile(URL audioURL){    board.playAudioFile(audioURL);}
 	/** 
 	 * Plays and loops the specified audio file 
-	 * @param audioURL audio URL for specific audio file 
+	 * @param audioURL1 audio URL for specific audio file 
 	 **/ 
 	public void loopAudioFile(URL audioURL1){	board.loopAudioFile(audioURL1);}
 
@@ -585,12 +580,17 @@ public class BattleshipGUI extends JFrame{
 	 **/ 
     public String hitPlayer(int shot){ return board.hitPlayer(shot);}
 	/**
-     * Adds locations for enemy's boats to the enemyBoats list.
-     * @param boatList A list of boat locations.
-     */
+     * Adds locations for enemy's boats to the board.
+     * @param boatLoc boat location 
+     **/
     public void addEnemyBoat(int boatLoc){ board.addEnemyBoat(boatLoc);}
-     
-    /**
+	/**
+     * Checks if the audio is muted 
+	 * @return status of audio mute
+	 **/     
+	public boolean getIsAudioMuted(){return board.getIsAudioMuted();} 
+    
+	/**
      * Listener for the play again options
      **/
 
