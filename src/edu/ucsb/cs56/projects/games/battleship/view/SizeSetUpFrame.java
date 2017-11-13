@@ -8,8 +8,12 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 public class SizeSetUpFrame extends JFrame implements ActionListener{
-	private JButton reminder = new JButton("Input sizes of ships (between 2 and 9), then click to proceed");
+
+	ImageIcon icon = new ImageIcon(getClass().getResource("images/battleshipnew.png"));
+ 
+	private JButton reminder = new JButton("Input sizes of ships (between 2 and 9), then click here to proceed");
 	private JPanel shipSizePanel = new JPanel();
+	private JLabel logoIcon = new JLabel(icon); 
 	private JTextField ship1 = new JTextField(5);
 	private JTextField ship2 = new JTextField(5);
 	private JTextField ship3 = new JTextField(5);
@@ -20,18 +24,24 @@ public class SizeSetUpFrame extends JFrame implements ActionListener{
 	private int[] shipSizes;
 
 	public SizeSetUpFrame(){
+
+	    GridLayout threeWidgetVerticleGrid = new GridLayout(3,1);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(600,100);
+        this.setSize(600,160);
 
         //Add shipsize buttons listeners
         this.reminder.addActionListener(this);
         for(int i=0; i<5; i++){
             this.inputBoxes[i].addActionListener(this);
         }
+		this.getContentPane().add(BorderLayout.NORTH, logoIcon);
         this.getContentPane().add(BorderLayout.SOUTH, reminder);
+
         for(int i=0; i<5; i++){
             this.shipSizePanel.add(this.inputBoxes[i]);
         }
+
         this.getContentPane().add(BorderLayout.CENTER, shipSizePanel);
     
 	}
