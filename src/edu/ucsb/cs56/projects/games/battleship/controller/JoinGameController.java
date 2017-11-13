@@ -167,7 +167,7 @@ public class JoinGameController extends NetworkController{
 				if(p1VictoryStatus.equals("LOSE")){
 					gui.setMessage("CONGRATULATIONS, YOU WIN!");
 					if(gui.getIsAudioMuted()){
-                    	gui.playAudioFile(gui.loseURL);
+                    	gui.playAudioFile(gui.winURL);
                 	}
 					break;
 				}

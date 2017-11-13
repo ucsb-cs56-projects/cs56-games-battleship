@@ -39,6 +39,7 @@ public class BattleshipGUI extends JFrame{
     public URL missURL;
     public URL winURL;
     public URL loseURL;
+    public URL bgmURL;
 	
     private JPanel audioPanel = new JPanel();
     //private JPanel loopPanel = new JPanel();
@@ -148,6 +149,7 @@ public class BattleshipGUI extends JFrame{
         winURL = this.getClass().getResource("sfx/victory.aiff");
         board.loseURL = this.getClass().getResource("sfx/failure.aiff");
         board.cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.aiff");
+        board.bgmURL = this.getClass().getResource("sfx/bgm.aiff");
     }
 
         /**
@@ -560,7 +562,7 @@ public class BattleshipGUI extends JFrame{
 	 * Plays and loops the specified audio file 
 	 * @param audioURL1 audio URL for specific audio file 
 	 **/ 
-	public void loopAudioFile(URL audioURL1){	board.loopAudioFile(audioURL1);}
+	public void loopAudioFile(URL loopAudioURL){	board.loopAudioFile( loopAudioURL);}
 
 	/** 
 	 * Shifts some location to player's Gamegrid 
