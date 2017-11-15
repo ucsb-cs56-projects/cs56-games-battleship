@@ -37,7 +37,7 @@ public class GameGrid extends JComponent{
     private int xLoc;
     private int yLoc;
     private boolean horzOrVert = true; //true for horizontal false for verticle
-    private boolean audio = true;
+    private boolean audio = false;
 
     public URL placeURL;
     public URL cantPlaceURL;
