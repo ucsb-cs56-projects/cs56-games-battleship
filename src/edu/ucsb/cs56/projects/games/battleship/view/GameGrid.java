@@ -363,7 +363,7 @@ public class GameGrid extends JComponent{
 
 	/**
 	* Method to loop audio clip 
-	* @param audioURL1 audio clip to be looped 
+	* @param loopAudioURL audio clip to be looped 
 	**/ 
     public void loopAudioFile(URL loopAudioURL){
         try{

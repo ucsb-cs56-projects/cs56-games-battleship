@@ -560,7 +560,7 @@ public class BattleshipGUI extends JFrame{
     public void playAudioFile(URL audioURL){    board.playAudioFile(audioURL);}
 	/** 
 	 * Plays and loops the specified audio file 
-	 * @param audioURL1 audio URL for specific audio file 
+	 * @param loopAudioURL audio URL for specific audio file 
 	 **/ 
 	public void loopAudioFile(URL loopAudioURL){	board.loopAudioFile( loopAudioURL);}
 
