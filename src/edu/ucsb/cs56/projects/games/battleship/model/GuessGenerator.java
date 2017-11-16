@@ -21,6 +21,7 @@ public class GuessGenerator {
     /**
      * Default constructor
      * @param difficulty difficulty of the game
+	 * @param player_boats player boats list
      */
 
     public GuessGenerator(String difficulty, ArrayList<Integer> player_boats) {
@@ -109,8 +110,10 @@ public class GuessGenerator {
 
 
     /**
-       updates lists and things based on results of previous move
-    */
+    *   updates lists and things based on results of previous move
+	*   @param location location 
+	* 	@param status status   
+	*/
     public void processResult(int location, String status) {
         if(smartGuesses.isEmpty() && status.equals("HIT")) {
             // make NWES && add to smart guesses

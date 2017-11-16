@@ -7,6 +7,13 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
+import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
+
+/**
+	 * Class for setting up the actual game's GUI 
+	 * @version 2.4 
+	*/
+
 public class GameGrid extends JComponent{
     public int width;
     public int height;
@@ -30,21 +37,28 @@ public class GameGrid extends JComponent{
     private int xLoc;
     private int yLoc;
     private boolean horzOrVert = true; //true for horizontal false for verticle
-    private boolean audio = true;
+    private boolean audio = false;
 
     public URL placeURL;
     public URL cantPlaceURL;
+    public URL loseURL;
+    public URL bgmURL;
     public Clip clip;
+    public Clip loopClip;
 
 
     //Audio muted/unmuted checkbox
-    JCheckBox audioMute = new JCheckBox("Mute");
+    JCheckBox audioMute = new JCheckBox("SFX");
+
+    JCheckBox bgmMute = new JCheckBox("Music");
 
     public GameGrid(){
         this.setSize(100,210);
         this.addMouseListener(this.new cellClick());
         this.addMouseMotionListener(this.new mouseMove());
         this.addKeyListener(this.new changeOrientation());
+        audioMute.setFocusable(false);
+        bgmMute.setFocusable(false);
     }
 
             public void paintComponent(Graphics g)
@@ -185,6 +199,7 @@ public class GameGrid extends JComponent{
             /**
      * Check if a spawn is valid for placing boat
      * @param spawn representing the specific spawn
+	 * @return validity of spawn
      */
 
     public boolean isValidSpawn(int spawn){
@@ -252,6 +267,7 @@ public class GameGrid extends JComponent{
     
     /**
      * Adds a single boat location to enemyBoats
+	 * @param boatLoc boat location 
      **/
     
     public void addEnemyBoat(int boatLoc){
@@ -260,7 +276,8 @@ public class GameGrid extends JComponent{
     
     /**
      * Method for retrieving player boats. Used when GUI is used to place boats.
-     **/
+	 * @return player boats 	     
+	**/
     
     public ArrayList<Integer> getPlayerBoats(){
         return this.playerBoats;
@@ -268,14 +285,16 @@ public class GameGrid extends JComponent{
 
     /**
      *controller class uses this method to set a player's boat list array
-     **/
+     * @return player boat list array 
+	 **/
     public ArrayList<ArrayList<Integer>> getGroupBoats(){
        return this.playerBoatGroups;
     }
     
     /**
      * Returns the player's most recent move.
-     **/
+     * @return the player's last move 
+	 **/
     
     public int getLastMove(){
         return this.lastMove;
@@ -323,8 +342,12 @@ public class GameGrid extends JComponent{
             return this.playersTurn;
         }
 
+        public void setIsAudioMuted(boolean isMuted){ this.audio = isMuted;}
+
+        public boolean getIsAudioMuted(){return this.audio;}
     /**  
-    * Methods that plays audio clip referenced by audioURL
+    * Method that plays audio clip referenced by audioURL
+	* @param audioURL audio clip to be played 
     **/
     public void playAudioFile(URL audioURL){
         try{
@@ -336,6 +359,24 @@ public class GameGrid extends JComponent{
         } catch(Exception e) {
             System.err.println(e);
         } 
+    }
+
+	/**
+	* Method to loop audio clip 
+	* @param loopAudioURL audio clip to be looped 
+	**/ 
+    public void loopAudioFile(URL loopAudioURL){
+        try{
+            AudioInputStream loopStream = AudioSystem.getAudioInputStream(loopAudioURL);
+            this.loopClip = AudioSystem.getClip();
+            this.loopClip.open(loopStream);
+            loopClip.start();
+            loopClip.loop(LOOP_CONTINUOUSLY);
+
+        }
+        catch(Exception e){
+            System.err.println(e);
+        }
     }
 
     public class mouseMove implements MouseMotionListener{
@@ -368,10 +409,22 @@ public class GameGrid extends JComponent{
     public class audioCheck implements ItemListener{
         public void itemStateChanged(ItemEvent e){
             JCheckBox cb = (JCheckBox) e.getSource();
-            if(cb.isSelected())
+            if(!cb.isSelected())
                 audio = false;
             else
                 audio = true;
+        }
+    }
+
+    public class bgmCheck implements ItemListener{
+        public void itemStateChanged(ItemEvent e){
+            JCheckBox bgmCB = (JCheckBox) e.getSource();
+            if(!bgmCB.isSelected()){
+                loopClip.stop();
+            }
+            else{
+                loopAudioFile(bgmURL);
+            }
         }
     }
             /**

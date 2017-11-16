@@ -16,7 +16,9 @@ import javax.sound.sampled.*;
  * @author Joseph Song (W16)
  * @author Barbara Korycki (F16)
  * @author Edward Guardado (F16)
- * @version 2.3 (CS56 Fall 2016)
+ * @author Yuyang Su (F17)
+ * @author Kindy Tan (F17) 
+ * @version 2.4 (CS56 Fall 2017)
 
  */
 
@@ -37,8 +39,10 @@ public class BattleshipGUI extends JFrame{
     public URL missURL;
     public URL winURL;
     public URL loseURL;
+    public URL bgmURL;
 	
     private JPanel audioPanel = new JPanel();
+    //private JPanel loopPanel = new JPanel();
 
 	//GUI Texts
    	private JLabel title = new JLabel("Battleship",JLabel.CENTER);
@@ -78,7 +82,6 @@ public class BattleshipGUI extends JFrame{
      * Default constructor for the class. Sets everything up.
      **/
     BattleshipGUI(){
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Add Title
@@ -95,6 +98,11 @@ public class BattleshipGUI extends JFrame{
         board.audioMute.setBackground(Color.WHITE);
         audioPanel.add(board.audioMute, BorderLayout.SOUTH);
         board.audioMute.addItemListener(board.new audioCheck());
+
+        this.getContentPane().add(BorderLayout.EAST,audioPanel);
+        board.bgmMute.setBackground(Color.WHITE);
+        audioPanel.add(board.bgmMute, BorderLayout.NORTH);
+        board.bgmMute.addItemListener(board.new bgmCheck());
 
         //Add messages
         this.getContentPane().add(BorderLayout.SOUTH, messages);
@@ -139,8 +147,9 @@ public class BattleshipGUI extends JFrame{
         shotURL = this.getClass().getResource("sfx/ship_hit.aiff");
         missURL = this.getClass().getResource("sfx/miss_splash.aiff");
         winURL = this.getClass().getResource("sfx/victory.aiff");
-        loseURL = this.getClass().getResource("sfx/failure.aiff");
+        board.loseURL = this.getClass().getResource("sfx/failure.aiff");
         board.cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.aiff");
+        board.bgmURL = this.getClass().getResource("sfx/bgm.aiff");
     }
 
         /**
@@ -382,6 +391,9 @@ public class BattleshipGUI extends JFrame{
         public void setTitle(String title){
             this.title.setText(title);
         }
+		public String getTitle() {
+			return this.title.getText();
+		}
 
         /**
          * Changes the message at the bottom of the gui.
@@ -445,18 +457,40 @@ public class BattleshipGUI extends JFrame{
 	public boolean getIPEntered(){
 		return this.ipPopUp.getIpEntered();
 	}
-	
+
+	/**
+	 * Set the IP that was entered 
+	 * @param set the new IP to set
+	 **/
+
     public void setIpEntered(boolean set){
         this.ipPopUp.setIpEntered(set);
     }
+
+	/**
+	 * Set the default ship sizes what is in array 
+	 **/
+
     public void setDefaultShipSizes(){
         int[] array = {2,3,3,4,5};
         board.setShipSizes(array);
        // player.setDefaultShipSizes();
     }
+
+	/** 
+	 * Find out if the ship size pop up is visible or not
+	 * @return state of visibility of ship size pop up 
+	 **/ 
+
     public boolean shipSizePopUpVisibile(){
         return this.shipSizePopUp.isVisible();
     }
+
+	/** 
+	 * Find out if the color of the pop up is visible or not
+	 * @return state of visibility of color of pop up 
+	 **/ 
+
     public boolean colorPopUpVisible(){
         return this.colorPopUp.isVisible();
     }
@@ -470,27 +504,95 @@ public class BattleshipGUI extends JFrame{
 		return this.prompt;
 	 }
 	 
-    
+    /** 
+	 * Change the visibility to false 
+	 * and remove everything on the board 
+	 **/ 
+
     public void end() {
         this.setVisible(false);
         this.getContentPane().removeAll();
     }
 	
+	/** 
+	 * Place the boats on the board 
+	 **/ 
+	
 	public void placeBoats(){ board.placeBoats(); }
+	/** 
+	 * Returns the ArrayList of the player boats 
+	 * @return ArrayList of player boats   
+	 **/ 
     public ArrayList<Integer> getPlayerBoats(){ return board.getPlayerBoats();}
+	/** 
+	 * Returns the locations of the player boats 
+	 * @param boatList list of player boat locations  
+	 **/ 
     public void addPlayerBoats(ArrayList<Integer> boatList){ board.addPlayerBoats(boatList);}
+	/** 
+	 * Returns the locations of the enemy boats 
+	 * @param boatList array of Player Boats 
+	 **/ 
     public void addEnemyBoats(ArrayList<Integer> boatList){board.addEnemyBoats(boatList);}
+	/** 
+	 * Lets the GUI knows its the player's turn     
+	 **/ 
     public void makeMove(){board.makeMove();}
+	/** 
+	 * Checks the status of the Player's turn 
+	 * @return state of player's turn 
+	 **/ 
     public boolean getPlayersTurn(){ return board.getPlayersTurn();}
+	/** 
+	 * Returns the player's last turn 
+	 * @return the player's last turn 
+	 **/
     public int getLastMove(){ return board.getLastMove();}
+	/** 
+	 * Returns the ArrayList of the enemy boats 
+	 * @return ArrayList of enemy boats
+	 **/ 
     public ArrayList<Integer> getEnemyBoats() {return board.getEnemyBoats();}
+	/** 
+	 * Plays the specified audio file 
+	 * @param audioURL audio URL for specific audio file 
+	 **/ 
     public void playAudioFile(URL audioURL){    board.playAudioFile(audioURL);}
+	/** 
+	 * Plays and loops the specified audio file 
+	 * @param loopAudioURL audio URL for specific audio file 
+	 **/ 
+	public void loopAudioFile(URL loopAudioURL){	board.loopAudioFile( loopAudioURL);}
+
+	/** 
+	 * Shifts some location to player's Gamegrid 
+	 * @param loc The location that wants to be shift  
+	 * @return shifted integer location value 
+	 **/ 
     public int shiftToPlayerGrid(int loc){return board.shiftToPlayerGrid(loc);}
+	/** 
+	 * Records a shot and adds it to shot list 
+	 * @param shot The shot that should be added 
+	 **/ 
     public void addShot(int shot){ board.addShot(shot);}
+	/** 
+	 * Tells us if the enemy hit or missed us 
+	 * @param shot Enemy shot 
+	 * @return whether or not the shot was a hit or miss 
+	 **/ 
     public String hitPlayer(int shot){ return board.hitPlayer(shot);}
+	/**
+     * Adds locations for enemy's boats to the board.
+     * @param boatLoc boat location 
+     **/
     public void addEnemyBoat(int boatLoc){ board.addEnemyBoat(boatLoc);}
-     
-    /**
+	/**
+     * Checks if the audio is muted 
+	 * @return status of audio mute
+	 **/     
+	public boolean getIsAudioMuted(){return board.getIsAudioMuted();} 
+    
+	/**
      * Listener for the play again options
      **/
 

@@ -4,6 +4,11 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+	 * Join game controller class, controller for handling joining a game
+	 * @version 2.4 
+	 */
+
 
 public class JoinGameController extends NetworkController{
 	private String connectTo = "";	
@@ -122,7 +127,9 @@ public class JoinGameController extends NetworkController{
 				if(player2.hasLost()){
 					toPlayer1.println("LOSE");
 					gui.setMessage("OH NO, YOU LOSE!");
-                    gui.playAudioFile(gui.loseURL);
+					if(gui.getIsAudioMuted()){
+                    	gui.playAudioFile(gui.loseURL);
+					}
 					break;
 				}
 				else
@@ -159,7 +166,9 @@ public class JoinGameController extends NetworkController{
 				String p1VictoryStatus = fromPlayer1.readLine();
 				if(p1VictoryStatus.equals("LOSE")){
 					gui.setMessage("CONGRATULATIONS, YOU WIN!");
-                    gui.playAudioFile(gui.loseURL);
+					if(gui.getIsAudioMuted()){
+                    	gui.playAudioFile(gui.winURL);
+                	}
 					break;
 				}
 				
