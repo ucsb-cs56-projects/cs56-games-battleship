@@ -6,6 +6,7 @@ import java.util.*;
 import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
+import javax.imageio.ImageIO;
 
 import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
 
@@ -46,7 +47,7 @@ public class GameGrid extends JComponent{
     public Clip clip;
     public Clip loopClip;
 
-
+    private Image image; 
     //Audio muted/unmuted checkbox
     JCheckBox audioMute = new JCheckBox("SFX");
 
@@ -59,6 +60,12 @@ public class GameGrid extends JComponent{
         this.addKeyListener(this.new changeOrientation());
         audioMute.setFocusable(false);
         bgmMute.setFocusable(false);
+	 try {
+                        image = ImageIO.read(getClass().getResourceAsStream("images/background.jpg"));
+                }catch(IOException e) {
+                        e.printStackTrace();
+                }
+
     }
 
             public void paintComponent(Graphics g)
@@ -72,9 +79,9 @@ public class GameGrid extends JComponent{
                 Color ocean = new Color(0,119,190);
 
                 //Make the background white
-                g2d.setColor(Color.WHITE);
-                g2d.fillRect(0,0,this.getWidth(),this.getHeight());
-
+//                 g2d.setColor(Color.BLACK);
+  //               g2d.fillRect(0,0,this.getWidth(),this.getHeight()
+		g2d.drawImage(image, 0, 0, this);		
                 //Paint individual cells
                 for(int i=0; i < 10; i++){
                     for(int j = 0; j<21; j++){
@@ -82,7 +89,7 @@ public class GameGrid extends JComponent{
                         if(j==10)
                             g2d.setColor(Color.BLACK);
                         else if(shots.contains(loc) && (playerBoats.contains(loc) || enemyBoats.contains(loc))){
-                            g2d.setColor(Color.RED);
+                            g2d.setColor(Color.RED); 
                         }
                         else if(playerBoats.contains(loc))
                             g2d.setColor(shipColor);
