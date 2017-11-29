@@ -73,6 +73,10 @@ The code can also be found at these links
 - [JavaDoc] (https://ucsb-cs56-f16.github.io/cs56-games-battleship_javadoc/javadoc/index.html)
 - [Git JavaDoc Repo] (https://github.com/UCSB-CS56-F16/cs56-games-battleship_javadoc)
 
+```
+F17 | EthanYSu | ktan97 | F17 final remarks:
+```
+*For whomever takes over the project next, we added some features to the game such as adding background music, adding test coverage to the game, and improved the GUI by adding more images to the game. The program in it's current state allows the user to create a game of battleship to play against a computer, of multiple difficulties,or play agaisnt someone using their IP address. The code could still be refactored, mainly the two classes BattleshipGUI.java and GameGrid.java. Everything in this program is tightly coupled so adding features to the game could be fairly difficult without the code being refactored first. My suggestion would be to refactor the two classes BattleshipGUI.java and GameGrid.java so changing the GUI and adding features to the game would be easier. 
 
 Figure 0
 ![](http://i.imgur.com/AUr93FG.png)
