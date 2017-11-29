@@ -85,26 +85,27 @@ Figure 0
 
 
 Figure 1
+
 ![](https://i.imgur.com/29Nmue5.png)
 
 
 Figure 2
-![](http://i.imgur.com/PnBQ9Lu.png)
+
+![](https://i.imgur.com/PxXeQOP.png)
 
 
 Figure 3
-![](http://i.imgur.com/1iNCHmp.png)
+
+![](https://i.imgur.com/GHJOrJW.png)
 
 
 Figure 4
-![](https://i.imgur.com/ZcOYTK3.png)
 
-
-Figure 5
 ![](https://i.imgur.com/8ZYeSSO.png)
 
 
-Figure 6
+Figure 5
+
 ![](https://i.imgur.com/1SU9e0B.png)		
 
 <b>FAQ</b>
