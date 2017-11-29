@@ -33,9 +33,7 @@ public class GuessGenerator {
         diagonals = new ArrayList<Integer>();
         for(int i = 0; i < 10; i++) {
             for(int j = 0; j < 10; j++) {
-                if(i % 2 == 0 && j % 2 == 1)
-                    diagonals.add(i*10 + j);
-                if(i % 2 == 1 && j % 2 == 0)
+                if( (i % 2 == 0 && j % 2 == 1) | (i % 2 == 1 && j % 2 == 0) )
                     diagonals.add(i*10 + j);
             }
         }
