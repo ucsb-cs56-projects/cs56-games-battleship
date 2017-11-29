@@ -60,9 +60,7 @@ public class GameGrid extends JComponent{
 	} }
 
             public void paintComponent(Graphics g)
-            {
-
-                width = this.getWidth() + 50; //50 added to accomodate for mute box
+            {	width = this.getWidth() + 50; //50 added to accomodate for mute box
                 height = this.getHeight();      
                 cellWidth = height/21;
                 startX = (width - (cellWidth*10))/2;
@@ -118,26 +116,21 @@ public class GameGrid extends JComponent{
                     g2d.setColor(Color.GRAY);
                     g2d.drawLine( topLeftX, topLeftY, topLeftX, topLeftY + boatToPlace*cellWidth);
                     g2d.drawLine( topLeftX + cellWidth, topLeftY, topLeftX + cellWidth, topLeftY + boatToPlace*cellWidth);
-                    for(int i = 0; i< boatToPlace + 1; i++){
-                        g2d.drawLine( topLeftX, topLeftY + i*cellWidth, topLeftX + cellWidth, topLeftY + i*cellWidth);
-                    }
+                    for(int i = 0; i< boatToPlace + 1; i++){ g2d.drawLine( topLeftX, topLeftY + i*cellWidth, topLeftX + cellWidth, topLeftY + i*cellWidth);}
                 }
             }
             public void reset(){
                 this.shots= new ArrayList<Integer>();
                 this.playerBoats = new ArrayList<Integer>();
                 this.playersTurn = false;
-                this.lastMove = 0;
-
-            }
+                this.lastMove = 0; }
     /**
      * Add a shot to the gui's shots list
      * @param shot The shot to be added
      */
         public void addShot(int shot){
             this.shots.add(shot);
-            this.repaint();
-        }
+            this.repaint(); }
 
     /**
      * Mouse listener for clicking on game cells
@@ -152,8 +145,7 @@ public class GameGrid extends JComponent{
             if(cellRow < 10 && cellRow >=0 && cellColumn >=0 && cellColumn < 10 && playersTurn && (!shots.contains(cellRow*10 + cellColumn))){
                 lastMove = cellRow*10 + cellColumn;
                 shots.add(lastMove);
-                playersTurn = false;
-            }
+                playersTurn = false; }
             //Record click for boat placement if it was in player's territory
             else if( cellRow < 21 && cellRow > 10 && cellColumn >=0 && cellColumn < 10){
                 if(placeBoats){
@@ -164,8 +156,7 @@ public class GameGrid extends JComponent{
     
                         if(audio){ playAudioFile(placeURL);}
     
-                        repaint();
-                    }
+                        repaint(); }
                 }
             }
             repaint();
@@ -183,8 +174,7 @@ public class GameGrid extends JComponent{
 
         public String hitPlayer(int shot){
             if( playerBoats.contains(shot)) return "HIT";
-            else return "MISS";
-        }
+            else return "MISS"; }
             /**
      * Check if a spawn is valid for placing boat
      * @param spawn representing the specific spawn
@@ -196,16 +186,14 @@ public class GameGrid extends JComponent{
             for(int i=0; i < boatToPlace; i++){
                 if((spawn + i)%10 > 9 || playerBoats.contains(spawn+i) || (spawn + i)/10 != spawn/10){
                     playAudioFile(cantPlaceURL);
-                    return false;
-                }
+                    return false;}
             }
         }
         else{
             for(int i=0; i<boatToPlace; i++){
                 if((spawn+10*i)/10 > 20 || playerBoats.contains(spawn+10*i)) {
                     playAudioFile(cantPlaceURL);
-                    return false;
-                }
+                    return false;}
             }
         }
         return true;
@@ -215,14 +203,12 @@ public class GameGrid extends JComponent{
         if(horzOrVert){
             for(int i=0; i<this.boatToPlace; i++){
                 this.playerBoats.add(spawn + i);
-                spawns.add(spawn + i);
-            }
+                spawns.add(spawn + i);}
         }
         else{
             for(int i=0; i<this.boatToPlace; i++){
                 this.playerBoats.add(spawn + 10*i);
-                spawns.add(spawn + 10*i);
-            }
+                spawns.add(spawn + 10*i); }
         }
         this.playerBoatGroups.add(spawns);
     }
@@ -240,8 +226,7 @@ public class GameGrid extends JComponent{
     
     public void addPlayerBoats(ArrayList<Integer> boatList){
         for( Integer loc: boatList)
-            this.playerBoats.add(shiftToPlayerGrid(loc));
-    }
+            this.playerBoats.add(shiftToPlayerGrid(loc)); }
     
     /**
      * Adds locations for enemy's boats to the enemyBoats list.
@@ -293,8 +278,7 @@ public class GameGrid extends JComponent{
                 this.boatPlaced = false;
                 this.boatToPlace = boat;
                 while(!this.boatPlaced){
-                    BattleshipController.sleep();
-                }
+                    BattleshipController.sleep();}
             }
             this.placeBoats = false;
             repaint();
@@ -311,9 +295,7 @@ public class GameGrid extends JComponent{
          * @return value stored in playersTurn
          */
 
-        public boolean getPlayersTurn(){
-            return this.playersTurn;
-        }
+        public boolean getPlayersTurn(){return this.playersTurn; }
 
         public void setIsAudioMuted(boolean isMuted){ this.audio = isMuted;}
 
@@ -345,9 +327,7 @@ public class GameGrid extends JComponent{
             this.loopClip.open(loopStream);
             loopClip.start();
             loopClip.loop(LOOP_CONTINUOUSLY);
-
-        }
-        catch(Exception e){
+	}catch(Exception e){
             System.err.println(e);
         }
     }
@@ -357,8 +337,7 @@ public class GameGrid extends JComponent{
             if(placeBoats){ //Records x & y locations if player is placing boats
                 xLoc = e.getX();
                 yLoc = e.getY();
-                repaint();
-            }
+                repaint();}
         }
         public void mouseDragged(MouseEvent e){}
     }
@@ -366,8 +345,7 @@ public class GameGrid extends JComponent{
     public class changeOrientation implements KeyListener{
         public void keyPressed(KeyEvent e){
             horzOrVert = !horzOrVert; //Switch from drawing boats horizontally to drawing them vertically
-            repaint();
-        }   
+            repaint(); }   
         public void keyReleased(KeyEvent e){}
         public void keyTyped(KeyEvent e){}
     }
