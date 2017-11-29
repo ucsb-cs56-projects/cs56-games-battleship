@@ -16,7 +16,9 @@ import javax.sound.sampled.*;
  * @author Joseph Song (W16)
  * @author Barbara Korycki (F16)
  * @author Edward Guardado (F16)
- * @version 2.3 (CS56 Fall 2016)
+ * @author Yuyang Su (F17)
+ * @author Kindy Tan (F17) 
+ * @version 2.4 (CS56 Fall 2017)
 
  */
 
@@ -33,10 +35,7 @@ public class BattleshipGUI extends JFrame{
 
     //Public so that other classes can play sound files
 
-    public URL shotURL;
-    public URL missURL;
-    public URL winURL;
-    public URL loseURL;
+    public URL shotURL, missURL,winURL, bgmURL, loseURL;
 	
     private JPanel audioPanel = new JPanel();
 
@@ -78,7 +77,6 @@ public class BattleshipGUI extends JFrame{
      * Default constructor for the class. Sets everything up.
      **/
     BattleshipGUI(){
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Add Title
@@ -96,11 +94,16 @@ public class BattleshipGUI extends JFrame{
         audioPanel.add(board.audioMute, BorderLayout.SOUTH);
         board.audioMute.addItemListener(board.new audioCheck());
 
+        this.getContentPane().add(BorderLayout.EAST,audioPanel);
+        board.bgmMute.setBackground(Color.WHITE);
+        audioPanel.add(board.bgmMute, BorderLayout.NORTH);
+        board.bgmMute.addItemListener(board.new bgmCheck());
+
         //Add messages
         this.getContentPane().add(BorderLayout.SOUTH, messages);
 
         this.pack(); // For some reason this code is necessary to give the board focus
-        this.setSize(350,500);
+        this.setSize(1280,720);
         this.board.requestFocusInWindow();
 
         //Setup playAgain popup
@@ -139,8 +142,9 @@ public class BattleshipGUI extends JFrame{
         shotURL = this.getClass().getResource("sfx/ship_hit.aiff");
         missURL = this.getClass().getResource("sfx/miss_splash.aiff");
         winURL = this.getClass().getResource("sfx/victory.aiff");
-        loseURL = this.getClass().getResource("sfx/failure.aiff");
+        board.loseURL = this.getClass().getResource("sfx/failure.aiff");
         board.cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.aiff");
+        board.bgmURL = this.getClass().getResource("sfx/bgm.aiff");
     }
 
         /**
@@ -153,25 +157,16 @@ public class BattleshipGUI extends JFrame{
             this.setVisible(false);
             this.typePopUp.setVisible(true);
             while (!typePopUp.entered){
-                try{
-                    Thread.sleep(100);}
-                catch(InterruptedException e){
-                    System.out.println(e);
-                }
-            }
+                try{Thread.sleep(100);}
+                catch(InterruptedException e){System.out.println(e); }}
             this.gameType = typePopUp.getGameType();
 
             this.typePopUp.setVisible(false);
             if(gameType == 1){                 //Host Game
                 this.setVisible(true);
-                this.setIpEntered(true);
-            }
-            else if (gameType == 2){            //Join Game
-                setUpJoinGame();
-            }
-            else if (gameType == 3){            //Play computer
-                setUpComputerGame();
-            }
+                this.setIpEntered(true); }
+            else if (gameType == 2){setUpJoinGame();}//Join Game
+            else if (gameType == 3){setUpComputerGame();}//Play computer
         }
 
         
@@ -180,44 +175,24 @@ public class BattleshipGUI extends JFrame{
          **/
         public void waitForColor(){
             while(colorPopUp.getColor() == null || !colorPopUp.getContinue()){
-                try{
-                    Thread.sleep(100);}
-                catch(InterruptedException e){
-                    System.out.println(e);
-                }                    
-                
-            }
-        }
-
+                try{Thread.sleep(100);}
+                catch(InterruptedException e){System.out.println(e);}}}
 
         /**
          * Method to wait for the boat sizes to be given.
          **/
         public void waitForSizes(){
             while(!shipSizePopUp.getSizeSet()){
-                try{
-                    Thread.sleep(100);}
-                catch(InterruptedException e){
-                    System.out.println(e);
-                }                    
-                
-            }
-        }
-
+                try{ Thread.sleep(100);}
+                catch(InterruptedException e){ System.out.println(e);}}}
 
         /**
          * Method to wait for the difficulty to be chosen.
          **/
         public void waitForDifficulty(){
             while(diffPopUp.getDifficulty() == null){
-                try{
-                    Thread.sleep(100);}
-                catch(InterruptedException e){
-                    System.out.println(e);
-                }                    
-                
-            }            
-        }
+                try{ Thread.sleep(100);}
+                catch(InterruptedException e){System.out.println(e);}}}
 
 
         /**
@@ -266,8 +241,7 @@ public class BattleshipGUI extends JFrame{
             waitForDifficulty();
             difficulty = diffPopUp.getDifficulty();
             this.diffPopUp.setVisible(false);
-            this.setVisible(true);
-        }
+            this.setVisible(true); }
 
         /**
          * Method to initiate the graphics for a Joining Game.
@@ -275,15 +249,10 @@ public class BattleshipGUI extends JFrame{
         public void setUpJoinGame(){
             this.ipPopUp.setVisible(true);
             while(this.ipPopUp.getIpEntered() == false){
-                try{
-                    Thread.sleep(100);}
-                catch(InterruptedException e){
-                    System.out.println(e);
-                }
-            }
+                try{Thread.sleep(100);}
+                catch(InterruptedException e){System.out.println(e);}}
             this.ipPopUp.setVisible(false);
-            this.setVisible(true);
-        }
+            this.setVisible(true);}
 
         /**
          * Method to reset the GUI
@@ -296,8 +265,7 @@ public class BattleshipGUI extends JFrame{
             this.prompt = true;
 
             board.reset();
-            this.setVisible(false);
-        }
+            this.setVisible(false);}
 
 
         public void resetPlace() {
@@ -310,9 +278,7 @@ public class BattleshipGUI extends JFrame{
         
             this.setVisible(false);
             this.diffPopUp.setVisible(true);
-            setUpCompterPlayAgain();
-        
-        }
+            setUpCompterPlayAgain(); }
 
         public void resetForIP() {
             this.prompt = true;
@@ -323,9 +289,7 @@ public class BattleshipGUI extends JFrame{
             board.reset();
         
             this.setVisible(false);
-            setUpJoinGame();
-        
-        }
+            setUpJoinGame(); }
 
         public void resetForJoinAgain() {
             this.setVisible(false);
@@ -336,9 +300,7 @@ public class BattleshipGUI extends JFrame{
              
             board.reset();
         
-            this.setVisible(true);
-        
-        }
+            this.setVisible(true);}
         
         public void resetForHost() {
             this.setVisible(false);
@@ -349,9 +311,7 @@ public class BattleshipGUI extends JFrame{
              
             board.reset();
             setDefaultShipSizes();
-            this.setVisible(true);
-        
-        }
+            this.setVisible(true); }
 
         public void resetShips() {
             this.difficulty = null;
@@ -363,154 +323,204 @@ public class BattleshipGUI extends JFrame{
 
             board.reset();
 
-            setUpComputerNewShips();
-        }
+            setUpComputerNewShips();  }
 
-        public void computerPlayAgain() {
-            this.playAgainPopUp.setVisible(true);
-        }
+        public void computerPlayAgain() {this.playAgainPopUp.setVisible(true);}
 
-        public void networkPlayAgain() {
-	       this.networkPlayAgainPopUp.setVisible(true);
-	   }
+        public void networkPlayAgain() { this.networkPlayAgainPopUp.setVisible(true); }
 
         /**
          * Changes the title at the top of the gui.
          * @param title The new title to set.
          **/
 
-        public void setTitle(String title){
-            this.title.setText(title);
-        }
+        public void setTitle(String title){ this.title.setText(title); }
+	
+	public String getTitle() {return this.title.getText();}
 
         /**
          * Changes the message at the bottom of the gui.
          * @param message The new message to set.
          **/
             
-        public void setMessage(String message){
-            this.messages.setText(message);
-        }
+        public void setMessage(String message){this.messages.setText(message);}
 
         /**
          * Getter for replay instance variable. Used to check if the player wants to keep playing.
          * @return true for keep playing false for stop playing
          **/
 
-        public int getReplayType(){
-            return this.replayType;
-        }
+        public int getReplayType(){return this.replayType;}
 
         /**
          * Getter for gameType instance variable
          * @return value stored in gameType
          */
 
-        public int getGameType(){
-            return this.gameType;
-        }
+        public int getGameType(){return this.gameType;}
 	
         /**
          * Getter for gameDifficulty instance variable
          * @return value stored in gameDifficulty
          */
 
-        public String getDifficulty(){
-            return this.difficulty;
-        }
+        public String getDifficulty(){return this.difficulty;}
 
 	/**
 	 * Returns the message being displayed at the bottom of the GUI.
 	 * @return message String
 	 */
 	
-	public String getMessage(){
-		return this.messages.getText();
-	}
+	public String getMessage(){return this.messages.getText();}
 	
 	/**
 	 * Returns the IP address that should be stored in ipField
 	 * @return the IP address stored in ipField
 	 **/
 	 
-	public String getIP(){
-		return this.ipPopUp.getText();
-	}
+	public String getIP(){return this.ipPopUp.getText();}
 	
 	/**
 	 * Find out whether or not an IP address has been entered
 	 * @return state of IP address entry
 	 **/
 	
-	public boolean getIPEntered(){
-		return this.ipPopUp.getIpEntered();
-	}
-	
-    public void setIpEntered(boolean set){
-        this.ipPopUp.setIpEntered(set);
-    }
+	public boolean getIPEntered(){return this.ipPopUp.getIpEntered();}
+
+	/**
+	 * Set the IP that was entered 
+	 * @param set the new IP to set
+	 **/
+
+    public void setIpEntered(boolean set){this.ipPopUp.setIpEntered(set); }
+
+	/**
+	 * Set the default ship sizes what is in array 
+	 **/
+
     public void setDefaultShipSizes(){
         int[] array = {2,3,3,4,5};
         board.setShipSizes(array);
-       // player.setDefaultShipSizes();
     }
-    public boolean shipSizePopUpVisibile(){
-        return this.shipSizePopUp.isVisible();
-    }
-    public boolean colorPopUpVisible(){
-        return this.colorPopUp.isVisible();
-    }
+
+	/** 
+	 * Find out if the ship size pop up is visible or not
+	 * @return state of visibility of ship size pop up 
+	 **/ 
+
+    public boolean shipSizePopUpVisibile(){return this.shipSizePopUp.isVisible();}
+
+	/** 
+	 * Find out if the color of the pop up is visible or not
+	 * @return state of visibility of color of pop up 
+	 **/ 
+
+    public boolean colorPopUpVisible(){ return this.colorPopUp.isVisible();}
 
 	/**
 	 * Method for returning status of user prompt
 	 * @return true for the uses acknowledged prompt, false for user hasn't acknowledged prompt
 	 **/
 	 
-	 public boolean getPrompt(){
-		return this.prompt;
-	 }
+	 public boolean getPrompt(){return this.prompt; }
 	 
-    
-    public void end() {
-        this.setVisible(false);
-        this.getContentPane().removeAll();
-    }
+    /** 
+	 * Change the visibility to false 
+	 * and remove everything on the board 
+	 **/ 
+
+    public void end() { this.setVisible(false);
+        this.getContentPane().removeAll();}
+	
+	/** 
+	 * Place the boats on the board 
+	 **/ 
 	
 	public void placeBoats(){ board.placeBoats(); }
+	/** 
+	 * Returns the ArrayList of the player boats 
+	 * @return ArrayList of player boats   
+	 **/ 
     public ArrayList<Integer> getPlayerBoats(){ return board.getPlayerBoats();}
+	/** 
+	 * Returns the locations of the player boats 
+	 * @param boatList list of player boat locations  
+	 **/ 
     public void addPlayerBoats(ArrayList<Integer> boatList){ board.addPlayerBoats(boatList);}
+	/** 
+	 * Returns the locations of the enemy boats 
+	 * @param boatList array of Player Boats 
+	 **/ 
     public void addEnemyBoats(ArrayList<Integer> boatList){board.addEnemyBoats(boatList);}
+	/** 
+	 * Lets the GUI knows its the player's turn     
+	 **/ 
     public void makeMove(){board.makeMove();}
+	/** 
+	 * Checks the status of the Player's turn 
+	 * @return state of player's turn 
+	 **/ 
     public boolean getPlayersTurn(){ return board.getPlayersTurn();}
+	/** 
+	 * Returns the player's last turn 
+	 * @return the player's last turn 
+	 **/
     public int getLastMove(){ return board.getLastMove();}
+	/** 
+	 * Returns the ArrayList of the enemy boats 
+	 * @return ArrayList of enemy boats
+	 **/ 
     public ArrayList<Integer> getEnemyBoats() {return board.getEnemyBoats();}
+	/** 
+	 * Plays the specified audio file 
+	 * @param audioURL audio URL for specific audio file 
+	 **/ 
     public void playAudioFile(URL audioURL){    board.playAudioFile(audioURL);}
+	/** 
+	 * Plays and loops the specified audio file 
+	 * @param loopAudioURL audio URL for specific audio file 
+	 **/ 
+	public void loopAudioFile(URL loopAudioURL){	board.loopAudioFile( loopAudioURL);}
+
+	/** 
+	 * Shifts some location to player's Gamegrid 
+	 * @param loc The location that wants to be shift  
+	 * @return shifted integer location value 
+	 **/ 
     public int shiftToPlayerGrid(int loc){return board.shiftToPlayerGrid(loc);}
+	/** 
+	 * Records a shot and adds it to shot list 
+	 * @param shot The shot that should be added 
+	 **/ 
     public void addShot(int shot){ board.addShot(shot);}
+	/** 
+	 * Tells us if the enemy hit or missed us 
+	 * @param shot Enemy shot 
+	 * @return whether or not the shot was a hit or miss 
+	 **/ 
     public String hitPlayer(int shot){ return board.hitPlayer(shot);}
+	/**
+     * Adds locations for enemy's boats to the board.
+     * @param boatLoc boat location 
+     **/
     public void addEnemyBoat(int boatLoc){ board.addEnemyBoat(boatLoc);}
-     
-    /**
+	/**
+     * Checks if the audio is muted 
+	 * @return status of audio mute
+	 **/     
+	public boolean getIsAudioMuted(){return board.getIsAudioMuted();} 
+    
+	/**
      * Listener for the play again options
      **/
 
     public class playAgainClick implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == BattleshipGUI.this.playAgainButton) {
-                replayType = 1;
-                BattleshipGUI.this.setVisible(false);
-                BattleshipGUI.this.playAgainPopUp.setVisible(false);
-            }
-            else if(e.getSource() == BattleshipGUI.this.newShipsButton) {
-                replayType = 2;
-                BattleshipGUI.this.setVisible(false);
-                BattleshipGUI.this.playAgainPopUp.setVisible(false);
-            }
-            else if(e.getSource() == BattleshipGUI.this.mainMenuButton) {
-                replayType = 3;
-                BattleshipGUI.this.setVisible(false);
-                BattleshipGUI.this.playAgainPopUp.setVisible(false);
-            }
+            if(e.getSource() == BattleshipGUI.this.playAgainButton) { replayType = 1;}
+            else if(e.getSource() == BattleshipGUI.this.newShipsButton) { replayType = 2;}
+            else if(e.getSource() == BattleshipGUI.this.mainMenuButton) { replayType = 3;}
+			BattleshipGUI.this.setVisible(false);
+            BattleshipGUI.this.playAgainPopUp.setVisible(false);
         } 
     }
 
@@ -520,29 +530,12 @@ public class BattleshipGUI extends JFrame{
 
     public class networkPlayAgainClick implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == BattleshipGUI.this.networkPlayAgainButton) {
-                replayType = 4;
-                BattleshipGUI.this.setVisible(false);
-                BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
-            }
-	    
-            else if(e.getSource() == BattleshipGUI.this.playAgainWithNewIPButton) {
-                replayType = 5;
-                BattleshipGUI.this.setVisible(false);
-                BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
-            }
-
-	       else if(e.getSource() == BattleshipGUI.this.playAgainAsHostButton) {
-                replayType = 6;
-                BattleshipGUI.this.setVisible(false);
-                BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
-            }
-	    
-            else if(e.getSource() == BattleshipGUI.this.networkMainMenuButton) {
-                replayType = 3;
-                BattleshipGUI.this.setVisible(false);
-                BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
-            }
+            if(e.getSource() == BattleshipGUI.this.networkPlayAgainButton) { replayType = 4; }
+            else if(e.getSource() == BattleshipGUI.this.playAgainWithNewIPButton) { replayType = 5;}
+	        else if(e.getSource() == BattleshipGUI.this.playAgainAsHostButton) { replayType = 6;}
+            else if(e.getSource() == BattleshipGUI.this.networkMainMenuButton) { replayType = 3; }
+			BattleshipGUI.this.setVisible(false);
+            BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
         } 
     }    
 }
