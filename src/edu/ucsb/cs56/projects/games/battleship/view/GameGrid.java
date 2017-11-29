@@ -40,7 +40,7 @@ public class GameGrid extends JComponent{
     public Clip clip;
     public Clip loopClip;
 
-    private Image image; 
+    private Image image,water; 
     //Audio muted/unmuted checkbox
     JCheckBox audioMute = new JCheckBox("SFX");
 
@@ -54,10 +54,12 @@ public class GameGrid extends JComponent{
         audioMute.setFocusable(false);
         bgmMute.setFocusable(false);
 	 try {
-                image = ImageIO.read(getClass().getResourceAsStream("images/background.jpg"));
+                //image = ImageIO.read(getClass().getResourceAsStream("images/background.jpg"));
+		water = ImageIO.read(getClass().getResourceAsStream("images/water.png"));
          }catch(IOException e) {
          	e.printStackTrace();
 	} }
+	
 
             public void paintComponent(Graphics g)
             {	width = this.getWidth() + 50; //50 added to accomodate for mute box
@@ -66,9 +68,9 @@ public class GameGrid extends JComponent{
                 startX = (width - (cellWidth*10))/2;
                 Graphics2D g2d = (Graphics2D) g;
                 Color ocean = new Color(0,119,190);
-
+		Color blank = new Color(255,255,255,75); 
                 //Draw the background image
-		g2d.drawImage(image, 0, 0, this);		
+		g2d.drawImage(water, 0, 0, this);		
                 //Paint individual cells
                 for(int i=0; i < 10; i++){
                     for(int j = 0; j<21; j++){
@@ -77,15 +79,15 @@ public class GameGrid extends JComponent{
                         else if(shots.contains(loc) && (playerBoats.contains(loc) || enemyBoats.contains(loc))){ g2d.setColor(Color.RED); }
                         else if(playerBoats.contains(loc)){ g2d.setColor(shipColor);}
                         else if(shots.contains(loc)){ g2d.setColor(ocean.darker());}
-                        else{ g2d.setColor(ocean);}
-
+                        else{ g2d.setColor(blank);}
+				//g2d.drawImage(water.getScaledInstance(cellWidth,-1,Image. SCALE_SMOOTH),i,loc,this);}
                         g2d.fillRect(startX + (i*cellWidth),j*cellWidth,cellWidth,cellWidth);
 
                     }
                 }
 
                 //Paint GameGrid lines
-                g2d.setColor(Color.GRAY);
+                g2d.setColor(Color.BLACK);
                 g2d.drawLine(startX,0,startX,cellWidth*21); //Far left border
                 g2d.drawLine(startX + 10*cellWidth,0,startX + 10*cellWidth,cellWidth*21); //Far right border
                 for(int i=1; i<10; i++)
