@@ -61,8 +61,7 @@ public class GuessGenerator {
       @return A random location 0-99 that hasn't been guessed
       */
     public int genEasyMove() {
-        int x = genMove(); 
-			return x; 
+			return genMove(); 
     }
 
     /**
@@ -71,8 +70,7 @@ public class GuessGenerator {
     public int genMedMove() {
 
         if(Math.random()*100 < 75) {
-			int x = genMove(); 
-			return x; 
+			return genMove(); 
         }
         else {
             return player_boats.remove(0);
@@ -85,8 +83,7 @@ public class GuessGenerator {
     public int genHardMove() {
         
         if(Math.random()*100 < 30) {
-			int x = genMove(); 
-			return x; 
+			return genMove();
         } 
         else {
             return player_boats.remove(0);
