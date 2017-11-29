@@ -150,26 +150,22 @@ public class Player {
 		if( orientation == 0){ //up
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn - 10*i);
-				spawns.add(spawn - 10*i);
-			}
+				spawns.add(spawn - 10*i);}
 		}
 		if( orientation == 1){ //right
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn + i);
-				spawns.add(spawn + i);
-			}
+				spawns.add(spawn + i);}
 		}
 		if( orientation == 2){ //down
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn + 10*i);
-				spawns.add(spawn+  10*i);
-			}
+				spawns.add(spawn+  10*i);}
 		}
 		if( orientation == 3){ //left
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn - i);
-				spawns.add(spawn - i);
-			}
+				spawns.add(spawn - i);}
 		}
 		boatGroups.add(spawns);
 	}

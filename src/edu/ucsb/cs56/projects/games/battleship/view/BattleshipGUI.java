@@ -108,7 +108,7 @@ public class BattleshipGUI extends JFrame{
         this.getContentPane().add(BorderLayout.SOUTH, messages);
 
         this.pack(); // For some reason this code is necessary to give the board focus
-        this.setSize(350,500);
+        this.setSize(1280,720);
         this.board.requestFocusInWindow();
 
         //Setup playAgain popup

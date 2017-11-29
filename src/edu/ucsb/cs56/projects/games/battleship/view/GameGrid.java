@@ -6,6 +6,7 @@ import java.util.*;
 import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
+import javax.imageio.ImageIO;
 
 import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
 
@@ -15,10 +16,7 @@ import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
 	*/
 
 public class GameGrid extends JComponent{
-    public int width;
-    public int height;
-    public int cellWidth; 
-    public int startX;
+    public int width, height, cellWidth, startX;
     private ArrayList<Integer> shots = new ArrayList<Integer>();
 
             //GUI's knowledge bank. Used for GameGrid cell coloring
@@ -30,23 +28,19 @@ public class GameGrid extends JComponent{
     private boolean placeBoats = false;
     private int[] playerShipSizes = Player.shipSizes;
     private boolean boatPlaced = false;
-    private int boatToPlace;
+   
     private boolean playersTurn = false;
-    private int lastMove;
+;
     private Color shipColor = Color.DARK_GRAY;
-    private int xLoc;
-    private int yLoc;
+    private int boatToPlace, lastMove, xLoc, yLoc;
     private boolean horzOrVert = true; //true for horizontal false for verticle
     private boolean audio = false;
 
-    public URL placeURL;
-    public URL cantPlaceURL;
-    public URL loseURL;
-    public URL bgmURL;
+    public URL placeURL, cantPlaceURL, loseURL, bgmURL;
     public Clip clip;
     public Clip loopClip;
 
-
+    private Image image; 
     //Audio muted/unmuted checkbox
     JCheckBox audioMute = new JCheckBox("SFX");
 
@@ -59,7 +53,11 @@ public class GameGrid extends JComponent{
         this.addKeyListener(this.new changeOrientation());
         audioMute.setFocusable(false);
         bgmMute.setFocusable(false);
-    }
+	 try {
+                image = ImageIO.read(getClass().getResourceAsStream("images/background.jpg"));
+         }catch(IOException e) {
+         	e.printStackTrace();
+	} }
 
             public void paintComponent(Graphics g)
             {
@@ -71,25 +69,17 @@ public class GameGrid extends JComponent{
                 Graphics2D g2d = (Graphics2D) g;
                 Color ocean = new Color(0,119,190);
 
-                //Make the background white
-                g2d.setColor(Color.WHITE);
-                g2d.fillRect(0,0,this.getWidth(),this.getHeight());
-
+                //Draw the background image
+		g2d.drawImage(image, 0, 0, this);		
                 //Paint individual cells
                 for(int i=0; i < 10; i++){
                     for(int j = 0; j<21; j++){
                         int loc = j*10 + i;
-                        if(j==10)
-                            g2d.setColor(Color.BLACK);
-                        else if(shots.contains(loc) && (playerBoats.contains(loc) || enemyBoats.contains(loc))){
-                            g2d.setColor(Color.RED);
-                        }
-                        else if(playerBoats.contains(loc))
-                            g2d.setColor(shipColor);
-                        else if(shots.contains(loc)){
-                            g2d.setColor(ocean.darker());
-                        }
-                        else g2d.setColor(ocean);
+                        if(j==10){ g2d.setColor(Color.BLACK);}
+                        else if(shots.contains(loc) && (playerBoats.contains(loc) || enemyBoats.contains(loc))){ g2d.setColor(Color.RED); }
+                        else if(playerBoats.contains(loc)){ g2d.setColor(shipColor);}
+                        else if(shots.contains(loc)){ g2d.setColor(ocean.darker());}
+                        else{ g2d.setColor(ocean);}
 
                         g2d.fillRect(startX + (i*cellWidth),j*cellWidth,cellWidth,cellWidth);
 
@@ -172,8 +162,7 @@ public class GameGrid extends JComponent{
                         boatPlaced = true;
                         placeBoat(spawn);
     
-                        if(audio)
-                            playAudioFile(placeURL);
+                        if(audio){ playAudioFile(placeURL);}
     
                         repaint();
                     }
@@ -241,9 +230,7 @@ public class GameGrid extends JComponent{
      * Lets gui know its players turn
      */
     
-    public void makeMove(){
-        this.playersTurn = true;
-    }
+    public void makeMove(){ this.playersTurn = true; }
     
     
     /**
@@ -261,44 +248,34 @@ public class GameGrid extends JComponent{
      * @param boatList A list of boat locations.
      */
     
-    public void addEnemyBoats(ArrayList<Integer> boatList){
-        this.enemyBoats = boatList;
-    }
+    public void addEnemyBoats(ArrayList<Integer> boatList){this.enemyBoats = boatList;}
     
     /**
      * Adds a single boat location to enemyBoats
 	 * @param boatLoc boat location 
      **/
     
-    public void addEnemyBoat(int boatLoc){
-        this.enemyBoats.add(boatLoc);
-    }
+    public void addEnemyBoat(int boatLoc){this.enemyBoats.add(boatLoc);}
     
     /**
      * Method for retrieving player boats. Used when GUI is used to place boats.
 	 * @return player boats 	     
 	**/
     
-    public ArrayList<Integer> getPlayerBoats(){
-        return this.playerBoats;
-    }
+    public ArrayList<Integer> getPlayerBoats(){return this.playerBoats;}
 
     /**
      *controller class uses this method to set a player's boat list array
      * @return player boat list array 
 	 **/
-    public ArrayList<ArrayList<Integer>> getGroupBoats(){
-       return this.playerBoatGroups;
-    }
+    public ArrayList<ArrayList<Integer>> getGroupBoats(){return this.playerBoatGroups;}
     
     /**
      * Returns the player's most recent move.
      * @return the player's last move 
 	 **/
     
-    public int getLastMove(){
-        return this.lastMove;
-    }
+    public int getLastMove(){return this.lastMove;}
            /**
          * Returns whether a shot from the player against the enemy is a "HIT" or a "MISS".
          * @param shot The player's shot.
@@ -322,17 +299,13 @@ public class GameGrid extends JComponent{
             this.placeBoats = false;
             repaint();
         }
-        public void setShipSizes(int[] sizes){
-            this.playerShipSizes = sizes;
-        }
+        public void setShipSizes(int[] sizes){this.playerShipSizes = sizes;}
                 /**
          * Setter for playersTurn variable. Used by controller to let user make a move.
          * @param tf The boolean value to set to playersTurn.
          **/
 
-        public void setPlayersTurn(boolean tf){
-            this.playersTurn = tf;
-        }
+        public void setPlayersTurn(boolean tf){ this.playersTurn = tf; }
                 /**
          * Getter for playersTurn instance variable
          * @return value stored in playersTurn
@@ -398,9 +371,7 @@ public class GameGrid extends JComponent{
         public void keyReleased(KeyEvent e){}
         public void keyTyped(KeyEvent e){}
     }
-    public void setShipColor(Color color){
-        this.shipColor = color;
-    }
+    public void setShipColor(Color color){ this.shipColor = color; }
     /**
     * Listener for the mute check box
     * audio is muted when checked and unmuted when unchecked
@@ -409,22 +380,16 @@ public class GameGrid extends JComponent{
     public class audioCheck implements ItemListener{
         public void itemStateChanged(ItemEvent e){
             JCheckBox cb = (JCheckBox) e.getSource();
-            if(!cb.isSelected())
-                audio = false;
-            else
-                audio = true;
+            if(!cb.isSelected()){audio = false;}
+            else{audio = true;}
         }
     }
 
     public class bgmCheck implements ItemListener{
         public void itemStateChanged(ItemEvent e){
             JCheckBox bgmCB = (JCheckBox) e.getSource();
-            if(!bgmCB.isSelected()){
-                loopClip.stop();
-            }
-            else{
-                loopAudioFile(bgmURL);
-            }
+            if(!bgmCB.isSelected()){ loopClip.stop(); }
+            else{ loopAudioFile(bgmURL); }
         }
     }
             /**
