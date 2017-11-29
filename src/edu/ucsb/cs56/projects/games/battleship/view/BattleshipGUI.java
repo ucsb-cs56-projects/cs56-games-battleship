@@ -213,8 +213,7 @@ public class BattleshipGUI extends JFrame{
             waitForDifficulty();
             difficulty = diffPopUp.getDifficulty();
             this.diffPopUp.setVisible(false);
-            this.setVisible(true);
-        }
+            this.setVisible(true);}
 
         
         /**
@@ -231,8 +230,7 @@ public class BattleshipGUI extends JFrame{
             waitForDifficulty();
             difficulty = diffPopUp.getDifficulty();
             this.diffPopUp.setVisible(false);
-            this.setVisible(true);
-        }
+            this.setVisible(true); }
 
         /**
          * Method to initiate the graphics a second game with the AI.
@@ -320,7 +318,6 @@ public class BattleshipGUI extends JFrame{
             this.ipPopUp.setIpEntered(false);
             this.replay = true;
 
-
             board.reset();
 
             setUpComputerNewShips();  }
@@ -400,8 +397,7 @@ public class BattleshipGUI extends JFrame{
 
     public void setDefaultShipSizes(){
         int[] array = {2,3,3,4,5};
-        board.setShipSizes(array);
-    }
+        board.setShipSizes(array);}
 
 	/** 
 	 * Find out if the ship size pop up is visible or not
@@ -520,9 +516,7 @@ public class BattleshipGUI extends JFrame{
             else if(e.getSource() == BattleshipGUI.this.newShipsButton) { replayType = 2;}
             else if(e.getSource() == BattleshipGUI.this.mainMenuButton) { replayType = 3;}
 			BattleshipGUI.this.setVisible(false);
-            BattleshipGUI.this.playAgainPopUp.setVisible(false);
-        } 
-    }
+            BattleshipGUI.this.playAgainPopUp.setVisible(false);}}
 
     /**
      * Listener for the network play again options
@@ -535,7 +529,5 @@ public class BattleshipGUI extends JFrame{
 	        else if(e.getSource() == BattleshipGUI.this.playAgainAsHostButton) { replayType = 6;}
             else if(e.getSource() == BattleshipGUI.this.networkMainMenuButton) { replayType = 3; }
 			BattleshipGUI.this.setVisible(false);
-            BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
-        } 
-    }    
+            BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);} }    
 }
