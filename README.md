@@ -80,6 +80,7 @@ F17 | EthanYSu | ktan97 | F17 final remarks:
 	* See issues for other problems with the game
 	
 Figure 0
+
 ![](https://i.imgur.com/Ec6e5vK.png)
 
 
