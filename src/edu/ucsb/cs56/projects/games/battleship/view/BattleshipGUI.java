@@ -65,7 +65,7 @@ public class BattleshipGUI extends JFrame{
     private JButton networkPlayAgainButton = new JButton("Play Again"); //shows up when playing mult
     private JButton newShipsButton = new JButton("Play Again w/ New Ship Sizes");
     private JButton playAgainWithNewIPButton = new JButton( "Join a new game");
-    private JButton playAgainAsHostButton = new JButton ("Start a new game as a host");
+    private JButton playAgainAsHostButton = new JButton ("Host a new game");
     private JButton mainMenuButton = new JButton("Main Menu");
     private JButton networkMainMenuButton = new JButton("Main Menu");
 

@@ -40,7 +40,7 @@ public class GameGrid extends JComponent{
     public Clip clip;
     public Clip loopClip;
 
-    private Image image,water; 
+    private Image water; 
     //Audio muted/unmuted checkbox
     JCheckBox audioMute = new JCheckBox("SFX");
 
@@ -54,8 +54,7 @@ public class GameGrid extends JComponent{
         audioMute.setFocusable(false);
         bgmMute.setFocusable(false);
 	 try {
-                //image = ImageIO.read(getClass().getResourceAsStream("images/background.jpg"));
-		water = ImageIO.read(getClass().getResourceAsStream("images/water.png"));
+               	water = ImageIO.read(getClass().getResourceAsStream("images/water.png"));
          }catch(IOException e) {
          	e.printStackTrace();
 	} }
@@ -80,7 +79,6 @@ public class GameGrid extends JComponent{
                         else if(playerBoats.contains(loc)){ g2d.setColor(shipColor);}
                         else if(shots.contains(loc)){ g2d.setColor(ocean.darker());}
                         else{ g2d.setColor(blank);}
-				//g2d.drawImage(water.getScaledInstance(cellWidth,-1,Image. SCALE_SMOOTH),i,loc,this);}
                         g2d.fillRect(startX + (i*cellWidth),j*cellWidth,cellWidth,cellWidth);
 
                     }
