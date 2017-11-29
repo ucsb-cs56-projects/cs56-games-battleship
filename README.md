@@ -80,11 +80,11 @@ F17 | EthanYSu | ktan97 | F17 final remarks:
 	* See issues for other problems with the game
 	
 Figure 0
-![](http://i.imgur.com/AUr93FG.png)
+![](https://i.imgur.com/Ec6e5vK.png)
 
 
 Figure 1
-![](http://i.imgur.com/Pc82RXX.png)
+![](https://i.imgur.com/29Nmue5.png)
 
 
 Figure 2
@@ -96,15 +96,15 @@ Figure 3
 
 
 Figure 4
-![](http://i.imgur.com/djezD7F.png)
+![](https://i.imgur.com/ZcOYTK3.png)
 
 
 Figure 5
-![](http://i.imgur.com/svm5tkM.png)
+![](https://i.imgur.com/8ZYeSSO.png)
 
 
 Figure 6
-![](http://i.imgur.com/pHAfWoO.png)		
+![](https://i.imgur.com/1SU9e0B.png)		
 
 <b>FAQ</b>
 
