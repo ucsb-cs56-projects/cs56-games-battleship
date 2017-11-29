@@ -35,12 +35,21 @@ public class Player {
     	this.shipSizes = array;
     }
 	/**
-	 * Getter of hit count
+	 * Getter of hit count 
+	 * @return hitCount
 	*/
 	public int getHitCount() {return this.hitCount;}
+/**
+	 * Getter of boat count 
+	 * @return boatCount
+	*/
     public int getBoatCount() { return this.boatCount;}
+/**
+	 * Getter of ship sizes 
+	 * @return shipSizes
+	*/
 	public int[] getShipSizes() {return this.shipSizes;}
-	//public int[] getDefaultShipSizes() {
+
 
 	/**
 	 * Increase hit count with 1
@@ -72,6 +81,7 @@ public class Player {
 	
 	/**
 	 * Compare all shots taken to boat locations to see if this player has lost
+	 * @return whether or not player has lost 
 	 **/
 	 
 	public boolean hasLost(){
@@ -140,33 +150,30 @@ public class Player {
 		if( orientation == 0){ //up
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn - 10*i);
-				spawns.add(spawn - 10*i);
-			}
+				spawns.add(spawn - 10*i);}
 		}
 		if( orientation == 1){ //right
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn + i);
-				spawns.add(spawn + i);
-			}
+				spawns.add(spawn + i);}
 		}
 		if( orientation == 2){ //down
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn + 10*i);
-				spawns.add(spawn+  10*i);
-			}
+				spawns.add(spawn+  10*i);}
 		}
 		if( orientation == 3){ //left
 			for( int i=0; i<shipSize; i++){
 				boats.add(spawn - i);
-				spawns.add(spawn - i);
-			}
+				spawns.add(spawn - i);}
 		}
 		boatGroups.add(spawns);
 	}
 
     /**
-     **return the BoatGroup matrix to the controller
-     **/
+     * return the BoatGroup matrix to the controller
+     * @return boat group matrix
+	 **/
     public ArrayList<ArrayList<Integer>> getBoatGroups(){
 	return boatGroups;
     }

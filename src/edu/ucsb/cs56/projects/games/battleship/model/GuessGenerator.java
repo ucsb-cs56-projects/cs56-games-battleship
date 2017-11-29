@@ -21,6 +21,7 @@ public class GuessGenerator {
     /**
      * Default constructor
      * @param difficulty difficulty of the game
+	 * @param player_boats player boats list
      */
 
     public GuessGenerator(String difficulty, ArrayList<Integer> player_boats) {
@@ -60,11 +61,7 @@ public class GuessGenerator {
       @return A random location 0-99 that hasn't been guessed
       */
     public int genEasyMove() {
-        int rando = (int)(Math.random() * 100);
-        while(guesses.contains(rando))
-            rando = (int)(Math.random() * 100);
-        guesses.add(rando);
-        return rando;
+			return genMove(); 
     }
 
     /**
@@ -73,18 +70,11 @@ public class GuessGenerator {
     public int genMedMove() {
 
         if(Math.random()*100 < 75) {
-            int rando = (int)(Math.random() * 100);
-            while(guesses.contains(rando) || player_boats.contains(rando)) {
-                rando = (int)(Math.random() * 100);
-            }
-            guesses.add(rando);
-            return rando;
+			return genMove(); 
         }
         else {
             return player_boats.remove(0);
         }
-
-
     }
 
     /**
@@ -93,24 +83,27 @@ public class GuessGenerator {
     public int genHardMove() {
         
         if(Math.random()*100 < 30) {
-            int rando = (int)(Math.random() * 100);
-            while(guesses.contains(rando) || player_boats.contains(rando)) {
-                rando = (int)(Math.random() * 100);
-            }
-            guesses.add(rando);
-            return rando;
+			return genMove();
         } 
         else {
             return player_boats.remove(0);
         }
-
-
     }
-
+	
+	public int genMove(){
+			int rando = (int)(Math.random() * 100);
+            while(guesses.contains(rando) || player_boats.contains(rando)) {
+                rando = (int)(Math.random() * 100);
+            }
+            guesses.add(rando);
+            return rando;	
+	}
 
     /**
-       updates lists and things based on results of previous move
-    */
+    *   updates lists and things based on results of previous move
+	*   @param location location 
+	* 	@param status status   
+	*/
     public void processResult(int location, String status) {
         if(smartGuesses.isEmpty() && status.equals("HIT")) {
             // make NWES && add to smart guesses
