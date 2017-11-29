@@ -86,7 +86,7 @@ Figure 0
 
 Figure 1
 
-![](https://i.imgur.com/29Nmue5.png)
+![](https://i.imgur.com/CbHuT8s.png)
 
 
 Figure 2
