@@ -30,7 +30,7 @@ public class GameGrid extends JComponent{
     private boolean boatPlaced = false;
    
     private boolean playersTurn = false;
-;
+
     private Color shipColor = Color.DARK_GRAY;
     private int boatToPlace, lastMove, xLoc, yLoc;
     private boolean horzOrVert = true; //true for horizontal false for verticle
@@ -226,7 +226,8 @@ public class GameGrid extends JComponent{
     
     public void addPlayerBoats(ArrayList<Integer> boatList){
         for( Integer loc: boatList)
-            this.playerBoats.add(shiftToPlayerGrid(loc)); }
+            this.playerBoats.add(shiftToPlayerGrid(loc)); 
+    }
     
     /**
      * Adds locations for enemy's boats to the enemyBoats list.
@@ -260,7 +261,7 @@ public class GameGrid extends JComponent{
      * @return the player's last move 
 	 **/
     
-    public int getLastMove(){return this.lastMove;}
+    public int getLastMove(){ return this.lastMove;}
            /**
          * Returns whether a shot from the player against the enemy is a "HIT" or a "MISS".
          * @param shot The player's shot.
@@ -358,16 +359,24 @@ public class GameGrid extends JComponent{
     public class audioCheck implements ItemListener{
         public void itemStateChanged(ItemEvent e){
             JCheckBox cb = (JCheckBox) e.getSource();
-            if(!cb.isSelected()){audio = false;}
-            else{audio = true;}
+            if(!cb.isSelected()){ 
+		    audio = false;
+	    }
+            else{ 
+		    audio = true;
+	    }
         }
     }
 
     public class bgmCheck implements ItemListener{
         public void itemStateChanged(ItemEvent e){
             JCheckBox bgmCB = (JCheckBox) e.getSource();
-            if(!bgmCB.isSelected()){ loopClip.stop(); }
-            else{ loopAudioFile(bgmURL); }
+            if(!bgmCB.isSelected()){ 
+		    loopClip.stop(); 
+	    }
+            else{ 
+		    loopAudioFile(bgmURL); 
+	    }
         }
     }
             /**
