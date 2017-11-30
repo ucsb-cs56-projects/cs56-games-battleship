@@ -46,7 +46,6 @@ public class BattleshipController {
 		gui.reset();
 		gui.setOptions();
 		this.wait(gui);
-
 		GameController game;
 
         //Hosting a game

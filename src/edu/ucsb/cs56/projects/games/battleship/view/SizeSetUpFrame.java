@@ -7,9 +7,18 @@ import java.net.URL;
 import java.io.*;
 import javax.sound.sampled.*;
 
+/**
+ * Class for setting up the size of ships 
+ * @version 2.4 (CS56 Fall 2017)
+*/
+
 public class SizeSetUpFrame extends JFrame implements ActionListener{
-	private JButton reminder = new JButton("Input sizes of ships (between 2 and 9), then click to proceed");
+
+	ImageIcon icon = new ImageIcon(getClass().getResource("images/battleshipnew.png"));
+ 
+	private JButton reminder = new JButton("Input sizes of ships (between 2 and 9), then click here to proceed");
 	private JPanel shipSizePanel = new JPanel();
+	private JLabel logoIcon = new JLabel(icon); 
 	private JTextField ship1 = new JTextField(5);
 	private JTextField ship2 = new JTextField(5);
 	private JTextField ship3 = new JTextField(5);
@@ -20,18 +29,24 @@ public class SizeSetUpFrame extends JFrame implements ActionListener{
 	private int[] shipSizes;
 
 	public SizeSetUpFrame(){
+
+	    GridLayout threeWidgetVerticleGrid = new GridLayout(3,1);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(600,100);
+        this.setSize(600,160);
 
         //Add shipsize buttons listeners
         this.reminder.addActionListener(this);
         for(int i=0; i<5; i++){
             this.inputBoxes[i].addActionListener(this);
         }
+		this.getContentPane().add(BorderLayout.NORTH, logoIcon);
         this.getContentPane().add(BorderLayout.SOUTH, reminder);
+
         for(int i=0; i<5; i++){
             this.shipSizePanel.add(this.inputBoxes[i]);
         }
+
         this.getContentPane().add(BorderLayout.CENTER, shipSizePanel);
     
 	}
@@ -67,6 +82,8 @@ public class SizeSetUpFrame extends JFrame implements ActionListener{
 	public int[] getShipSizes(){ return this.shipSizes;}
 	/**
 	 * Method exlusively for ship sizes button listener to check validity of user input
+	 * @param input input from user for ship size
+	 * @return validity of input 
 	 **/
 	public static boolean isValid(String input){
 		if(input.equals("") || input.length()!=1) return false;

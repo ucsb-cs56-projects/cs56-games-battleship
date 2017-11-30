@@ -4,6 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+	 * Host game controller class, controller for handling the setting up the game when we host 
+	 * @version 2.4 
+	 */
 
 public class HostGameController extends NetworkController{
 

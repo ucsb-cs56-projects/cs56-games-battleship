@@ -20,8 +20,6 @@ public class Computer extends Player {
     public Computer(String difficulty) {
         super();
         super.randomGenerateBoats();
-
-        // gg = new GuessGenerator(difficulty);
     }
 
     public Computer(String difficulty, ArrayList<Integer> player_boats) {
@@ -41,6 +39,8 @@ public class Computer extends Player {
     
 	/**
 	 * Sends information to the guess generator so we can have a 'smart' computer
+	 * @param location location 
+	 * @param status status
 	 */
     public void updateGuessGrid(int location, String status) {
         gg.processResult(location, status);

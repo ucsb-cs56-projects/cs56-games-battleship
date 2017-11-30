@@ -4,6 +4,12 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+	 * Network controller class, controller for handling the networking  
+	 * @version 2.4 
+	 */
+
+
 public abstract class NetworkController extends GameController{
 	public abstract void go(BattleshipGUI gui);
 	public void endOfGame(BattleshipGUI gui){
