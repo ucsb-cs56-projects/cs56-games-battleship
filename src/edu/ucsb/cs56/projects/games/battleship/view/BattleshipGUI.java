@@ -157,16 +157,25 @@ public class BattleshipGUI extends JFrame{
             this.setVisible(false);
             this.typePopUp.setVisible(true);
             while (!typePopUp.entered){
-                try{Thread.sleep(100);}
-                catch(InterruptedException e){System.out.println(e); }}
+                try{
+			Thread.sleep(100);
+		}catch(InterruptedException e){
+			System.out.println(e); 
+		}
+	    }
             this.gameType = typePopUp.getGameType();
 
             this.typePopUp.setVisible(false);
             if(gameType == 1){                 //Host Game
                 this.setVisible(true);
-                this.setIpEntered(true); }
-            else if (gameType == 2){setUpJoinGame();}//Join Game
-            else if (gameType == 3){setUpComputerGame();}//Play computer
+                this.setIpEntered(true); 
+	    }
+            else if (gameType == 2){	
+		    setUpJoinGame();
+	    }//Join Game
+            else if (gameType == 3){	
+		    setUpComputerGame();
+	    }//Play computer
         }
 
         
@@ -175,24 +184,42 @@ public class BattleshipGUI extends JFrame{
          **/
         public void waitForColor(){
             while(colorPopUp.getColor() == null || !colorPopUp.getContinue()){
-                try{Thread.sleep(100);}
-                catch(InterruptedException e){System.out.println(e);}}}
+                try{
+			Thread.sleep(100);
+		}
+                catch(InterruptedException e){
+			System.out.println(e);
+		}
+	    }
+	}
 
         /**
          * Method to wait for the boat sizes to be given.
          **/
         public void waitForSizes(){
             while(!shipSizePopUp.getSizeSet()){
-                try{ Thread.sleep(100);}
-                catch(InterruptedException e){ System.out.println(e);}}}
+                try{ 
+			Thread.sleep(100);
+		}
+                catch(InterruptedException e){ 
+			System.out.println(e);
+		}
+	    }
+	}
 
         /**
          * Method to wait for the difficulty to be chosen.
          **/
         public void waitForDifficulty(){
             while(diffPopUp.getDifficulty() == null){
-                try{ Thread.sleep(100);}
-                catch(InterruptedException e){System.out.println(e);}}}
+                try{ 
+			Thread.sleep(100);
+		}
+                catch(InterruptedException e){
+			System.out.println(e);
+		}
+	    }
+	}
 
 
         /**
@@ -213,7 +240,8 @@ public class BattleshipGUI extends JFrame{
             waitForDifficulty();
             difficulty = diffPopUp.getDifficulty();
             this.diffPopUp.setVisible(false);
-            this.setVisible(true);}
+            this.setVisible(true);
+	}
 
         
         /**
@@ -230,7 +258,8 @@ public class BattleshipGUI extends JFrame{
             waitForDifficulty();
             difficulty = diffPopUp.getDifficulty();
             this.diffPopUp.setVisible(false);
-            this.setVisible(true); }
+            this.setVisible(true);
+	}
 
         /**
          * Method to initiate the graphics a second game with the AI.
@@ -239,7 +268,8 @@ public class BattleshipGUI extends JFrame{
             waitForDifficulty();
             difficulty = diffPopUp.getDifficulty();
             this.diffPopUp.setVisible(false);
-            this.setVisible(true); }
+            this.setVisible(true); 
+	}
 
         /**
          * Method to initiate the graphics for a Joining Game.
@@ -250,7 +280,8 @@ public class BattleshipGUI extends JFrame{
                 try{Thread.sleep(100);}
                 catch(InterruptedException e){System.out.println(e);}}
             this.ipPopUp.setVisible(false);
-            this.setVisible(true);}
+            this.setVisible(true);
+	}
 
         /**
          * Method to reset the GUI
@@ -263,7 +294,8 @@ public class BattleshipGUI extends JFrame{
             this.prompt = true;
 
             board.reset();
-            this.setVisible(false);}
+            this.setVisible(false);
+	}
 
 
         public void resetPlace() {
@@ -276,7 +308,8 @@ public class BattleshipGUI extends JFrame{
         
             this.setVisible(false);
             this.diffPopUp.setVisible(true);
-            setUpCompterPlayAgain(); }
+            setUpCompterPlayAgain();
+	}
 
         public void resetForIP() {
             this.prompt = true;
@@ -287,7 +320,8 @@ public class BattleshipGUI extends JFrame{
             board.reset();
         
             this.setVisible(false);
-            setUpJoinGame(); }
+            setUpJoinGame();
+	}
 
         public void resetForJoinAgain() {
             this.setVisible(false);
@@ -298,7 +332,8 @@ public class BattleshipGUI extends JFrame{
              
             board.reset();
         
-            this.setVisible(true);}
+            this.setVisible(true);
+	}
         
         public void resetForHost() {
             this.setVisible(false);
@@ -309,7 +344,8 @@ public class BattleshipGUI extends JFrame{
              
             board.reset();
             setDefaultShipSizes();
-            this.setVisible(true); }
+            this.setVisible(true);
+	}
 
         public void resetShips() {
             this.difficulty = null;
@@ -320,9 +356,10 @@ public class BattleshipGUI extends JFrame{
 
             board.reset();
 
-            setUpComputerNewShips();  }
+            setUpComputerNewShips(); 
+	}
 
-        public void computerPlayAgain() {this.playAgainPopUp.setVisible(true);}
+        public void computerPlayAgain() { this.playAgainPopUp.setVisible(true);}
 
         public void networkPlayAgain() { this.networkPlayAgainPopUp.setVisible(true); }
 
@@ -397,7 +434,8 @@ public class BattleshipGUI extends JFrame{
 
     public void setDefaultShipSizes(){
         int[] array = {2,3,3,4,5};
-        board.setShipSizes(array);}
+        board.setShipSizes(array);
+    }
 
 	/** 
 	 * Find out if the ship size pop up is visible or not
@@ -425,8 +463,10 @@ public class BattleshipGUI extends JFrame{
 	 * and remove everything on the board 
 	 **/ 
 
-    public void end() { this.setVisible(false);
-        this.getContentPane().removeAll();}
+    public void end() { 
+	this.setVisible(false);
+        this.getContentPane().removeAll();
+	}
 	
 	/** 
 	 * Place the boats on the board 
@@ -512,11 +552,13 @@ public class BattleshipGUI extends JFrame{
 
     public class playAgainClick implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == BattleshipGUI.this.playAgainButton) { replayType = 1;}
-            else if(e.getSource() == BattleshipGUI.this.newShipsButton) { replayType = 2;}
-            else if(e.getSource() == BattleshipGUI.this.mainMenuButton) { replayType = 3;}
-			BattleshipGUI.this.setVisible(false);
-            BattleshipGUI.this.playAgainPopUp.setVisible(false);}}
+            if(e.getSource() == BattleshipGUI.this.playAgainButton) { replayType = 1; }
+            else if(e.getSource() == BattleshipGUI.this.newShipsButton) { replayType = 2; }
+            else if(e.getSource() == BattleshipGUI.this.mainMenuButton) { replayType = 3; }
+	  		BattleshipGUI.this.setVisible(false);
+            BattleshipGUI.this.playAgainPopUp.setVisible(false);
+	}
+    }
 
     /**
      * Listener for the network play again options
@@ -526,8 +568,10 @@ public class BattleshipGUI extends JFrame{
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == BattleshipGUI.this.networkPlayAgainButton) { replayType = 4; }
             else if(e.getSource() == BattleshipGUI.this.playAgainWithNewIPButton) { replayType = 5;}
-	        else if(e.getSource() == BattleshipGUI.this.playAgainAsHostButton) { replayType = 6;}
+	    	else if(e.getSource() == BattleshipGUI.this.playAgainAsHostButton) { replayType = 6;}
             else if(e.getSource() == BattleshipGUI.this.networkMainMenuButton) { replayType = 3; }
-			BattleshipGUI.this.setVisible(false);
-            BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);} }    
+	    	BattleshipGUI.this.setVisible(false);
+            BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
+		} 
+	}    
 }
