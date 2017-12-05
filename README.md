@@ -77,6 +77,7 @@ F17 | EthanYSu | ktan97 | F17 final remarks:
 * For whomever takes over the project next, we added some features to the game such as adding background music, adding test coverage to the game, and improved the GUI by adding more images to the game. The program in it's current state allows the user to create a game of battleship to play against a computer, of multiple difficulties,or play agaisnt someone using their IP address. The code could still be refactored, mainly the two classes BattleshipGUI.java and GameGrid.java. Everything in this program is tightly coupled so adding features to the game could be fairly difficult without the code being refactored first. My suggestion would be to refactor the two classes BattleshipGUI.java and GameGrid.java so changing the GUI and adding features to the game would be easier. 
 
 	* Refactor the classes BattleshipGUI.java and GameGrid.java, if you want to change the GUI or add new features to the game like a back button 
+	* Instead of continuing with using Java Swing, use JavaFX
 	* See issues for other problems with the game
 	
 Figure 0
