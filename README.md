@@ -79,7 +79,7 @@ F17 | EthanYSu | ktan97 | F17 final remarks:
 	* Refactor the classes BattleshipGUI.java and GameGrid.java, if you want to change the GUI or add new features to the game like a back button 
 	* Instead of continuing with using Java Swing, use JavaFX
 	* Add volume slider
-	* Revamp GUI for the boats so that it could accept different shapes and sizes of boats.
+	* Add back/reset button when setting up the game
 	* See issues for other problems with the game
 	
 Figure 0
