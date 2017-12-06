@@ -10,7 +10,7 @@ project history
 
 * Original developer description - the Milton Bradley board game that has won the hearts of children for over four decades. It will be single-player (vs. computer) and will have various difficulty settings (easy, normal, hard).  You can also host/join games and play against your friends online WITH THE POWER OF JAVA NETWORKING!
 
-* Current version: 2.3
+* Current version: 2.4
 * Previous versions:
 	* version 1: See "Original developer description" (see figure 0)
 	* version 2.0: New feature added. Player can customize ship sizes in the "against computer" mode through a new window.(see figure 1) Illegal ship sizes will be reported to the player. (see figure 2)
@@ -19,10 +19,8 @@ project history
     * <b>version 2.2</b>: Game now has replay functionality, ship color selection, harder computer difficulty, and sound effects.
 
     * <b>version 2.3</b>: Game now has replay functionality for multiplayer games and also has a boat count, so the user can keep track of how many boats have been sunk. Also, the port number has been removed in order to limit confusion when setting up multiplayer games.
-
-    * <b>version 2.3</b>: Game now has replay functionality for multiplayer games and also has a boat count, so the user can keep track of how many boats have been sunk. Also, the port number has been removed in order to limit confusion when setting up multiplayer games.
-
-    * <b>version 2.3</b>: Game now has replay functionality for multiplayer games and also has a boat count, so the user can keep track of how many boats have been sunk. Also, the port number has been removed in order to limit confusion when setting up multiplayer games.
+    
+    * <b>version 2.4</b>: Game now has proper background music, new background images, buttons for the settings should now look much better. 
 
 * Game description - this Battleship game has 3 modes for user to choose from: hosting a game, joining a game, and playing against a computer. (see figure 5)
 	
@@ -73,33 +71,45 @@ The code can also be found at these links
 - [JavaDoc] (https://ucsb-cs56-f16.github.io/cs56-games-battleship_javadoc/javadoc/index.html)
 - [Git JavaDoc Repo] (https://github.com/UCSB-CS56-F16/cs56-games-battleship_javadoc)
 
+```
+F17 | EthanYSu | ktan97 | F17 final remarks:
+```
+* For whomever takes over the project next, we added some features to the game such as adding background music, adding test coverage to the game, and improved the GUI by adding more images to the game. The program in it's current state allows the user to create a game of battleship to play against a computer, of multiple difficulties,or play agaisnt someone using their IP address. The code could still be refactored, mainly the two classes BattleshipGUI.java and GameGrid.java. Everything in this program is tightly coupled so adding features to the game could be fairly difficult without the code being refactored first. My suggestion would be to refactor the two classes BattleshipGUI.java and GameGrid.java so changing the GUI and adding features to the game would be easier. 
 
+	* Refactor the classes BattleshipGUI.java and GameGrid.java, if you want to change the GUI or add new features to the game like a back button 
+	* Instead of continuing with using Java Swing, use JavaFX
+	* Add volume slider
+	* Add back/reset button when setting up the game
+	* See issues for other problems with the game
+	
 Figure 0
-![](http://i.imgur.com/AUr93FG.png)
+
+![](https://i.imgur.com/Ec6e5vK.png)
 
 
 Figure 1
-![](http://i.imgur.com/Pc82RXX.png)
+
+![](https://i.imgur.com/CbHuT8s.png)
 
 
 Figure 2
-![](http://i.imgur.com/PnBQ9Lu.png)
+
+![](https://i.imgur.com/PxXeQOP.png)
 
 
 Figure 3
-![](http://i.imgur.com/1iNCHmp.png)
+
+![](https://i.imgur.com/GHJOrJW.png)
 
 
 Figure 4
-![](http://i.imgur.com/djezD7F.png)
+
+![](https://i.imgur.com/8ZYeSSO.png)
 
 
 Figure 5
-![](http://i.imgur.com/svm5tkM.png)
 
-
-Figure 6
-![](http://i.imgur.com/pHAfWoO.png)		
+![](https://i.imgur.com/1SU9e0B.png)		
 
 <b>FAQ</b>
 
