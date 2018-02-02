@@ -1,12 +1,15 @@
 # Jeff Longo and Richard Rodriguez
 
 Answer these questions and delete them as we go
-(a) (20 pts) A brief description of the project. Here, I’m looking for a short description: probably 1 sentence, 2-3 at most.
 
-(b) (20 pts) a set of user stories (as a X I can Y so that Z) that describe what the current software in its current state can do.
-First, review how User Stories are supposed to be written.
+(a) This project allows the user to play the game battleship against a computer, or online via java networking.
 
-(c) (20 pts) a brief assessment of whether the software runs or not. If it runs, briefly describe what it does,
+(b) As a user, I can start the game and choose to play locally or online so that I can play by myself or with someone else.
+    As a user, I can choose a color and difficulty so that I can determine which player is me.
+    As a user, I can lay out my ships so that I have a choice where my ships are placed
+    As a user, I can choose a pixel where to fire a shot so that I can attempt to win the game by my own choices.
+
+(c) The software runs. When the game is opened, there is a choice of opponent type (online or against AI), a choice of color, and a choice of difficulty (if against AI). The user then places his/her ships and then attempts to sink the opponents.
 
 (d) (20 pts) a set of user stories (at least 2, but you are encouraged to write up to 4 or more if you can, as many as you think is reasonable) about features that COULD be added to the software to make it more useful, fun, better, etc.
 Again, review the preferred way to write User Stories.
