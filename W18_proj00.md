@@ -11,8 +11,10 @@ Answer these questions and delete them as we go
 
 (c) The software runs. When the game is opened, there is a choice of opponent type (online or against AI), a choice of color, and a choice of difficulty (if against AI). The user then places his/her ships and then attempts to sink the opponents.
 
-(d) (20 pts) a set of user stories (at least 2, but you are encouraged to write up to 4 or more if you can, as many as you think is reasonable) about features that COULD be added to the software to make it more useful, fun, better, etc.
-Again, review the preferred way to write User Stories.
+(d) As a user, I can alter the background picture of the game through a settings menu so that the game is more visually appealing.
+As a user, I can leave the game through an exit button so that I do not have to manually close the window to quit the game.
+As a user, I can start the game with a default set of ship sizes so that I can start playing without entering values for ship sizes.
+As a user, I can see my results after a match through a point system so that I can compare my score with other players.
 
 (e) (20 pts) An assessment of the current quality of the README.md. What information could be added to make it easier for the next generation of folks maintaining this code to use the software, and/or maintain the software?
 
