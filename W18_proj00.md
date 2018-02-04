@@ -16,16 +16,15 @@ As a user, I can leave the game through an exit button so that I do not have to 
 As a user, I can start the game with a default set of ship sizes so that I can start playing without entering values for ship sizes.
 As a user, I can see my results after a match through a point system so that I can compare my score with other players.
 
-(e) (20 pts) An assessment of the current quality of the README.md. What information could be added to make it easier for the next generation of folks maintaining this code to use the software, and/or maintain the software?
+(e) The current README.md includes various comments from the previous students that have worked on this legacy code. The features that students have added to the game are stated in the README.md along with suggestions for both improvement and fixes. There are also screenshots and a FAQ that are useful in understanding the overall function of this game. It would be very useful organize all the previous information in the README.md. This could be done by creating sections that contain information on features, issues, possible improvements and suggestions.    
 
-(f) (20 pts) An assessment of the current state of the build.xml file if applicable, or if the project has been converted to Maven or Gradle, note this.
-If it’s based on Ant, Are there targets that need descriptions? Is there old legacy JWS stuff that needs to be removed? (More on this below).
-It it’s based on Maven or Gradle, is there sufficient documentation in the README.md that someone new to those tools has the information they need to get started?
 
-(g) (20 pts) An assessment of the current “issues”. Are there enough issues that you could earn 1000 points by working on this project? Are the issues clear in terms of what the expectations are?
+(f) This game runs on ant. The various targets in the build.xml file contain a short description of the target should do. This build.xml file is in working condition and successfully built and run the battleship game.
+
+(g) On the git hub repository there are 13 issues stated. These issues add up to about 2000 possible points. Most of theses issues are explained straightforwardly and are simple to understand.
 
 (h) (20 pts) A list of additional issues that you may have added, if any. For each, a link to the issue is good enough.
 
 (i) (100 pts) Most important: an assessment of the actual code. Write a bit about how the code is organized. Are the purposes of the classes, and their methods clear? Is it obvious how the classes relate to one another? Is the code easy to read and understand? If you had to give someone else that was going to work on the code just “one screenful of text” to help that programmer get up to speed quickly, what information would you convey?
 
-(j) (40 pts) Related to code quality, but factored out into a separate issue because it is so important: how is the test coverage? Are there JUnit tests at all? If so, how much of the project is covered by testing? Are there opportunities to expand test coverage, and if so, how would you go about it?
+(j) The build.xml has a target called "test" which mentions the use of JUnit in its description. This ant command states that many test have failed and that some of the files have a compiling error. The actual test do not give a failure message but instead give a error message. These test files are in the src/edu/ucsb/cs56/projects/games/battleship/view directory. In total there are only three test files that seem to in regards to the GUI of the game. The file called GameGridTest.java only has one test inside it and should probably have more. There should also be more tests that test actual gameplay and other functions of the code. A test file for every class in game would probably a thorough way of testing all functions of the code. The various test for the GUI also seem a bit incomplete and should have additional tests implemented. Further tests should be implemented and current tests should be improved upon.
