@@ -1,7 +1,5 @@
 # Jeff Longo and Richard Rodriguez
 
-Answer these questions and delete them as we go
-
 (a) This project allows the user to play the game battleship against a computer, or online via java networking.
 
 (b) As a user, I can start the game and choose to play locally or online so that I can play by myself or with someone else.
