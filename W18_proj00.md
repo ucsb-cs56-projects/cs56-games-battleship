@@ -18,12 +18,12 @@ As a user, I can see my results after a match through a point system so that I c
 
 (e) The current README.md includes various comments from the previous students that have worked on this legacy code. The features that students have added to the game are stated in the README.md along with suggestions for both improvement and fixes. There are also screenshots and a FAQ that are useful in understanding the overall function of this game. It would be very useful to organize all the previous information in the README.md. This could be done by creating sections that contain information on features, issues, possible improvements and suggestions.    
 
-
 (f) This game runs on ant. The various targets in the build.xml file contain a short description of what the target should do. This build.xml file is in working condition and successfully built and ran the battleship game.
 
 (g) On the git hub repository there are 13 issues stated. These issues add up to about 2000 possible points. Most of theses issues are explained straightforwardly and are simple to understand.
 
-(h) (20 pts) A list of additional issues that you may have added, if any. For each, a link to the issue is good enough.
+(h) (20 pts) https://github.com/ucsb-cs56-projects/cs56-games-battleship/issues/71
+             https://github.com/ucsb-cs56-projects/cs56-games-battleship/issues/72
 
 (i) The code is farily well written and clear. The game's main method lies in the BattleshipController class. Depending on the game type, a controller for that game mode is created. A GUI is also created using one of the GUI's defined in the view folder. The game type controller class handles the game's logic, while the player/opponent moves are handled by the classes (depending on type) in the model folder. Essentially, the hierarchy is BattleshipController->GUI/GameController->Player.
 
