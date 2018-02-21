@@ -5,25 +5,28 @@ import java.net.*;
 import java.util.ArrayList;
 
 /**
-	 * Network controller class, controller for handling the networking  
-	 * @version 2.4 
-	 */
+ * Network controller class, controller for handling the networking
+ *
+ * @version 2.4
+ */
 
 
-public abstract class NetworkController extends GameController{
-	public abstract void go(BattleshipGUI gui);
-	public void endOfGame(BattleshipGUI gui){
-		String currentMessage = gui.getMessage();
-		gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
-		gui.networkPlayAgain();
-		this.waitReplay(gui);
-		this.playAgain(gui);
-	}
-	public void playAgain(BattleshipGUI gui){
-		String currentMessage = gui.getMessage();
-		gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
-        
-		if(gui.getReplayType() == 5) {		//join game
+public abstract class NetworkController extends GameController {
+    public abstract void go(BattleshipGUI gui);
+
+    public void endOfGame(BattleshipGUI gui) {
+        String currentMessage = gui.getMessage();
+        gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
+        gui.networkPlayAgain();
+        this.waitReplay(gui);
+        this.playAgain(gui);
+    }
+
+    public void playAgain(BattleshipGUI gui) {
+        String currentMessage = gui.getMessage();
+        gui.setMessage(currentMessage + " THANK YOU FOR PLAYING");
+
+        if (gui.getReplayType() == 5) {        //join game
             gui.end();
             gui = new BattleshipGUI();
             gui.resetForIP();
@@ -34,7 +37,7 @@ public abstract class NetworkController extends GameController{
             joinGame.endOfGame(gui);
         }
 
-		if(gui.getReplayType() == 6) {		//host game
+        if (gui.getReplayType() == 6) {        //host game
             gui.end();
             gui = new BattleshipGUI();
             gui.resetForHost();
@@ -46,10 +49,10 @@ public abstract class NetworkController extends GameController{
 
             this.endOfGame(gui);
         }
-		if(gui.getReplayType() == 4) {		//Play again with same person
-            	playAgainSameIP(gui);
+        if (gui.getReplayType() == 4) {        //Play again with same person
+            playAgainSameIP(gui);
         }
-		if(gui.getReplayType() == 3) {		//main menu
+        if (gui.getReplayType() == 3) {        //main menu
             gui.end();
             gui = new BattleshipGUI();
 
@@ -57,26 +60,26 @@ public abstract class NetworkController extends GameController{
             gui.setOptions();
             this.waitForGameType(gui);
 
-            if(gui.getGameType() == 1) {
-            	HostGameController hostGame = new HostGameController();
-            	hostGame.go(gui);
+            if (gui.getGameType() == 1) {
+                HostGameController hostGame = new HostGameController();
+                hostGame.go(gui);
                 this.endOfGame(gui);
             }
-            if(gui.getGameType() == 2) {
-            	JoinGameController joinGame = new JoinGameController();
-            	joinGame.go(gui);
+            if (gui.getGameType() == 2) {
+                JoinGameController joinGame = new JoinGameController();
+                joinGame.go(gui);
                 this.endOfGame(gui);
 
             }
-            if(gui.getGameType() == 3) {
+            if (gui.getGameType() == 3) {
                 this.waitForSizes(gui);
                 ComputerGameController computerGame = new ComputerGameController();
                 computerGame.go(gui);
                 computerGame.endOfGame(gui);
             }
         }
-	 }
+    }
 
-	 public abstract void playAgainSameIP(BattleshipGUI gui);
+    public abstract void playAgainSameIP(BattleshipGUI gui);
 
 }

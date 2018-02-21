@@ -9,15 +9,15 @@ import org.junit.Test;
 
 public class GameGridTest {
 
-	GameGrid gui = new GameGrid(); 	
-	
-	@Test
-	public void test_reset_1() {
-		gui.reset();
-		assertEquals("0", gui.getLastMove() ); 
-		assertFalse(gui.getPlayersTurn() ); 
-		assertTrue(gui.getPlayerBoats().isEmpty());
-	}
+    GameGrid gui = new GameGrid();
+
+    @Test
+    public void test_reset_1() {
+        gui.reset();
+        assertEquals("0", gui.getLastMove());
+        assertFalse(gui.getPlayersTurn());
+        assertTrue(gui.getPlayerBoats().isEmpty());
+    }
 
 }
 
