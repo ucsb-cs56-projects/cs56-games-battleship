@@ -92,12 +92,6 @@ public class BattleshipGUI extends JFrame {
         this.getContentPane().setBackground(Color.WHITE);
 
         //Add  controls
-
-        // These were in GameGrid constructor, I don't think they're necessary
-        // The board requests focus but these checkboxes are no longer in the grid class
-        //audioMute.setFocusable(false);
-        //bgmMute.setFocusable(false);
-
         audioPanel.setLayout(new BorderLayout());
         audioPanel.setBackground(Color.WHITE);
         this.getContentPane().add(BorderLayout.EAST, audioPanel);
@@ -109,6 +103,10 @@ public class BattleshipGUI extends JFrame {
         bgmMute.setBackground(Color.WHITE);
         audioPanel.add(bgmMute, BorderLayout.NORTH);
         bgmMute.addItemListener(new bgmCheck());
+
+        // We don't want the audio checkboxes to be focusable
+        audioMute.setFocusable(false);
+        bgmMute.setFocusable(false);
 
         //Add messages
         this.getContentPane().add(BorderLayout.SOUTH, messages);
