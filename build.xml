@@ -2,106 +2,111 @@
  by Wenjian Li -->
 
 <project default="compile">
-  <property environment="env" />
-  <property name="webRoot" value="${env.HOME}/public_html/cs56" />
-  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
-  <property name="projectName" value="cs56-games-battleship" />
-  <property name="javadocDest" value="${webRoot}/${projectName}" /> 
-  <property name="javadocUrl" value="${webBaseUrl}/${projectName}" />
-  <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipController" />
-  <property name="public_javadoc_absolute_path" location="../cs56-games-battleship_javadoc/javadoc"/>
+    <property environment="env"/>
+    <property name="webRoot" value="${env.HOME}/public_html/cs56"/>
+    <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56"/>
+    <property name="projectName" value="cs56-games-battleship"/>
+    <property name="javadocDest" value="${webRoot}/${projectName}"/>
+    <property name="javadocUrl" value="${webBaseUrl}/${projectName}"/>
+    <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipController"/>
+    <property name="public_javadoc_absolute_path" location="../cs56-games-battleship_javadoc/javadoc"/>
 
-  <!-- beginning of targets -->
+    <!-- beginning of targets -->
 
-  <!-- compile -->
-  <target name="compile" description="Compile the code">
-    <mkdir dir="build/edu/ucsb/cs56/projects/games/battleship/sfx" />
-    <copy todir="build/edu/ucsb/cs56/projects/games/battleship/sfx">
-        <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/sfx"/>
-    </copy>
-    <javac srcdir="src" destdir="build" includeantruntime="false" debug="true">
-      <classpath>
-	<pathelement location="build" />
-	<pathelement location="lib/junit-4.8.2.jar" />
-      </classpath>
-    </javac>
-  </target>
+    <!-- compile -->
+    <target name="compile" description="Compile the code">
+        <mkdir dir="build/edu/ucsb/cs56/projects/games/battleship/sfx"/>
+        <copy todir="build/edu/ucsb/cs56/projects/games/battleship/sfx">
+            <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/sfx"/>
+        </copy>
+        <mkdir dir="build/edu/ucsb/cs56/projects/games/battleship/images"/>
+        <copy todir="build/edu/ucsb/cs56/projects/games/battleship/images">
+            <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/images"/>
+        </copy>
+        <javac srcdir="src" destdir="build" includeantruntime="false" debug="true">
+            <classpath>
+                <pathelement location="build"/>
+                <pathelement location="lib/junit-4.8.2.jar"/>
+            </classpath>
+        </javac>
+    </target>
 
-  <!-- run -->
- <target name="run" depends="jar" description="Run the cs56-games-battleship file."> 
-    <java jar="cs56-games-battleship.jar" fork ="true"/>
-  </target>
+    <!-- run -->
+    <target name="run" depends="jar" description="Run the cs56-games-battleship file.">
+        <java jar="cs56-games-battleship.jar" fork="true"/>
+    </target>
 
-   <!-- runTest -->
- <target name="runTest" depends="compile" description="Run a test file of my choosing."> 
-    <java classpath="build" classname="edu.ucsb.cs56.projects.games.battleship.BattleshipGUI" fork ="true"/>
-  </target>
+    <!-- runTest -->
+    <target name="runTest" depends="compile" description="Run a test file of my choosing.">
+        <java classpath="build" classname="edu.ucsb.cs56.projects.games.battleship.BattleshipGUI" fork="true"/>
+    </target>
 
-  <!-- clean -->
-  <target name="clean" description="Clean up the project directory.">
-    <delete dir="build" quiet="true" />
-    <delete dir="javadoc" quiet="true" />
-    <delete dir="dist" quiet="true" />
-    <delete dir="download" quiet="true" />
-    <delete dir="temp" quiet="true" />
-  </target>
+    <!-- clean -->
+    <target name="clean" description="Clean up the project directory.">
+        <delete dir="build" quiet="true"/>
+        <delete dir="javadoc" quiet="true"/>
+        <delete dir="dist" quiet="true"/>
+        <delete dir="download" quiet="true"/>
+        <delete dir="temp" quiet="true"/>
+    </target>
 
-  <!-- javadoc -->
-  <target name="javadoc" depends="compile" description="Generate a javadoc in the javadoc subdirectory.">
-        <delete dir="javadoc" quiet="true" />       
-   <javadoc  destdir="javadoc" author="true" version="true" use="true" >
-      <fileset dir="src" includes="**/*.java"/>
-      <classpath>
-          <pathelement location="lib/junit-4.8.2.jar"/>
-     </classpath>
-   </javadoc>
-   <delete quiet="true" dir="${javadocDest}" />   
-   <copy todir="${javadocDest}" >
-     <fileset dir="javadoc"/>
-   </copy>                                                                               
-   <chmod dir="${javadocDest}" perm="755"  type="dir" includes="**" /> 
-   <chmod dir="${javadocDest}" perm="755"  type="file" includes="**/*" />
-   <echo>Javadoc deployed to ${javadocUrl}</echo>
-    <echo>                                                                                       
-      javadoc written to file://${javadoc_absolute_path}/index.html                              
-      copying to ${public_javadoc_absolute_path}/index.html                                      
-    </echo>                                                                                      
-    <delete quiet="true">                                                                        
-      <fileset dir="${public_javadoc_absolute_path}" />                                          
-    </delete>                                                                                    
-    <mkdir dir="${public_javadoc_absolute_path}" />                                              
-    <copy todir="${public_javadoc_absolute_path}">                                               
-      <fileset dir="javadoc" />                                                                  
-    </copy>                                                                                      
-    <echo>                                                                                       
-      javadoc copied to ${public_javadoc_absolute_path}/index.html                               
-      TO PUBLISH: cd into that repo, then git add javadoc;                                       
-        git commit -m "update javadoc"; git push origin gh-pages                                
-    </echo>
-  </target>
+    <!-- javadoc -->
+    <target name="javadoc" depends="compile" description="Generate a javadoc in the javadoc subdirectory.">
+        <delete dir="javadoc" quiet="true"/>
+        <javadoc destdir="javadoc" author="true" version="true" use="true">
+            <fileset dir="src" includes="**/*.java"/>
+            <classpath>
+                <pathelement location="lib/junit-4.8.2.jar"/>
+            </classpath>
+        </javadoc>
+        <delete quiet="true" dir="${javadocDest}"/>
+        <copy todir="${javadocDest}">
+            <fileset dir="javadoc"/>
+        </copy>
+        <chmod dir="${javadocDest}" perm="755" type="dir" includes="**"/>
+        <chmod dir="${javadocDest}" perm="755" type="file" includes="**/*"/>
+        <echo>Javadoc deployed to ${javadocUrl}</echo>
+        <echo>
+            javadoc written to file://${javadoc_absolute_path}/index.html
+            copying to ${public_javadoc_absolute_path}/index.html
+        </echo>
+        <delete quiet="true">
+            <fileset dir="${public_javadoc_absolute_path}"/>
+        </delete>
+        <mkdir dir="${public_javadoc_absolute_path}"/>
+        <copy todir="${public_javadoc_absolute_path}">
+            <fileset dir="javadoc"/>
+        </copy>
+        <echo>
+            javadoc copied to ${public_javadoc_absolute_path}/index.html
+            TO PUBLISH: cd into that repo, then git add javadoc;
+            git commit -m "update javadoc"; git push origin gh-pages
+        </echo>
+    </target>
 
-  <!-- test -->
-  <target name="test" depends="compile" description="Run junit tests">
-    <junit haltonerror="no" haltonfailure="no">
-     <classpath>
-	<pathelement location="lib/junit-4.8.2.jar" />
-	<pathelement location="build" />
-      </classpath>
-      <batchtest fork="yes">
-          <fileset dir="src">
-            <include name="**/*Test.java"/>
-          </fileset>
-       </batchtest>
-       <formatter type="plain" usefile="false" /> 
-    </junit>
-  </target>
+    <!-- test -->
+    <target name="test" depends="compile" description="Run junit tests">
+        <junit haltonerror="no" haltonfailure="no">
+            <classpath>
+                <pathelement location="lib/junit-4.8.2.jar"/>
+                <pathelement location="build"/>
+            </classpath>
+            <batchtest fork="yes">
+                <fileset dir="src">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+            <formatter type="plain" usefile="false"/>
+        </junit>
+    </target>
 
-  <!-- jar -->
-  <target name="jar" depends="compile" description="Generate a jar file in the dist directory">
-    <jar destfile="${projectName}.jar" basedir="build">
-      <manifest>
-	<attribute name="Main-Class" value="${mainClass}" />      </manifest>
-    </jar>
-  </target>
+    <!-- jar -->
+    <target name="jar" depends="compile" description="Generate a jar file in the dist directory">
+        <jar destfile="${projectName}.jar" basedir="build">
+            <manifest>
+                <attribute name="Main-Class" value="${mainClass}"/>
+            </manifest>
+        </jar>
+    </target>
 
 </project>
