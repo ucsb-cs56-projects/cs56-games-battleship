@@ -32,10 +32,11 @@ public class BattleshipGUI extends JFrame {
     private int boatSpawn;
     private boolean replay = true;
     private boolean prompt = true;
+    private boolean audio = false;
 
     //Public so that other classes can play sound files
 
-    public URL shotURL, missURL, winURL, bgmURL, loseURL;
+    public URL bgmURL, shotURL, missURL, winURL, loseURL;
 
     private JPanel audioPanel = new JPanel();
 
@@ -69,6 +70,10 @@ public class BattleshipGUI extends JFrame {
     private JButton mainMenuButton = new JButton("Main Menu");
     private JButton networkMainMenuButton = new JButton("Main Menu");
 
+    //Audio muted/unmuted checkbox
+    private JCheckBox audioMute = new JCheckBox("SFX");
+    private JCheckBox bgmMute = new JCheckBox("Music");
+
     //Game board component
     private GameGrid board = new GameGrid();
     GridLayout threeButtonGrid = new GridLayout(1, 3);
@@ -87,17 +92,23 @@ public class BattleshipGUI extends JFrame {
         this.getContentPane().setBackground(Color.WHITE);
 
         //Add  controls
+
+        // These were in GameGrid constructor, I don't think they're necessary
+        // The board requests focus but these checkboxes are no longer in the grid class
+        //audioMute.setFocusable(false);
+        //bgmMute.setFocusable(false);
+
         audioPanel.setLayout(new BorderLayout());
         audioPanel.setBackground(Color.WHITE);
         this.getContentPane().add(BorderLayout.EAST, audioPanel);
-        board.audioMute.setBackground(Color.WHITE);
-        audioPanel.add(board.audioMute, BorderLayout.SOUTH);
-        board.audioMute.addItemListener(board.new audioCheck());
+        audioMute.setBackground(Color.WHITE);
+        audioPanel.add(audioMute, BorderLayout.SOUTH);
+        audioMute.addItemListener(new audioCheck());
 
         this.getContentPane().add(BorderLayout.EAST, audioPanel);
-        board.bgmMute.setBackground(Color.WHITE);
-        audioPanel.add(board.bgmMute, BorderLayout.NORTH);
-        board.bgmMute.addItemListener(board.new bgmCheck());
+        bgmMute.setBackground(Color.WHITE);
+        audioPanel.add(bgmMute, BorderLayout.NORTH);
+        bgmMute.addItemListener(new bgmCheck());
 
         //Add messages
         this.getContentPane().add(BorderLayout.SOUTH, messages);
@@ -138,13 +149,13 @@ public class BattleshipGUI extends JFrame {
         this.networkPlayAgainPopUp.add(networkMainMenuButton);
 
         //Initialize sound file locations
-        board.placeURL = this.getClass().getResource("sfx/ship_place.aiff");
         shotURL = this.getClass().getResource("sfx/ship_hit.aiff");
         missURL = this.getClass().getResource("sfx/miss_splash.aiff");
         winURL = this.getClass().getResource("sfx/victory.aiff");
-        board.loseURL = this.getClass().getResource("sfx/failure.aiff");
+        loseURL = this.getClass().getResource("sfx/failure.aiff");
+        bgmURL = this.getClass().getResource("sfx/bgm.aiff");
+        board.placeURL = this.getClass().getResource("sfx/ship_place.aiff");
         board.cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.aiff");
-        board.bgmURL = this.getClass().getResource("sfx/bgm.aiff");
     }
 
     /**
@@ -580,24 +591,6 @@ public class BattleshipGUI extends JFrame {
     }
 
     /**
-     * Plays the specified audio file
-     *
-     * @param audioURL audio URL for specific audio file
-     **/
-    public void playAudioFile(URL audioURL) {
-        board.playAudioFile(audioURL);
-    }
-
-    /**
-     * Plays and loops the specified audio file
-     *
-     * @param loopAudioURL audio URL for specific audio file
-     **/
-    public void loopAudioFile(URL loopAudioURL) {
-        board.loopAudioFile(loopAudioURL);
-    }
-
-    /**
      * Shifts some location to player's Gamegrid
      *
      * @param loc The location that wants to be shift
@@ -636,15 +629,6 @@ public class BattleshipGUI extends JFrame {
     }
 
     /**
-     * Checks if the audio is muted
-     *
-     * @return status of audio mute
-     **/
-    public boolean getIsAudioMuted() {
-        return board.getIsAudioMuted();
-    }
-
-    /**
      * Listener for the play again options
      **/
 
@@ -679,6 +663,34 @@ public class BattleshipGUI extends JFrame {
             }
             BattleshipGUI.this.setVisible(false);
             BattleshipGUI.this.networkPlayAgainPopUp.setVisible(false);
+        }
+    }
+
+    /**
+     * Listener for the sfx check box
+     * audio is muted when checked and unmuted when unchecked
+     **/
+
+    public class audioCheck implements ItemListener {
+        public void itemStateChanged(ItemEvent e) {
+            JCheckBox cb = (JCheckBox) e.getSource();
+            AudioHandler.getInstance().setAudioStatus(!cb.isSelected() ? false : true);
+        }
+    }
+
+    /**
+     * Listener for the sfx check box
+     * audio is muted when checked and unmuted when unchecked
+     **/
+
+    public class bgmCheck implements ItemListener {
+        public void itemStateChanged(ItemEvent e) {
+            JCheckBox bgmCB = (JCheckBox) e.getSource();
+            if (!bgmCB.isSelected()) {
+                AudioHandler.getInstance().stopMusic();
+            } else {
+                AudioHandler.getInstance().loopAudioFile(bgmURL);
+            }
         }
     }
 }

@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.util.*;
 import java.net.URL;
 import java.io.*;
-import javax.sound.sampled.*;
 import javax.imageio.ImageIO;
 
 import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
@@ -39,25 +38,16 @@ public class GameGrid extends JComponent {
     private Color shipColor = Color.DARK_GRAY;
     private int boatToPlace, lastMove, xLoc, yLoc;
     private boolean horzOrVert = true; //true for horizontal false for verticle
-    private boolean audio = false;
 
-    public URL placeURL, cantPlaceURL, loseURL, bgmURL;
-    public Clip clip;
-    public Clip loopClip;
+    public URL placeURL, cantPlaceURL;
 
     private Image water;
-    //Audio muted/unmuted checkbox
-    JCheckBox audioMute = new JCheckBox("SFX");
-
-    JCheckBox bgmMute = new JCheckBox("Music");
 
     public GameGrid() {
         this.setSize(100, 210);
         this.addMouseListener(this.new cellClick());
         this.addMouseMotionListener(this.new mouseMove());
         this.addKeyListener(this.new changeOrientation());
-        audioMute.setFocusable(false);
-        bgmMute.setFocusable(false);
         try {
             water = ImageIO.read(getClass().getResourceAsStream("images/water.png"));
         } catch (IOException e) {
@@ -175,8 +165,8 @@ public class GameGrid extends JComponent {
                         boatPlaced = true;
                         placeBoat(spawn);
 
-                        if (audio) {
-                            playAudioFile(placeURL);
+                        if (AudioHandler.getInstance().getAudioStatus()) {
+                            AudioHandler.getInstance().playAudioFile(placeURL);
                         }
 
                         repaint();
@@ -220,14 +210,18 @@ public class GameGrid extends JComponent {
         if (this.horzOrVert) {
             for (int i = 0; i < boatToPlace; i++) {
                 if ((spawn + i) % 10 > 9 || playerBoats.contains(spawn + i) || (spawn + i) / 10 != spawn / 10) {
-                    playAudioFile(cantPlaceURL);
+                    if (AudioHandler.getInstance().getAudioStatus()) {
+                        AudioHandler.getInstance().playAudioFile(cantPlaceURL);
+                    }
                     return false;
                 }
             }
         } else {
             for (int i = 0; i < boatToPlace; i++) {
                 if ((spawn + 10 * i) / 10 > 20 || playerBoats.contains(spawn + 10 * i)) {
-                    playAudioFile(cantPlaceURL);
+                    if (AudioHandler.getInstance().getAudioStatus()) {
+                        AudioHandler.getInstance().playAudioFile(cantPlaceURL);
+                    }
                     return false;
                 }
             }
@@ -369,48 +363,6 @@ public class GameGrid extends JComponent {
         return this.playersTurn;
     }
 
-    public void setIsAudioMuted(boolean isMuted) {
-        this.audio = isMuted;
-    }
-
-    public boolean getIsAudioMuted() {
-        return this.audio;
-    }
-
-    /**
-     * Method that plays audio clip referenced by audioURL
-     *
-     * @param audioURL audio clip to be played
-     **/
-    public void playAudioFile(URL audioURL) {
-        try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioURL);
-            this.clip = AudioSystem.getClip();
-            this.clip.open(audioStream);
-            clip.start();
-            clip.setMicrosecondPosition(0);
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-    }
-
-    /**
-     * Method to loop audio clip
-     *
-     * @param loopAudioURL audio clip to be looped
-     **/
-    public void loopAudioFile(URL loopAudioURL) {
-        try {
-            AudioInputStream loopStream = AudioSystem.getAudioInputStream(loopAudioURL);
-            this.loopClip = AudioSystem.getClip();
-            this.loopClip.open(loopStream);
-            loopClip.start();
-            loopClip.loop(LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-    }
-
     public class mouseMove implements MouseMotionListener {
         public void mouseMoved(MouseEvent e) {
             if (placeBoats) { //Records x & y locations if player is placing boats
@@ -439,33 +391,6 @@ public class GameGrid extends JComponent {
 
     public void setShipColor(Color color) {
         this.shipColor = color;
-    }
-
-    /**
-     * Listener for the mute check box
-     * audio is muted when checked and unmuted when unchecked
-     **/
-
-    public class audioCheck implements ItemListener {
-        public void itemStateChanged(ItemEvent e) {
-            JCheckBox cb = (JCheckBox) e.getSource();
-            if (!cb.isSelected()) {
-                audio = false;
-            } else {
-                audio = true;
-            }
-        }
-    }
-
-    public class bgmCheck implements ItemListener {
-        public void itemStateChanged(ItemEvent e) {
-            JCheckBox bgmCB = (JCheckBox) e.getSource();
-            if (!bgmCB.isSelected()) {
-                loopClip.stop();
-            } else {
-                loopAudioFile(bgmURL);
-            }
-        }
     }
 
     /**

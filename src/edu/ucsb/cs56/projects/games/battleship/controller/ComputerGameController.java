@@ -24,7 +24,6 @@ public class ComputerGameController extends GameController {
         Player human = new Player();
         gui.setMessage("Place your boats. Use any key to change orientation");
         gui.placeBoats();
-        gui.loopAudioFile(gui.loseURL);
         human.setBoatsArrayList(gui.getPlayerBoats());
         Computer computer = new Computer(gui.getDifficulty(), human.getBoatsArrayList());
 
@@ -46,8 +45,8 @@ public class ComputerGameController extends GameController {
             computer.addShot(humanMove);
             if (gui.getEnemyBoats().contains(humanMove)) {
                 human.increaseHitCount();
-                if (gui.getIsAudioMuted()) {
-                    gui.playAudioFile(gui.shotURL);
+                if (AudioHandler.getInstance().getAudioStatus()) {
+                    AudioHandler.getInstance().playAudioFile(gui.shotURL);
                 }
                 //checkBoatCount(humanMove);
 
@@ -67,14 +66,15 @@ public class ComputerGameController extends GameController {
                     }
                 }
                 computer.setBoatGroups(groups);
-            } else if (gui.getIsAudioMuted()) {
-                gui.playAudioFile(gui.missURL);
+            } else if (AudioHandler.getInstance().getAudioStatus()) {
+                AudioHandler.getInstance().playAudioFile(gui.missURL);
             }
             //Check win status
             if (computer.hasLost()) {
                 gui.setMessage("CONGRATULATIONS, YOU WIN!");
-                if (gui.getIsAudioMuted()) {
-                    gui.playAudioFile(gui.winURL);
+                if (AudioHandler.getInstance().getAudioStatus()) {
+                    AudioHandler.getInstance().stopMusic();
+                    AudioHandler.getInstance().playAudioFile(gui.winURL);
                 }
                 break;
             }
@@ -95,8 +95,9 @@ public class ComputerGameController extends GameController {
             //Check win status
             if (human.hasLost()) {
                 gui.setMessage("OH NO, YOU LOSE!");
-                if (gui.getIsAudioMuted()) {
-                    gui.playAudioFile(gui.loseURL);
+                if (AudioHandler.getInstance().getAudioStatus()) {
+                    AudioHandler.getInstance().stopMusic();
+                    AudioHandler.getInstance().playAudioFile(gui.loseURL);
                 }
                 break;
             }

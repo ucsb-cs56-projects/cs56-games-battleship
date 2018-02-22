@@ -123,8 +123,9 @@ public class JoinGameController extends NetworkController {
                 if (player2.hasLost()) {
                     toPlayer1.println("LOSE");
                     gui.setMessage("OH NO, YOU LOSE!");
-                    if (gui.getIsAudioMuted()) {
-                        gui.playAudioFile(gui.loseURL);
+                    if (AudioHandler.getInstance().getAudioStatus()) {
+                        AudioHandler.getInstance().stopMusic();
+                        AudioHandler.getInstance().playAudioFile(gui.loseURL);
                     }
                     break;
                 } else
@@ -161,8 +162,9 @@ public class JoinGameController extends NetworkController {
                 String p1VictoryStatus = fromPlayer1.readLine();
                 if (p1VictoryStatus.equals("LOSE")) {
                     gui.setMessage("CONGRATULATIONS, YOU WIN!");
-                    if (gui.getIsAudioMuted()) {
-                        gui.playAudioFile(gui.winURL);
+                    if (AudioHandler.getInstance().getAudioStatus()) {
+                        AudioHandler.getInstance().stopMusic();
+                        AudioHandler.getInstance().playAudioFile(gui.winURL);
                     }
                     break;
                 }
