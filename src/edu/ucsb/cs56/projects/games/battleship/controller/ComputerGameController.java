@@ -129,7 +129,7 @@ public class ComputerGameController extends GameController {
             gui = new BattleshipGUI();
             gui.reset();
             gui.setOptions();
-            this.wait(gui);
+            this.waitForGameType(gui);
 
 
             if (gui.getGameType() == 1) {
