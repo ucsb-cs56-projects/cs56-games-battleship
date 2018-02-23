@@ -98,6 +98,7 @@ public class SizeSetUpFrame extends JFrame implements ActionListener {
     public static boolean isValid(String input) {
         if (input.equals("") || input.length() != 1) return false;
         char character = input.charAt(0);
+        System.out.println(character);
         if (character > '9' || character < '2') return false;
         return true;
     }
