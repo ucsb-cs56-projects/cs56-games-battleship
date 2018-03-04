@@ -42,6 +42,9 @@ public class ColorPopUpFrame extends JFrame implements ActionListener {
         //Add buttons and dropdown to window
         this.getContentPane().add(BorderLayout.CENTER, colorDrop);
         this.getContentPane().add(BorderLayout.SOUTH, colorSelectButton);
+
+        // Set the default color to be selected
+        colorDrop.setSelectedItem("Default");
     }
 
     /**
@@ -78,6 +81,7 @@ public class ColorPopUpFrame extends JFrame implements ActionListener {
                 color = Color.YELLOW;
                 break;
             default:
+                color = Color.DARK_GRAY;
                 break;
         }
     }
