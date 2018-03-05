@@ -164,10 +164,7 @@ public class GameGrid extends JComponent {
                     if (isValidSpawn(spawn)) { //Place the boat on click if the spawn location is valid
                         boatPlaced = true;
                         placeBoat(spawn);
-
-                        if (AudioHandler.getInstance().getAudioStatus()) {
-                            AudioHandler.getInstance().playAudioFile(placeURL);
-                        }
+                        AudioHandler.getInstance().playAudioFile(placeURL);
 
                         repaint();
                     }
@@ -210,18 +207,14 @@ public class GameGrid extends JComponent {
         if (this.horzOrVert) {
             for (int i = 0; i < boatToPlace; i++) {
                 if ((spawn + i) % 10 > 9 || playerBoats.contains(spawn + i) || (spawn + i) / 10 != spawn / 10) {
-                    if (AudioHandler.getInstance().getAudioStatus()) {
-                        AudioHandler.getInstance().playAudioFile(cantPlaceURL);
-                    }
+                    AudioHandler.getInstance().playAudioFile(cantPlaceURL);
                     return false;
                 }
             }
         } else {
             for (int i = 0; i < boatToPlace; i++) {
                 if ((spawn + 10 * i) / 10 > 20 || playerBoats.contains(spawn + 10 * i)) {
-                    if (AudioHandler.getInstance().getAudioStatus()) {
-                        AudioHandler.getInstance().playAudioFile(cantPlaceURL);
-                    }
+                    AudioHandler.getInstance().playAudioFile(cantPlaceURL);
                     return false;
                 }
             }

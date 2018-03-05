@@ -3,6 +3,8 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.util.*;
 import java.net.URL;
 import java.io.*;
@@ -32,7 +34,6 @@ public class BattleshipGUI extends JFrame {
     private int boatSpawn;
     private boolean replay = true;
     private boolean prompt = true;
-    private boolean audio = false;
 
     //Public so that other classes can play sound files
 
@@ -43,6 +44,7 @@ public class BattleshipGUI extends JFrame {
     //GUI Texts
     private JLabel title = new JLabel("Battleship", JLabel.CENTER);
     private JLabel messages = new JLabel("Messages go here:", JLabel.CENTER);
+    private JLabel volumeText = new JLabel("Volume", JLabel.CENTER);
 
     //Gametype frame popup
     private TypeSetUpFrame typePopUp = new TypeSetUpFrame();
@@ -70,9 +72,8 @@ public class BattleshipGUI extends JFrame {
     private JButton mainMenuButton = new JButton("Main Menu");
     private JButton networkMainMenuButton = new JButton("Main Menu");
 
-    //Audio muted/unmuted checkbox
-    private JCheckBox audioMute = new JCheckBox("SFX");
-    private JCheckBox bgmMute = new JCheckBox("Music");
+    // Audio slider
+    private JSlider audio = new JSlider(JSlider.VERTICAL,0, 4, 0);
 
     //Game board component
     private GameGrid board = new GameGrid();
@@ -95,18 +96,10 @@ public class BattleshipGUI extends JFrame {
         audioPanel.setLayout(new BorderLayout());
         audioPanel.setBackground(Color.WHITE);
         this.getContentPane().add(BorderLayout.EAST, audioPanel);
-        audioMute.setBackground(Color.WHITE);
-        audioPanel.add(audioMute, BorderLayout.SOUTH);
-        audioMute.addItemListener(new audioCheck());
-
-        this.getContentPane().add(BorderLayout.EAST, audioPanel);
-        bgmMute.setBackground(Color.WHITE);
-        audioPanel.add(bgmMute, BorderLayout.NORTH);
-        bgmMute.addItemListener(new bgmCheck());
-
-        // We don't want the audio checkboxes to be focusable
-        audioMute.setFocusable(false);
-        bgmMute.setFocusable(false);
+        audio.addChangeListener(new audioCheck());
+        audio.setPreferredSize(new Dimension(20, 200));
+        audioPanel.add(audio, BorderLayout.SOUTH);
+        audioPanel.add(volumeText, BorderLayout.EAST);
 
         //Add messages
         this.getContentPane().add(BorderLayout.SOUTH, messages);
@@ -154,6 +147,8 @@ public class BattleshipGUI extends JFrame {
         bgmURL = this.getClass().getResource("sfx/bgm.aiff");
         board.placeURL = this.getClass().getResource("sfx/ship_place.aiff");
         board.cantPlaceURL = this.getClass().getResource("sfx/ship_cant_place.aiff");
+
+        AudioHandler.getInstance().loopAudioFile(bgmURL);
     }
 
     /**
@@ -301,7 +296,7 @@ public class BattleshipGUI extends JFrame {
         this.gameType = 0;
         this.replay = true;
         this.prompt = true;
-
+        AudioHandler.getInstance().setVolume(-80);
         board.reset();
         this.setVisible(false);
     }
@@ -312,9 +307,8 @@ public class BattleshipGUI extends JFrame {
         this.prompt = true;
         this.gameType = 3;
         this.replay = true;
-
+        AudioHandler.getInstance().setVolume(-80);
         board.reset();
-
         this.setVisible(false);
         this.diffPopUp.setVisible(true);
         setUpCompterPlayAgain();
@@ -325,9 +319,8 @@ public class BattleshipGUI extends JFrame {
         this.gameType = 2;
         this.ipPopUp.setIpEntered(false);
         this.replay = true;
-
+        AudioHandler.getInstance().setVolume(-80);
         board.reset();
-
         this.setVisible(false);
         setUpJoinGame();
     }
@@ -338,7 +331,7 @@ public class BattleshipGUI extends JFrame {
         this.gameType = 2;
         this.ipPopUp.setIpEntered(true);
         this.replay = true;
-
+        AudioHandler.getInstance().setVolume(-80);
         board.reset();
 
         this.setVisible(true);
@@ -350,7 +343,7 @@ public class BattleshipGUI extends JFrame {
         this.gameType = 1;
         this.ipPopUp.setIpEntered(true);
         this.replay = true;
-
+        AudioHandler.getInstance().setVolume(-80);
         board.reset();
         setDefaultShipSizes();
         this.setVisible(true);
@@ -362,9 +355,8 @@ public class BattleshipGUI extends JFrame {
         this.gameType = 3;
         this.ipPopUp.setIpEntered(false);
         this.replay = true;
-
+        AudioHandler.getInstance().setVolume(-80);
         board.reset();
-
         setUpComputerNewShips();
     }
 
@@ -669,26 +661,32 @@ public class BattleshipGUI extends JFrame {
      * audio is muted when checked and unmuted when unchecked
      **/
 
-    public class audioCheck implements ItemListener {
-        public void itemStateChanged(ItemEvent e) {
-            JCheckBox cb = (JCheckBox) e.getSource();
-            AudioHandler.getInstance().setAudioStatus(!cb.isSelected() ? false : true);
-        }
-    }
-
-    /**
-     * Listener for the sfx check box
-     * audio is muted when checked and unmuted when unchecked
-     **/
-
-    public class bgmCheck implements ItemListener {
-        public void itemStateChanged(ItemEvent e) {
-            JCheckBox bgmCB = (JCheckBox) e.getSource();
-            if (!bgmCB.isSelected()) {
-                AudioHandler.getInstance().stopMusic();
-            } else {
-                AudioHandler.getInstance().loopAudioFile(bgmURL);
+    public class audioCheck implements ChangeListener {
+        public void stateChanged(ChangeEvent e) {
+            JSlider s = (JSlider) e.getSource();
+            // Hacky way to convert slider levels to volume
+            int v;
+            switch (s.getValue()) {
+                case 0:
+                    v = -80;
+                    break;
+                case 1:
+                    v = -30;
+                    break;
+                case 2:
+                    v = -20;
+                    break;
+                case 3:
+                    v = -10;
+                    break;
+                case 4:
+                    v = 0;
+                    break;
+                default:
+                    v = -80;
+                    break;
             }
+            AudioHandler.getInstance().setVolume(v);
         }
     }
 }

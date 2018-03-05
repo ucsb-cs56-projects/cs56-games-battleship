@@ -20,7 +20,7 @@ public class AudioHandler {
     private static AudioHandler instance = null;
     private Clip clip;
     private Clip loopClip;
-    private boolean audio = false;
+    private int volume = -80;
 
     protected AudioHandler() {
         // Exists only to defeat instantiation
@@ -45,6 +45,8 @@ public class AudioHandler {
             this.clip.open(audioStream);
             this.clip.start();
             this.clip.setMicrosecondPosition(0);
+            FloatControl ctrl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            ctrl.setValue(volume);
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -62,29 +64,33 @@ public class AudioHandler {
             this.loopClip.open(loopStream);
             this.loopClip.start();
             this.loopClip.loop(LOOP_CONTINUOUSLY);
+            FloatControl ctrl = (FloatControl) loopClip.getControl(FloatControl.Type.MASTER_GAIN);
+            ctrl.setValue(volume);
         } catch (Exception e) {
             System.err.println(e);
         }
     }
 
     /**
-     * Setter for audio status
+     * Setter for audio volume
      *
-     * @param audio new status of audio: true for on, false for off
+     * @param volume level between 0 and 4
      **/
-    public void setAudioStatus(boolean audio) {
-        this.audio = audio;
+    public void setVolume(int volume) {
+        this.volume = volume;
+        if (clip != null) {
+            FloatControl ctrl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            ctrl.setValue(volume);
+        }
+        if (loopClip != null) {
+            FloatControl ctrl = (FloatControl) loopClip.getControl(FloatControl.Type.MASTER_GAIN);
+            ctrl.setValue(volume);
+        }
     }
 
     /**
-     * Getter for audio status
-     *
-     * @return status for audio: true for on, false for off
+     * Stops all audio
      **/
-    public boolean getAudioStatus() {
-        return this.audio;
-    }
-
     public void stopMusic() {
         this.loopClip.stop();
     }

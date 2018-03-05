@@ -45,9 +45,7 @@ public class ComputerGameController extends GameController {
             computer.addShot(humanMove);
             if (gui.getEnemyBoats().contains(humanMove)) {
                 human.increaseHitCount();
-                if (AudioHandler.getInstance().getAudioStatus()) {
-                    AudioHandler.getInstance().playAudioFile(gui.shotURL);
-                }
+                AudioHandler.getInstance().playAudioFile(gui.shotURL);
                 //checkBoatCount(humanMove);
 
                 ArrayList<ArrayList<Integer>> groups = computer.getBoatGroups();
@@ -66,16 +64,13 @@ public class ComputerGameController extends GameController {
                     }
                 }
                 computer.setBoatGroups(groups);
-            } else if (AudioHandler.getInstance().getAudioStatus()) {
-                AudioHandler.getInstance().playAudioFile(gui.missURL);
-            }
+            }  AudioHandler.getInstance().playAudioFile(gui.missURL);
+
             //Check win status
             if (computer.hasLost()) {
                 gui.setMessage("CONGRATULATIONS, YOU WIN!");
-                if (AudioHandler.getInstance().getAudioStatus()) {
-                    AudioHandler.getInstance().stopMusic();
-                    AudioHandler.getInstance().playAudioFile(gui.winURL);
-                }
+                AudioHandler.getInstance().stopMusic();
+                AudioHandler.getInstance().playAudioFile(gui.winURL);
                 break;
             }
 
@@ -95,10 +90,8 @@ public class ComputerGameController extends GameController {
             //Check win status
             if (human.hasLost()) {
                 gui.setMessage("OH NO, YOU LOSE!");
-                if (AudioHandler.getInstance().getAudioStatus()) {
-                    AudioHandler.getInstance().stopMusic();
-                    AudioHandler.getInstance().playAudioFile(gui.loseURL);
-                }
+                AudioHandler.getInstance().stopMusic();
+                AudioHandler.getInstance().playAudioFile(gui.loseURL);
                 break;
             }
             //back up to player's move
