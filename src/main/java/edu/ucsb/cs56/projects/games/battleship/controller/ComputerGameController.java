@@ -3,6 +3,7 @@ package edu.ucsb.cs56.projects.games.battleship;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.awt.*;
 
 /**
  * Computer game controller class, controller for handling when playing against a computer
@@ -100,8 +101,10 @@ public class ComputerGameController extends GameController {
 
     public void playAgain(BattleshipGUI gui) {
         if (gui.getReplayType() == 1) {
+            Color c = gui.getColor();
             gui.end();
             gui = new BattleshipGUI();
+            gui.setColor(c);
             gui.resetPlace();
             this.waitForGameType(gui);
 
@@ -109,8 +112,10 @@ public class ComputerGameController extends GameController {
             this.endOfGame(gui);
         }
         if (gui.getReplayType() == 2) {
+            Color c = gui.getColor();
             gui.end();
             gui = new BattleshipGUI();
+            gui.setColor(c);
             gui.resetShips();
             this.waitForSizes(gui);
 

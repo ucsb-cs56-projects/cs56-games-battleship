@@ -35,6 +35,8 @@ public class BattleshipGUI extends JFrame {
     private boolean replay = true;
     private boolean prompt = true;
 
+    private Color c = null;
+
     //Public so that other classes can play sound files
 
     public URL bgmURL, shotURL, missURL, winURL, loseURL;
@@ -193,6 +195,7 @@ public class BattleshipGUI extends JFrame {
                 System.out.println(e);
             }
         }
+        this.c = colorPopUp.getColor();
     }
 
     /**
@@ -228,7 +231,7 @@ public class BattleshipGUI extends JFrame {
     public void setUpComputerGame() {
         this.colorPopUp.setVisible(true);
         waitForColor();
-        this.board.setShipColor(this.colorPopUp.getColor());
+        this.board.setShipColor(this.c);
         this.shipSizePopUp.setVisible(true);
         this.colorPopUp.setVisible(false);
 
@@ -248,6 +251,7 @@ public class BattleshipGUI extends JFrame {
      * Method to initiate the graphics for computer boats.
      **/
     public void setUpComputerNewShips() {
+        this.board.setShipColor(this.c);
         this.setVisible(false);
         this.shipSizePopUp.setVisible(true);
         waitForSizes();
@@ -264,7 +268,8 @@ public class BattleshipGUI extends JFrame {
     /**
      * Method to initiate the graphics a second game with the AI.
      **/
-    public void setUpCompterPlayAgain() {
+    public void setUpComputerPlayAgain() {
+        this.board.setShipColor(this.c);
         waitForDifficulty();
         difficulty = diffPopUp.getDifficulty();
         this.diffPopUp.setVisible(false);
@@ -311,7 +316,7 @@ public class BattleshipGUI extends JFrame {
         board.reset();
         this.setVisible(false);
         this.diffPopUp.setVisible(true);
-        setUpCompterPlayAgain();
+        setUpComputerPlayAgain();
     }
 
     public void resetForIP() {
@@ -510,6 +515,25 @@ public class BattleshipGUI extends JFrame {
         this.setVisible(false);
         this.getContentPane().removeAll();
     }
+
+    /**
+     * Manually set the boat color for when replaying
+     *
+     * @pararm c color of boats
+     **/
+    public void setColor(Color c) {
+        this.c = c;
+    }
+
+    /**
+     * Find out the color of the users' ships
+     *
+     * @return color of boats
+     **/
+    public Color getColor() {
+        return (c == null ? Color.DARK_GRAY : c);
+    }
+
 
     /**
      * Place the boats on the board
