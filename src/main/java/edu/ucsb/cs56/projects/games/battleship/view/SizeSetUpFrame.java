@@ -18,14 +18,16 @@ public class SizeSetUpFrame extends JFrame implements ActionListener {
 
     ImageIcon icon = new ImageIcon(getClass().getResource("images/battleshipnew.png"));
 
+    private String[] defaultShipSize = {"2","3", "3", "4", "5"};
+
     private JButton reminder = new JButton("Input sizes of ships (between 2 and 9), then click here to proceed");
     private JPanel shipSizePanel = new JPanel();
     private JLabel logoIcon = new JLabel(icon);
-    private JTextField ship1 = new JTextField(5);
-    private JTextField ship2 = new JTextField(5);
-    private JTextField ship3 = new JTextField(5);
-    private JTextField ship4 = new JTextField(5);
-    private JTextField ship5 = new JTextField(5);
+    private JTextField ship1 = new JTextField(defaultShipSize[0],5);
+    private JTextField ship2 = new JTextField(defaultShipSize[1],5);
+    private JTextField ship3 = new JTextField(defaultShipSize[2],5);
+    private JTextField ship4 = new JTextField(defaultShipSize[3],5);
+    private JTextField ship5 = new JTextField(defaultShipSize[4],5);
     private JTextField[] inputBoxes = {ship1, ship2, ship3, ship4, ship5};
     private boolean sizeSet = false;
     private int[] shipSizes;
