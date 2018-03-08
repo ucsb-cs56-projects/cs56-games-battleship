@@ -31,6 +31,7 @@ public class SizeSetUpFrame extends JFrame implements ActionListener {
     private JTextField[] inputBoxes = {ship1, ship2, ship3, ship4, ship5};
     private boolean sizeSet = false;
     private int[] shipSizes;
+    private ErrorSizePopUpFrame ErrorSizePopUp = new ErrorSizePopUpFrame();
 
     public SizeSetUpFrame() {
 
@@ -79,7 +80,11 @@ public class SizeSetUpFrame extends JFrame implements ActionListener {
             }
             if (isValid == true) {
                 sizeSet = true;
-            } else reminder.setText("Please input sizes between 2 and 9");
+            }
+            else
+            {
+              this.ErrorSizePopUp.setVisible(true);
+            }
         }
     }
 
