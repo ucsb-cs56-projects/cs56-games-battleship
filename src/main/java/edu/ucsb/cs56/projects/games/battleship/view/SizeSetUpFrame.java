@@ -38,12 +38,20 @@ public class SizeSetUpFrame extends JFrame implements ActionListener {
         GridLayout threeWidgetVerticleGrid = new GridLayout(3, 1);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(600, 160);
+        this.setSize(600, 220);
+
+        this.reminder.setFont(new Font("Arial", Font.PLAIN, 15));
+        this.ship1.setFont(new Font("Arial", Font.PLAIN, 20));
+        this.ship2.setFont(new Font("Arial", Font.PLAIN, 20));
+        this.ship3.setFont(new Font("Arial", Font.PLAIN, 20));
+        this.ship4.setFont(new Font("Arial", Font.PLAIN, 20));
+        this.ship5.setFont(new Font("Arial", Font.PLAIN, 20));
 
         //Add shipsize buttons listeners
         this.reminder.addActionListener(this);
         for (int i = 0; i < 5; i++) {
             this.inputBoxes[i].addActionListener(this);
+
         }
         this.getContentPane().add(BorderLayout.NORTH, logoIcon);
         this.getContentPane().add(BorderLayout.SOUTH, reminder);
