@@ -50,30 +50,35 @@
 
   <!--
 
-  ### Maven Commands
-  - 'mvn test'
-    - Compiles and runs the test files in the *src/test* directory
-    - Similar to 'ant test'
 
-  - 'mvn test-compile'
+
+  ### Maven Commands
+
+  See the Maven Tutorial at W18_proj00.md
+
+  - `mvn test`
+    - Compiles and runs the test files in the *src/test* directory
+    - Similar to `ant test`
+
+  - `mvn test-compile`
     - Will only compile the test files but not execute them
 
-  - 'mvn compile'
+  - `mvn compile`
     - Compiles
-    - Similar to 'ant compile'
+    - Similar to `ant compile`
 
-  - 'mvn package'
-    - Similar to 'ant jar'
+  - `mvn package`
+    - Similar to `ant jar`
     - Creates a jar file at *target/battleship-1.0-SNAPSHOT.jar*
     - **Will not work if there are any errors in the test files**
       - So run this command instead:
-        - 'mvn package -Dmaven.test.skip=true'
+        - `mvn package -Dmaven.test.skip=true`
       - To run the jar, execute this command in the main directory
-        - 'java -cp target/battleship-1.0-SNAPSHOT.jar edu.ucsb.cs56.projects.games.battleship.BattleshipController'
+        - `java -cp target/battleship-1.0-SNAPSHOT.jar edu.ucsb.cs56.projects.games.battleship.BattleshipController`
 
-  - 'mvn Clean'
+  - `mvn Clean`
     - Cleans the directory by deleting the *target* subdirectory
-    - Similar to 'ant clean'
+    - Similar to `ant clean`
 
   -->
 
