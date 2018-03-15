@@ -1,6 +1,7 @@
 Issues
 
 Refactor playAgain method in the controller class to not create a new GUI
+- #81
 - Currently when hitting a replay button a new GUI is created so all previous data from the last game is "forgotten". This is needed to clean up the way the ship layout and color setting is stored when replaying a game. (points: 200)
 
 Add images for boat
