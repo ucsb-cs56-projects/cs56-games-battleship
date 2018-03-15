@@ -1,11 +1,13 @@
 <!-- build.xml for battleship
- by Wenjian Li -->
+ by Wenjian Li
+ updated by Richard Rodriguez 3/5/2018
+-->
 
 <project default="compile">
     <property environment="env"/>
     <property name="webRoot" value="${env.HOME}/public_html/cs56"/>
     <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56"/>
-    <property name="projectName" value="cs56-games-battleship"/>
+    <property name="projectName" value="battleship-1.0-SNAPSHOT.jar"/>
     <property name="javadocDest" value="${webRoot}/${projectName}"/>
     <property name="javadocUrl" value="${webBaseUrl}/${projectName}"/>
     <property name="mainClass" value="edu.ucsb.cs56.projects.games.battleship.BattleshipController"/>
@@ -15,42 +17,48 @@
 
     <!-- compile -->
     <target name="compile" description="Compile the code">
-        <mkdir dir="build/edu/ucsb/cs56/projects/games/battleship/sfx"/>
-        <copy todir="build/edu/ucsb/cs56/projects/games/battleship/sfx">
-            <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/sfx"/>
+        <mkdir dir="target/classes/edu/ucsb/cs56/projects/games/battleship/sfx"/>
+        <copy todir="target/classes/edu/ucsb/cs56/projects/games/battleship/sfx">
+            <fileset dir="src/main/resources/edu/ucsb/cs56/projects/games/battleship/sfx"/>
         </copy>
-        <mkdir dir="build/edu/ucsb/cs56/projects/games/battleship/images"/>
-        <copy todir="build/edu/ucsb/cs56/projects/games/battleship/images">
-            <fileset dir="src/edu/ucsb/cs56/projects/games/battleship/images"/>
+        <mkdir dir="target/classes/edu/ucsb/cs56/projects/games/battleship/images"/>
+        <copy todir="target/classes/edu/ucsb/cs56/projects/games/battleship/images">
+            <fileset dir="src/main/resources/edu/ucsb/cs56/projects/games/battleship/images"/>
         </copy>
-        <javac srcdir="src" destdir="build" includeantruntime="false" debug="true">
+        <javac srcdir="src" destdir="target/classes" includeantruntime="false" debug="true">
             <classpath>
-                <pathelement location="build"/>
+                <pathelement location="target/classes"/>
                 <pathelement location="lib/junit-4.8.2.jar"/>
             </classpath>
         </javac>
+        <!-- moves all test classes to test-classes -->
+        <mkdir dir="target/test-classes/edu/ucsb/cs56/projects/games/battleship"/>
+        <move todir="target/test-classes/edu/ucsb/cs56/projects/games/battleship">
+          <fileset dir="target/classes">
+            <include name="**/*Test.class"/>
+          </fileset>
+        </move>
     </target>
 
     <!-- run -->
     <target name="run" depends="jar" description="Run the cs56-games-battleship file.">
-        <java jar="cs56-games-battleship.jar" fork="true"/>
+        <java jar="target/${projectName}.jar" fork="true"/>
     </target>
 
     <!-- runTest -->
+    <!-- Needs to be fixed -Richard 2018 -->
     <target name="runTest" depends="compile" description="Run a test file of my choosing.">
         <java classpath="build" classname="edu.ucsb.cs56.projects.games.battleship.BattleshipGUI" fork="true"/>
     </target>
 
     <!-- clean -->
     <target name="clean" description="Clean up the project directory.">
-        <delete dir="build" quiet="true"/>
+        <delete dir="target" quiet="true"/>
         <delete dir="javadoc" quiet="true"/>
-        <delete dir="dist" quiet="true"/>
-        <delete dir="download" quiet="true"/>
-        <delete dir="temp" quiet="true"/>
     </target>
 
     <!-- javadoc -->
+    <!-- Creates a copy of javadoc file outside of the main directory for some reason -->
     <target name="javadoc" depends="compile" description="Generate a javadoc in the javadoc subdirectory.">
         <delete dir="javadoc" quiet="true"/>
         <javadoc destdir="javadoc" author="true" version="true" use="true">
@@ -89,7 +97,7 @@
         <junit haltonerror="no" haltonfailure="no">
             <classpath>
                 <pathelement location="lib/junit-4.8.2.jar"/>
-                <pathelement location="build"/>
+                <pathelement location="target/classes"/>
             </classpath>
             <batchtest fork="yes">
                 <fileset dir="src">
@@ -102,11 +110,12 @@
 
     <!-- jar -->
     <target name="jar" depends="compile" description="Generate a jar file in the dist directory">
-        <jar destfile="${projectName}.jar" basedir="build">
+        <jar destfile="${projectName}.jar" basedir="target/classes">
             <manifest>
                 <attribute name="Main-Class" value="${mainClass}"/>
             </manifest>
         </jar>
+        <move file="${projectName}.jar" todir="target"/>
     </target>
 
 </project>

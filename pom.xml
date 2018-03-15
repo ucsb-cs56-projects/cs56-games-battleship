@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.ucsb.cs56.projects.games.battleship</groupId>
+  <artifactId>battleship</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Battleship</name>
+  <url>http://maven.apache.org</url>
+
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <!-- Make jar file executable -->
+  <build>
+    <plugins>
+      <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>3.0.2</version>
+      <configuration>
+        <archive>
+          <manifest>
+            <!-- full package name of class with the main you want to run -->
+            <mainClass>edu.ucsb.cs56.projects.games.battleship.controller.BattleshipController</mainClass>
+          </manifest>
+        </archive>
+      </configuration>
+    </plugin>
+    </plugins>
+  </build>
+
+
+
+  <!--
+
+
+
+  ### Maven Commands
+
+  See the Maven Tutorial at W18_proj00.md
+
+  - `mvn test`
+    - Compiles and runs the test files in the *src/test* directory
+    - Similar to `ant test`
+
+  - `mvn test-compile`
+    - Will only compile the test files but not execute them
+
+  - `mvn compile`
+    - Compiles
+    - Similar to `ant compile`
+
+  - `mvn package`
+    - Similar to `ant jar`
+    - Creates a jar file at *target/battleship-1.0-SNAPSHOT.jar*
+    - **Will not work if there are any errors in the test files**
+      - So run this command instead:
+        - `mvn package -Dmaven.test.skip=true`
+      - To run the jar, execute this command in the main directory
+        - `java -cp target/battleship-1.0-SNAPSHOT.jar edu.ucsb.cs56.projects.games.battleship.BattleshipController`
+
+  - `mvn Clean`
+    - Cleans the directory by deleting the *target* subdirectory
+    - Similar to `ant clean`
+
+  -->
+
+
+
+</project>
