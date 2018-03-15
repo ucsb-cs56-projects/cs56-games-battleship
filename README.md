@@ -10,7 +10,7 @@ project history
 
 * Original developer description - the Milton Bradley board game that has won the hearts of children for over four decades. It will be single-player (vs. computer) and will have various difficulty settings (easy, normal, hard).  You can also host/join games and play against your friends online WITH THE POWER OF JAVA NETWORKING!
 
-* Current version: 2.4
+* Current version: 2.5
 * Previous versions:
 	* version 1: See "Original developer description" (see figure 0)
 	* version 2.0: New feature added. Player can customize ship sizes in the "against computer" mode through a new window.(see figure 1) Illegal ship sizes will be reported to the player. (see figure 2)
@@ -21,7 +21,8 @@ project history
     * <b>version 2.3</b>: Game now has replay functionality for multiplayer games and also has a boat count, so the user can keep track of how many boats have been sunk. Also, the port number has been removed in order to limit confusion when setting up multiplayer games.
     
     * <b>version 2.4</b>: Game now has proper background music, new background images, buttons for the settings should now look much better. 
-
+    * <b>version 2.4</b>: Lots of bugs fixed. Volume implementation reworked, volume slider aded. Maven integrated.
+    
 * Game description - this Battleship game has 3 modes for user to choose from: hosting a game, joining a game, and playing against a computer. (see figure 5)
 	
 	* Hosting a game: User's IP address will be displayed, and user shall wait for someone else to join his game.
@@ -82,6 +83,18 @@ F17 | EthanYSu | ktan97 | F17 final remarks:
 	* Add back/reset button when setting up the game
 	* See issues for other problems with the game
 	
+	
+```
+ W18 | jefflongo | richardrod605  | W18 final remarks:
+```
+* For the next generation of students working on this project, make sure you understand the hierarchy of the program when you approach this project. Start with the controller classes, work your way down to the player/GUI classes. The BattleshipGUI class does most of the work, so definitely understand how that class works. Refactoring BattleshipGUI to be further separated from GameGrid would be a difficult but worthwhile task to undertake. Adding test cases is also what this project desperately needs. Currently there are only a few test cases and they don't even work. Adding test cases will make adding additional code easier. Some things you may want to consider working on:
+
+	* Refactoring the GUI class and GameGrid class
+	* Make the setup GUI one window so you can modify any of the options before starting the game after selecting them
+	* Moving away from Java swing
+	* Add test cases, fully use the power of Maven
+	* Refactor the replay game method to not make a new GUI (and forget everything about the previous game)
+
 Figure 0
 
 ![](https://i.imgur.com/Ec6e5vK.png)
